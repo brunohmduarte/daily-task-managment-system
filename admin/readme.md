@@ -1,0 +1,1 @@
+Essa camada representa um fornecedor de dados para a camada de visualização, é aqui onde irá ficar todo o carregamento das informações e depois será renderizado para a visualização passando todas as informações necessárias pra a página.
