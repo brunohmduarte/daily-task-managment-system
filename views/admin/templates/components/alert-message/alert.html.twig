@@ -1,0 +1,39 @@
+{% block alert_message %}
+    <div class="row">
+        <div class="col-12">
+            {% if SUCCESS_ALERT is defined %}
+            <div class="alert alert-success alert-dismissible mt-2" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                 
+                <ul class="mb-0">
+                    {% for alert in SUCCESS_ALERT %}
+                        <i class="ri-check-line me-1 align-middle font-16"></i> {{ alert }}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+
+            {% if ERROR_ALERT is defined %}
+            <div class="alert alert-danger alert-dismissible mt-2" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                 
+                <ul class="mb-0">
+                    {% for alert in ERROR_ALERT %}
+                        <i class="ri-close-circle-line me-1 align-middle font-16"></i> {{ alert }}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if WARNING_ALERT is defined %}
+            <div class="alert alert-warning alert-dismissible mt-2" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                
+                <ul class="mb-0">
+                    {% for alert in WARNING_ALERT %}
+                        <i class="ri-alert-line me-1 align-middle font-16"></i> {{ alert }}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

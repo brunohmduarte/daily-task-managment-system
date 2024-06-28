@@ -1,0 +1,148 @@
+{% extends "layouts/main.html" %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+{% use "templates/components/filter-per-page/select.html.twig" %}
+{% use "templates/components/pagination/pagination-navigation-menu.html.twig" %}
+{% use "templates/components/field-form-search/formSearch.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block head %} 
+    {{ parent() }}
+{% endblock %}
+
+
+{% block css %}
+    <!-- Datatable css -->
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/dataTables.bootstrap5.min.css' }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/responsive.bootstrap5.min.css' }}" rel="stylesheet" type="text/css">
+    
+    <style>
+        figure.figure-brand-logo {
+            margin: 0 !important;
+            width: 100%;
+        }
+        figure.figure-brand-logo img {
+            width: auto;
+            height: auto;
+            max-width: 100px;
+            max-height: 60px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %} {{ parent() }} {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="?action=create" class="btn btn-primary mb-2" title="Adicionar uma nova loja">
+                        <i class="mdi mdi-plus-circle"></i>
+                        <b>Novo</b>
+                    </a>
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="products-datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="products-datatable_length">
+                                        <label class="form-label">
+                                            {% block field_per_page %} {{ parent()}} {% endblock %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="w-75 mb-2 ms-auto">
+                                        {% block field_form_search %} {{ parent() }} {% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-centered w-100 dt-responsive nowrap dataTable no-footer dtr-inline collapsed" id="stores-datatable" aria-describedby="products-datatable_info" style="width: 948px;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" rowspan="1" colspan="1" style="width: 10px;" data-col="0" aria-label="&amp;nbsp;">Ações</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Logomarca</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Nome</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Responsável</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Contato</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if STORES is defined %}
+                                        {% for store in STORES %}
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="{{ URL_BASE ~ '/admin/stores.php?action=update&id=' ~ store.store_id }}" class="btn btn-info py-1 px-2 ms-1" title="Editar este registro">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                <figure class="figure-brand-logo">
+                                                    <img src="{{ URL_BASE ~ '/views/' ~ store.brand_logo }}" alt="{{ store.name }}" title="{{ store.name }}" class="" height="48" />
+                                                </figure>
+                                            </td>
+                                            <td style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ store.name }}</td>
+                                            <td style="max-width: 90px;">{{ store.responsible }}</td>                                            
+                                            <td style="max-width: 90px;">{% if store.phone is defined %}{{ store.phone }}{% endif %}</td>                                            
+                                        </tr>
+                                        {% endfor %}
+
+                                    {% else %}
+
+                                        <tr class="odd">
+                                            <td class="dt-checkboxes-cell dtr-control" colspan="7">
+                                                Nenhum registro encontrado!
+                                            </td>
+                                        </tr>
+
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {% block pagination_navigation_menu %} {{ parent() }} {% endblock %}
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/jquery.dataTables.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.responsive.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/responsive.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.checkboxes.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+
+    {% block js_per_page %} {{ parent() }} {% endblock %}
+
+    <script>
+        /** 
+            @todo - Criar um autocomplete para preenchimento dos campos links das lojas
+                - Ao adicionar um link em qualquer um dos campos, processar, formatar e preencher os outros campos.
+         */
+    </script>
+{% endblock %}

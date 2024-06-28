@@ -1,0 +1,31 @@
+{% block pagination_navigation_menu %}
+    {% if PAGINATOR.PAGINATION_NAV_LINK is defined %}
+    <div class="row">
+        <div class="col-sm-12 col-md-5"></div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="products-datatable_paginate">
+                <ul class="pagination pagination-rounded justify-content-end">
+
+                    <li class="paginate_button page-item previous {% if PAGINATOR.PAGINATION_CURRENT_PAGE == 1 %} disabled {% endif %}" id="products-datatable_previous">
+                        <a href="{{ URL_BASE ~ '/' ~ PAGINATOR.PAGINATION_LINK_START }}" aria-controls="products-datatable" data-dt-idx="0" tabindex="0" class="page-link">
+                            <i class="mdi mdi-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    {% for link in PAGINATOR.PAGINATION_NAV_LINK %}
+                        <li class="paginate_button page-item {% if link.active %} active {% endif %}">
+                            <a href="{{ link.url }}" aria-controls="products-datatable" data-dt-idx="1" tabindex="0" class="page-link">{{ loop.index }}</a>
+                        </li>
+                    {% endfor %}
+
+                    <li class="paginate_button page-item next {% if PAGINATOR.PAGINATION_CURRENT_PAGE == PAGINATOR.PAGINATION_TOTAL_LINKS %} disabled {% endif %}" id="products-datatable_next">
+                        <a href="{{ URL_BASE ~ '/' ~ PAGINATOR.PAGINATION_LINK_END }}" aria-controls="products-datatable" data-dt-idx="4" tabindex="0" class="page-link">
+                            <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

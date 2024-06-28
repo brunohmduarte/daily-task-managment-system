@@ -1,0 +1,239 @@
+{% extends "layouts/main.html" %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+{% use "templates/components/modal-summary/modal.html.twig" %}
+{% use "templates/components/filter-per-page/select.html.twig" %}
+{% use "templates/components/pagination/pagination-navigation-menu.html.twig" %}
+{% use "templates/components/field-form-search/formSearch.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block css %}
+    <!-- Datatable css -->
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/dataTables.bootstrap5.min.css' }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/responsive.bootstrap5.min.css' }}" rel="stylesheet" type="text/css" />
+
+    {% block css_modal_summary %} {{ parent() }} {% endblock %}
+
+    <style>
+        .width-limiter {
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
+        img.shadow {
+            box-shadow: 0 1px 8px rgba(33, 32, 36, .22) !important;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %}
+        {{ parent()}}
+    {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    {% block button_modal_summary %} {{ parent() }} {% endblock %}
+
+                    <a href="?action=create" class="btn btn-primary mb-2 ms-2" title="Adicionar um novo ticket">
+                        <i class="mdi mdi-plus-circle"></i>
+                        <b>Novo</b>
+                    </a>
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="products-datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="products-datatable_length">
+                                        <label class="form-label">
+                                            {% block field_per_page %} {{ parent()}} {% endblock %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="w-75 mb-2 ms-auto">
+                                        {% block field_form_search %} {{ parent() }} {% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-centered w-100 dt-responsive nowrap dataTable no-footer dtr-inline collapsed" id="tickets-datatable" aria-describedby="products-datatable_info" style="width: 948px;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" rowspan="1" colspan="1" style="width: 10px;" data-col="0" aria-label="&amp;nbsp;">Ações</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Referência</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Título</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Loja</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Relator</th>
+                                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Situação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if TICKETS is defined %}
+                                        {% for ticket in TICKETS %}
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="{{ URL_BASE ~ '/admin/tickets.php?action=update&id=' ~ ticket.ticket_id }}" 
+                                                    class="btn btn-info py-1 px-2 ms-1" 
+                                                    title="Editar este registro"
+                                                >
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                            </td>
+                                            <td style="max-width: 60px;" class="width-limiter">
+                                                <a href="https://helpdesk.bis2bis.com.br/Ticket/Edit/{{ ticket.reference }}" 
+                                                    class="text-info link-info" 
+                                                    title="#{{ ticket.reference }}"
+                                                    target="_blank"
+                                                >
+                                                    #{{ ticket.reference }}
+                                                </a>
+                                            </td>
+                                            <td style="max-width: 200px;" class="width-limiter">
+                                                <span title="{{ ticket.title }}">{{ ticket.title }}</span>
+                                            </td>
+                                            <td style="max-width: 90px;" class="width-limiter">
+                                                <span title="{{ ticket.store }}">{{ ticket.store }}</span>
+                                            </td>
+                                            <td class="text-center" style="max-width: 70px;">
+                                                <img src="{{ URL_BASE ~ '/views/' ~ ticket.reporter_thumb }}" 
+                                                    alt="{{ ticket.reporter }}" title="{{ ticket.reporter }}" 
+                                                    class="rounded-circle me-3 shadow" 
+                                                    height="48" 
+                                                />
+                                            </td>
+                                            <td class="text-center" style="max-width: 40px;">                                                
+                                                {% if ticket.status == 'Fazendo' %} <span class="badge p-1 bg-info">Fazendo</span> {% endif %}
+                                                {% if ticket.status == 'Bloqueado' %} <span class="badge p-1 bg-danger">Bloqueado</span> {% endif %}
+                                                {% if ticket.status == 'Pausado' %} <span class="badge p-1 bg-warning">Pausado</span> {% endif %}
+                                                {% if ticket.status == 'Resolvido' %} <span class="badge p-1 bg-success">Resolvido</span> {% endif %}
+                                                {% if ticket.status == 'Fechado' %} <span class="badge p-1 bg-secondary">Fechado</span> {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    {% else %}
+
+                                        <tr class="odd">
+                                            <td class="dt-checkboxes-cell dtr-control" colspan="7">
+                                                Nenhum registro encontrado!
+                                            </td>
+                                        </tr>
+
+                                    {% endif %}
+
+                                        <!--
+                                        <tr class="even">
+                                            <td class="dtr-control dt-checkboxes-cell" tabindex="0">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input dt-checkboxes">
+                                                    <label class="form-check-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="sorting_1">
+                                                <a href="apps-ecommerce-products-details.html" class="text-body link-info">#413235</a>
+                                            </td>
+                                            <td>Aeron Chairs</td>
+                                            <td>09/12/2018</td>
+                                            <td>09/12/2018</td>
+                                            <td class="text-center"><img src="https://coderthemes.com/hyper/saas/assets/images/products/product-1.jpg" alt="contact-img" title="contact-img" class="rounded-circle me-3" height="48"></td>
+                                            <td class="text-center"><ispan class="badge bg-success">Active</span></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="dt-checkboxes-cell dtr-control">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input dt-checkboxes">
+                                                    <label class="form-check-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="sorting_1">
+                                                <a href="apps-ecommerce-products-details.html" class="text-body link-info">#413034</a>
+                                            </td>
+                                            <td>Wooden Chairs</td>
+                                            <td>06/30/2018</td>
+                                            <td>06/30/2018</td>
+                                            <td class="text-center"><img src="https://coderthemes.com/hyper/saas/assets/images/products/product-2.jpg" alt="contact-img" title="contact-img" class="rounded-circle me-3" height="48"></td>
+                                            <td class="text-center"><ispan class="badge bg-danger">Deactive</span></td>
+                                        </tr>
+                                        <tr class="even">
+                                            <td class="dtr-control dt-checkboxes-cell" tabindex="0">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input dt-checkboxes">
+                                                    <label class="form-check-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="sorting_1">
+                                                <a href="apps-ecommerce-products-details.html" class="text-body link-info">#416582</a>
+                                            </td>
+                                            <td>Wooden Chairs</td>
+                                            <td>09/08/2018</td>
+                                            <td>09/08/2018</td>
+                                            <td class="text-center"><img src="https://coderthemes.com/hyper/saas/assets/images/products/product-4.jpg" alt="contact-img" title="contact-img" class="rounded-circle me-3" height="48"></td>
+                                            <td class="text-center"><ispan class="badge bg-success">Active</span></td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="dt-checkboxes-cell dtr-control">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input dt-checkboxes">
+                                                    <label class="form-check-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="sorting_1">
+                                                <a href="apps-ecommerce-products-details.html" class="text-body link-info">#412587</a>
+                                            </td>
+                                            <td>Wing Chairs</td>
+                                            <td>07/15/2018</td>
+                                            <td>07/15/2018</td>
+                                            <td class="text-center"><img src="https://coderthemes.com/hyper/saas/assets/images/products/product-3.jpg" alt="contact-img" title="contact-img" class="rounded-circle me-3" height="48"></td>
+                                            <td class="text-center"><ispan class="badge bg-danger">Deactive</span></td>
+                                        </tr>
+                                        -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {% block pagination_navigation_menu %} {{ parent() }} {% endblock %}
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal %}
+    {% block dialog_modal_summary %} {{ parent() }}{% endblock %}
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/jquery.dataTables.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.responsive.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/responsive.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.checkboxes.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+    
+    {% block js_per_page %} {{ parent() }} {% endblock %}
+    {% block js_modal_summary %} {{ parent() }} {% endblock %}
+{% endblock %}

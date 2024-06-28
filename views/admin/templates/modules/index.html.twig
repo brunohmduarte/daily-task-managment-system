@@ -1,0 +1,28 @@
+{% extends "layouts/main.html" %}
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+{% block content %}
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-10 text-center">
+            <h2>Qual arquitetura o módulo que você procura pertence?</h2>
+            <p>A definição da versão de arquitetura trás somente os módulos correspondente a arquitetura escolhida, deixando o seu filtro muito mais rápido e economizando o seu tempo.</p>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-10 d-flex justify-content-center flow-row gap-4">
+            <div class="card" style="width: 18rem; height: 18rem">
+                <a href="{{ URL_BASE ~ '/admin/modules.php?action=architecture&version=1' }}" class="fs-4 fw-semibold d-block d-block">
+                    <img src="{{ URL_BASE ~ '/views/admin/assets/images/magento1.png' }}" alt="Magento 1" class="img-fluid" style="width: 18rem; height: 18rem" />
+                </a>
+            </div>
+
+            <div class="card" style="width: 18rem; height: 18rem">
+                <a href="{{ URL_BASE ~ '/admin/modules.php?action=architecture&version=2' }}" class="fs-4 fw-semibold d-block">
+                    <img src="{{ URL_BASE ~ '/views/admin/assets/images/magento2.png' }}" alt="Magento 2" class="img-fluid" style="width: 18rem; height: 18rem" />
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

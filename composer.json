@@ -1,0 +1,29 @@
+{
+    "name": "brunoduarte/daily",
+    "description": "Ticket Management System",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bruno Duarte",
+            "email": "bruno.meddua@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*",
+        "coffeecode/datalayer": "^2.0",
+        "coffeecode/uploader": "^2.0",
+        "guzzlehttp/guzzle": "^7.8",
+        "twig/twig": "^3.8"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.9",
+        "phpmd/phpmd": "^2.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": ["src/", "admin/"]
+        },
+        "files": ["src/Config.php"]
+    }
+}

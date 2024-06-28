@@ -1,0 +1,314 @@
+{% extends "layouts/main.html" %}
+
+
+{% set TICKET_ID    = DATA is defined and DATA.ticket_id   ? DATA.ticket_id   : '' %}
+{% set REPORTER     = DATA is defined and DATA.reporter_id ? DATA.reporter_id : '' %}
+{% set STORE        = DATA is defined and DATA.store_id    ? DATA.store_id    : '' %}
+{% set REFERENCE    = DATA is defined and DATA.reference   ? DATA.reference   : '' %}
+{% set TICKET_TITLE = DATA is defined and DATA.title       ? DATA.title       : '' %}
+{% set DESCRIPTION  = DATA is defined and DATA.description ? DATA.description : '' %}
+{% set RESOLUTION   = DATA is defined and DATA.resolution  ? DATA.resolution  : '' %}
+{% set SITUATION    = DATA is defined and DATA.status      ? DATA.status      : '' %}
+{% set PRIORITY     = DATA is defined and DATA.priority    ? DATA.priority    : '' %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+{% use "templates/components/modal-form/modal.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block css %}
+    <!-- Select2 css -->
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/select2.min.css' }}" rel="stylesheet" type="text/css" />
+
+    <!-- Quill css -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:history.go(-1)" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                        <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
+                        <b>Voltar</b>
+                    </a>
+                    {% if TICKET_ID %}
+                        {% block button_modal_form %} {{ parent() }} {% endblock %}
+                    {% endif %}
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="col-12" action="{{ URL_BASE ~ '/admin/tickets.php?action=' ~ FORM_ACTION}}" method="post" name="ticketManagementForm" id="ticketManagementForm" enctype="multipart/form-data">
+                        <input type="hidden" name="data[tickets][ticket_id]" id="data[tickets][ticket_id]" value="{{ TICKET_ID }}" />
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][reporter_id]" class="col-3 form-label text-end required">Relator</label>
+                            <div class="col-6">
+                                <select class="form-control select2" name="data[tickets][reporter_id]" id="data[tickets][reporter_id]" data-toggle="select2" required>
+                                    {% for reporter in REPORTER_SELECT_OPT %}
+                                        <option value="{{ reporter.value }}" {% if reporter.value == REPORTER %} selected {% endif %}>
+                                            {{ reporter.label }}
+                                        </option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][reference]" class="col-3 form-label text-end required">Código de referência</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[tickets][reference]" id="data[tickets][reference]" value="{{ REFERENCE }}" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3">
+                                {% if REFERENCE %}
+                                <a href="{{ 'https://helpdesk.bis2bis.com.br/Ticket/Edit/' ~ REFERENCE }}" class="mt-auto" target="_blank"><i class="mdi mdi-18px mdi-link"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][title]" class="col-3 form-label text-end required">Título</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[tickets][title]" id="data[tickets][title]" value="{{ TICKET_TITLE }}" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][store_id]" class="col-3 form-label text-end required">Loja</label>
+                            <div class="col-6">
+                                <select class="form-control select2" name="data[tickets][store_id]" id="data[tickets][store_id]" data-toggle="select2" required>
+                                    {% for store in STORE_SELECT_OPT %}
+                                    <option value="{{ store.value }}" {% if store.value == STORE %} selected {% endif %}>
+                                        {{ store.label }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][status]" class="col-3 form-label text-end required">Situação</label>
+                            <div class="col-6">
+                                <select class="form-select" name="data[tickets][status]" id="data[tickets][status]" required>
+                                    <option value="">Selecione uma situação</option>
+                                    <option value="1" {% if SITUATION == 'Fazendo' %} selected {% endif %}>Fazendo</option>
+                                    <option value="2" {% if SITUATION == 'Bloqueado' %} selected {% endif %}>Bloqueado</option>
+                                    <option value="3" {% if SITUATION == 'Pausado' %} selected {% endif %}>Pausado</option>
+                                    <option value="4" {% if SITUATION == 'Resolvido' %} selected {% endif %}>Resolvido</option>
+                                    <option value="4" {% if SITUATION == 'Fechado' %} selected {% endif %}>Fechado</option>
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][priority]" class="col-3 form-label text-end required">Nível de prioridade</label>
+                            <div class="col-6">
+                                <select class="form-select" name="data[tickets][priority]" id="data[tickets][priority]" required>
+                                    <option value="">Selecione uma nível</option>
+                                    <option value="1" {% if PRIORITY == 'Baixa' %} selected {% endif %}>Baixa</option>
+                                    <option value="2" {% if PRIORITY == 'Média' %} selected {% endif %}>Média</option>
+                                    <option value="3" {% if PRIORITY == 'Alta' %} selected {% endif %}>Alta</option>
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="priority" class="col-3 form-label text-end">Período de desenvolvimento</label>
+                            <div class="col-6 box-appoiments">
+                                {% if DATA.appoiments is defined %}
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label class="form-label">Data</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="form-label">Início</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="form-label">Término</label>
+                                            </div>
+                                        </div>
+
+                                    {% for appoiment in DATA.appoiments %}
+
+                                        <div class="row mt-2">
+                                            <div class="col-4">
+                                                <input type="date" class="form-control" name="data[working_time][development_date][{{ appoiment.time_id }}]" id="data[working_time][development_date][{{ appoiment.time_id }}]" value="{{ appoiment.development_date }}" />
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="time" class="form-control" name="data[working_time][development_begin][{{ appoiment.time_id }}]" id="data[working_time][development_begin][{{ appoiment.time_id }}]" value="{{ appoiment.development_begin }}" min="00:00" max="24:00" />                                    
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="time" class="form-control" name="data[working_time][development_end][{{ appoiment.time_id }}]" id="data[working_time][development_end][{{ appoiment.time_id }}]" value="{{ appoiment.development_end }}" min="00:00" max="24:00" />                                    
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_date][]" class="form-label">Data</label>
+                                            <input type="date" class="form-control" name="data[working_time][development_date][]" id="data[working_time][development_date][]" value="" />
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_begin][]" class="form-label">Início</label>
+                                            <input type="time" class="form-control" name="data[working_time][development_begin][]" id="data[working_time][development_begin][]" value="" min="00:00" max="24:00" />                                    
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_end][]" class="form-label">Término</label>
+                                            <input type="time" class="form-control" name="data[working_time][development_end][]" id="data[working_time][development_end][]" value="" min="00:00" max="24:00" />                                    
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            </div>
+                            <div class="col-3 mt-auto">
+                                <button type="button" class="btn btn-primary btn-add-appoiment" title="Adicionar um novo item" >
+                                    <i class="mdi mdi-18px mdi-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][description]" class="col-3 form-label text-end required">Descrição do problema</label>
+                            <div class="col-6">
+                                <textarea class="form-control" name="data[tickets][description]" id="data[tickets][description]" rows="5" placeholder="" autocomplete="off" required>{{ DESCRIPTION }}</textarea>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][resolution]" class="col-3 form-label text-end">Como foi resolvido?</label>
+                            <div class="col-6">
+                                <textarea class="form-control" name="data[tickets][resolution]" id="data[tickets][resolution]" rows="5" placeholder="" autocomplete="off">{{ RESOLUTION }}</textarea>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][resolution]" class="col-3 form-label text-end">TESTE</label>
+                            <div class="col-6">
+                                <div id="quill-test" style="width: 100%"></div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                        
+                        <div class="mb-2 row">
+                            <label for="" class="col-3 form-label"></label>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="mdi mdi-18px mdi-content-save"></i>
+                                    <b>Salvar</b>
+                                </button>
+                                <button type="button" class="btn btn-primary ms-1">
+                                    <i class="mdi mdi-18px mdi-content-save"></i>
+                                    <b>Salvar e Continuar na Página</b>
+                                </button>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal %}
+    {% block dialog_modal_form %} {{ parent() }} {% endblock %}
+{% endblock %}
+
+
+{% block javascript %}
+
+    <!-- Quill js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script> -->
+
+    <!-- Select2 Js -->
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/select2.min.js' }}"></script>
+
+    {% block js_modal_form %} {{ parent() }} {% endblock %}
+
+    <script>
+        var btnAppoimennt = document.getElementsByClassName('btn-add-appoiment')[0];
+        var boxAppoiments = document.getElementsByClassName('box-appoiments')[0];
+        
+        // Quill Editor
+        /*const ResolutionQuill = new Quill('#quill-teste', {
+            debug: 'info',
+            modules: {
+                toolbar: true,
+            },
+            placeholder: 'Descreva em poucas palavras como foi a resolução do problema...',
+            theme: 'snow'
+        })*/
+
+        btnAppoimennt.addEventListener('click', (el) => {
+            
+            let divRow = document.createElement('div');
+            divRow.setAttribute('class', 'row');
+
+
+            let inputDate = document.createElement('input');
+            inputDate.setAttribute('type', 'date');
+            inputDate.setAttribute('class', 'form-control');
+            inputDate.setAttribute('name', 'data[working_time][development_date][]');
+            inputDate.setAttribute('id', 'data[working_time][development_date][]');
+            
+            let divColDate = document.createElement('div');
+            divColDate.setAttribute('class', 'col-4 mt-2');
+            divColDate.appendChild(inputDate);
+            divRow.appendChild(divColDate);
+
+            
+            let inputTimeBegin = document.createElement('input');
+            inputTimeBegin.setAttribute('type', 'time');
+            inputTimeBegin.setAttribute('class', 'form-control');
+            inputTimeBegin.setAttribute('name', 'data[working_time][development_begin][]');
+            inputTimeBegin.setAttribute('id', 'data[working_time][development_begin][]');
+            inputTimeBegin.setAttribute('min', '00:00');
+            inputTimeBegin.setAttribute('max', '24:00');
+            
+            let divColTimeBegin = document.createElement('div');
+            divColTimeBegin.setAttribute('class', 'col-4 mt-2');
+            divColTimeBegin.appendChild(inputTimeBegin);
+            divRow.appendChild(divColTimeBegin);
+            
+            
+            let inputTimeEnd = document.createElement('input');
+            inputTimeEnd.setAttribute('type', 'time');
+            inputTimeEnd.setAttribute('class', 'form-control');
+            inputTimeEnd.setAttribute('name', 'data[working_time][development_end][]');
+            inputTimeEnd.setAttribute('id', 'data[working_time][development_end][]');
+            inputTimeEnd.setAttribute('min', '00:00');
+            inputTimeEnd.setAttribute('max', '24:00');
+            
+            let divColTimeEnd = document.createElement('div');
+            divColTimeEnd.setAttribute('class', 'col-4 mt-2');
+            divColTimeEnd.appendChild(inputTimeEnd);
+            divRow.appendChild(divColTimeEnd);
+
+            boxAppoiments.appendChild(divRow);
+        });
+    </script>
+{% endblock %}

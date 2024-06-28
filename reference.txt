@@ -1,0 +1,5 @@
+Requisições Fetch API em javascript
+https://www.youtube.com/watch?v=qIGYM4S8x50 - 18:39
+
+Conceito de data em MySQL
+https://imasters.com.br/data/utilizacao-de-datas-no-mysql

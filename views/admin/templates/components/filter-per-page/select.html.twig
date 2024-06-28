@@ -1,0 +1,30 @@
+{% block field_per_page %}
+    Exibir 
+    <select id="itemsByPage" class="form-select form-select-sm ms-1 me-1">
+        <option value="10" {% if ITEMS_PER_PAGE == 10 %} selected {% endif %}>10</option>
+        <option value="20" {% if ITEMS_PER_PAGE == 20 %} selected {% endif %}>20</option>
+        <option value="30" {% if ITEMS_PER_PAGE == 30 %} selected {% endif %}>30</option>
+    </select> 
+    itens por página
+{% endblock %}
+
+
+{% block js_per_page %}
+    <script type="text/javascript">
+        const filterByPage = document.getElementById('itemsByPage');
+
+        filterByPage.addEventListener('click', function(event) {
+            const option = [...event.target.children]
+            let id = option.findIndex(el => el.selected === true)
+            let list = event.target.children[id].value
+
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('list')) {
+                params.delete('list')
+            }
+            params.set('list', list)
+
+            window.location.href = `?${params.toString()}`
+        });
+    </script>
+{% endblock %}

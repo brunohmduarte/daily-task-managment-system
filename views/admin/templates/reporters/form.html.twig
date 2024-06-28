@@ -1,0 +1,115 @@
+{% extends "layouts/main.html" %}
+
+{% set REPORTER_ID = DATA is defined and DATA.reporter_id   ? DATA.reporter_id   : '' %}
+{% set NAME        = DATA is defined and DATA.name          ? DATA.name          : '' %}
+{% set PICTURE     = DATA is defined and DATA.picture       ? DATA.picture       : '' %}
+{% set LINK        = URL_BASE ~ '/admin/reporters.php?action=delete&id=' ~ REPORTER_ID %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+{% use "templates/components/modal-form/modal.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block head %} 
+    {{ parent() }}
+
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %}
+        {{ parent()}}
+    {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:history.go(-1)" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                        <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
+                        <b>Voltar</b>
+                    </a>
+                    {% if REPORTER_ID != '' %}
+                        <!--
+                        <a href="{{ URL_BASE ~ '/admin/reporters.php?action=delete&id=' ~ REPORTER_ID }}" class="btn btn-danger mb-2 ms-2" title="Deletar esse ticket">
+                            <i class="mdi mdi-18px mdi-delete"></i>
+                            <b>Deletar</b>
+                        </a>
+                        -->
+                        {% block button_modal_form %}
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endif %}
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="col-12" action="{{ URL_BASE ~ '/admin/reporters.php?action=' ~ FORM_ACTION}}" method="post" name="ticketManagementForm" id="ticketManagementForm" enctype="multipart/form-data">
+                        <input type="hidden" name="reporter_id" id="reporter_id" value="{{ REPORTER_ID }}" />
+
+                        <div class="mb-2 row">
+                            <label for="name" class="col-3 form-label text-end required">Nome</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[name]" id="name" value="{{ NAME }}" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="picture" class="col-3 form-label text-end">Foto</label>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <input type="file" name="picture" id="picture" class="form-control" value="{{ PICTURE }}" />
+                                    {% if PICTURE %}
+                                        <img src="{{ URL_BASE ~ '/' ~ PICTURE }}" alt="{{ NAME }}" class="rounded-2 mt-2" width="60" />
+                                        <div class="form-check form-switch mt-1">
+                                            <input type="checkbox" class="form-check-input" name="picture_remove" id="picture_remove" />
+                                            <label class="form-check-label" for="logomarca_remove"><small>Deseja excluir o arquivo da logomarca atual?</small></label>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                        
+                        <div class="mb-2 row">
+                            <label for="" class="col-3 form-label"></label>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="mdi mdi-18px mdi-content-save"></i>
+                                    <b>Salvar</b>
+                                </button>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal %}
+    {% block dialog_modal_form %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    
+    {% block js_modal_form %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}

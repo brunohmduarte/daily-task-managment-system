@@ -1,0 +1,125 @@
+{% extends "layouts/main.html" %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+{% use "templates/components/filter-per-page/select.html.twig" %}
+{% use "templates/components/pagination/pagination-navigation-menu.html.twig" %}
+{% use "templates/components/field-form-search/formSearch.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block head %} 
+    {{ parent() }}
+{% endblock %}
+
+
+{% block css %}
+    <!-- Datatable css -->
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/dataTables.bootstrap5.min.css' }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/responsive.bootstrap5.min.css' }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %} {{ parent()}} {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="?action=create" class="btn btn-primary mb-2" title="Adicionar um novo relator">
+                        <i class="mdi mdi-plus-circle"></i>
+                        <b>Novo</b>
+                    </a>
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="products-datatable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="products-datatable_length">
+                                        <label class="form-label">
+                                            {% block field_per_page %} {{ parent()}} {% endblock %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="w-75 mb-2 ms-auto">
+                                        {% block field_form_search %} {{ parent() }} {% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-centered w-100 dt-responsive nowrap dataTable no-footer dtr-inline collapsed" id="products-datatables" aria-describedby="products-datatable_info" style="width: 948px;">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center" rowspan="1" colspan="1" style="width: 10px;" data-col="0" aria-label="&amp;nbsp;">Ações</th>
+                                            <th class="text-center sorting" rowspan="1" colspan="1">Foto</th>
+                                            <th class="text-start sorting" rowspan="1" colspan="1">Nome</th>
+                                            <th class="text-center sorting" rowspan="1" colspan="1">Desde</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if REPORTERS is defined %}
+                                            {% for reporter in REPORTERS %}
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a href="{{ URL_BASE ~ '/admin/reporters.php?action=delete&id=' ~ reporter.reporter_id }}" class="btn btn-danger p-1" title="Remover este registro">
+                                                        <i class="mdi mdi-trash-can"></i>
+                                                    </a>
+                                                    <a href="{{ URL_BASE ~ '/admin/reporters.php?action=update&id=' ~ reporter.reporter_id }}" class="btn btn-info p-1 ms-1" title="Editar este registro">
+                                                        <i class="mdi mdi-pencil"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <img src="{{ URL_BASE ~ '/views/' ~ reporter.picture }}" alt="{{ reporter.name }}" title="{{ reporter.name }}" class="rounded-circle me-3" height="48" />
+                                                </td>                                                
+                                                <td class="text-start">{{ reporter.name }}</td>
+                                                <td class="text-center">{{ reporter.created_at|date("d/m/Y") }}</td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        {% else %}
+
+                                            <tr>
+                                                <td class="dt-checkboxes-cell dtr-control" colspan="4">
+                                                    Nenhum registro encontrado!
+                                                </td>
+                                            </tr>
+
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/jquery.dataTables.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.responsive.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/responsive.bootstrap5.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/dataTables.checkboxes.min.js' }}"></script>
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+
+    {% block js_per_page %} {{ parent() }} {% endblock %}
+{% endblock %}
