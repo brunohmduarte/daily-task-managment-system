@@ -219,21 +219,21 @@ class Reporters extends Controller
     public function loadPaginationReporters(): array
     {
         $loadSearch = $this->loadReporters();
-        $paginator = new Paginator($loadSearch, 'reporters', $this->getCurrentPage(), $this->getListParam());
+        $paginator = new Paginator($loadSearch, 'reporters', $this->getCurrentPage(), $this->getListParam());        
         return $paginator->paginate(); 
     }
 
-    public function loadReporters(): ?array
+    public function loadReporters(): array
     {
         if (!empty($this->searchParams)) {
-            return $this->loadReportersSearch($this->searchParams);
+            return $this->loadReportersSearch($this->searchParams) ?? [];
         }
         
         if (empty($this->searchParams)) {
-            return $this->loadAllReporters();
+            return $this->loadAllReporters() ?? [];
         }
 
-        return null;
+        return [];
     }
 
     public function loadReportersSearch(string $search) 

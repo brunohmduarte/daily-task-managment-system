@@ -25,6 +25,15 @@
 
     <!-- Quill css -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        textarea[id="data[tickets][resolution]"] {
+            display: none;
+        }
+        #resolutionQuill {
+            height: 200px;
+        }
+    </style>
 {% endblock %}
 
 
@@ -200,26 +209,19 @@
                             <label for="data[tickets][resolution]" class="col-3 form-label text-end">Como foi resolvido?</label>
                             <div class="col-6">
                                 <textarea class="form-control" name="data[tickets][resolution]" id="data[tickets][resolution]" rows="5" placeholder="" autocomplete="off">{{ RESOLUTION }}</textarea>
-                            </div>
-                            <div class="col-3"></div>
-                        </div>
-
-                        <div class="mb-2 row">
-                            <label for="data[tickets][resolution]" class="col-3 form-label text-end">TESTE</label>
-                            <div class="col-6">
-                                <div id="quill-test" style="width: 100%"></div>
+                                <div id="resolutionQuill">{{ RESOLUTION }}</div>
                             </div>
                             <div class="col-3"></div>
                         </div>
                         
-                        <div class="mb-2 row">
+                        <div class="mb-2 mt-3 row">
                             <label for="" class="col-3 form-label"></label>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="mdi mdi-18px mdi-content-save"></i>
                                     <b>Salvar</b>
                                 </button>
-                                <button type="button" class="btn btn-primary ms-1">
+                                <button type="button" class="btn btn-primary ms-1" id="btnSaveAndPageContinue">
                                     <i class="mdi mdi-18px mdi-content-save"></i>
                                     <b>Salvar e Continuar na Página</b>
                                 </button>
@@ -242,7 +244,7 @@
 {% block javascript %}
 
     <!-- Quill js -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     <!-- Select2 Js -->
     <script src="{{ URL_BASE ~ '/views/admin/assets/js/select2.min.js' }}"></script>
@@ -252,16 +254,27 @@
     <script>
         var btnAppoimennt = document.getElementsByClassName('btn-add-appoiment')[0];
         var boxAppoiments = document.getElementsByClassName('box-appoiments')[0];
+        var formTickets = document.getElementById('ticketManagementForm');
+        var btnSaveAndPage = document.getElementById('btnSaveAndPageContinue');
         
         // Quill Editor
-        /*const ResolutionQuill = new Quill('#quill-teste', {
+        const ResolutionQuill = new Quill('#resolutionQuill', {
             debug: 'info',
             modules: {
                 toolbar: true,
             },
             placeholder: 'Descreva em poucas palavras como foi a resolução do problema...',
             theme: 'snow'
-        })*/
+        })
+
+        btnSaveAndPage.addEventListener('click', () => {
+            let resolutionEditor = document.getElementById('resolutionQuill');
+            let fieldResolution = document.getElementById('data[tickets][resolution]');
+
+            fieldResolution = resolutionEditor.innerHTML
+
+            
+        });
 
         btnAppoimennt.addEventListener('click', (el) => {
             

@@ -1,5 +1,5 @@
-Requisições Fetch API em javascript
-https://www.youtube.com/watch?v=qIGYM4S8x50 - 18:39
+# COMO FAZER BACKUP DA BASE DE DADOS
+https://www.sqlshack.com/how-to-backup-and-restore-mysql-databases-using-the-mysqldump-command/
 
-Conceito de data em MySQL
-https://imasters.com.br/data/utilizacao-de-datas-no-mysql
+# CONFIGURAÇÃO DA CRON
+https://bluevps.com/blog/how-to-create-a-cron-job-in-linux-ubuntu-cron-job
