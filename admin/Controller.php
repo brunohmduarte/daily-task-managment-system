@@ -20,10 +20,16 @@ abstract class Controller
     /** @var int $listParam */
     public $listParam = 10;
 
+    public $continuePage = false;
+
     public function init() 
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->dataForm = $_POST['data'];
+            
+            if (isset($_GET['continuepage']) && $_GET['continuepage'] == 1) {
+                $this->continuePage = true;
+            }
         }
         
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {

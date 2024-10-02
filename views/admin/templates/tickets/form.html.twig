@@ -208,7 +208,7 @@
                         <div class="mb-2 row">
                             <label for="data[tickets][resolution]" class="col-3 form-label text-end">Como foi resolvido?</label>
                             <div class="col-6">
-                                <textarea class="form-control" name="data[tickets][resolution]" id="data[tickets][resolution]" rows="5" placeholder="" autocomplete="off">{{ RESOLUTION }}</textarea>
+                                <input type="hidden" name="data[tickets][resolution]" id="data[tickets][resolution]" value="{{ RESOLUTION }}" />
                                 <div id="resolutionQuill">{{ RESOLUTION }}</div>
                             </div>
                             <div class="col-3"></div>
@@ -256,6 +256,7 @@
         var boxAppoiments = document.getElementsByClassName('box-appoiments')[0];
         var formTickets = document.getElementById('ticketManagementForm');
         var btnSaveAndPage = document.getElementById('btnSaveAndPageContinue');
+        var resolutionInput = document.getElementById('data[tickets][resolution]');
         
         // Quill Editor
         const ResolutionQuill = new Quill('#resolutionQuill', {
@@ -268,13 +269,13 @@
         })
 
         btnSaveAndPage.addEventListener('click', () => {
-            let resolutionEditor = document.getElementById('resolutionQuill');
-            let fieldResolution = document.getElementById('data[tickets][resolution]');
+            resolutionInput.value = JSON.stringify(ResolutionQuill.getContents());
 
-            fieldResolution = resolutionEditor.innerHTML
-
-            
+            let url = formTickets.getAttribute('action')+'&continuepage=1';
+            formTickets.setAttribute('action', url);
+            formTickets.submit();
         });
+        ResolutionQuill.setContents(JSON.parse(resolutionInput.value));
 
         btnAppoimennt.addEventListener('click', (el) => {
             

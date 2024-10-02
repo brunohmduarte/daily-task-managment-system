@@ -8,7 +8,7 @@
     --ct-leftbar-condensed-height: 2000px;
     --ct-topbar-height: 70px;
     --ct-menu-item-icon-size: 1.2rem;
-    --ct-menu-item-font-size: 0.9375rem;
+    --ct-menu-item-font-size: 1rem;
     --ct-menu-item-padding-x: 10px;
     --ct-menu-item-padding-y: 15px;
     --ct-menu-condensed-link-bg: #727cf5;
@@ -153,7 +153,7 @@ html[data-bs-theme="dark"][data-topbar-color="light"] {
     --ct-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --ct-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --ct-body-font-family: var(--ct-font-sans-serif);
-    --ct-body-font-size: 0.9rem;
+    --ct-body-font-size: 1rem;
     --ct-body-font-weight: 400;
     --ct-body-line-height: 1.5;
     --ct-body-color: #6c757d;

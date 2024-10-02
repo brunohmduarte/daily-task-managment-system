@@ -211,7 +211,8 @@ class Tickets extends Controller
             $message = sprintf("O ticket #%s foi alterado com sucesso!", $reference);
             Core::successSession($message);
 
-            die(header('Location: '. Core::getUrlBase('admin/tickets.php')));
+            $continuePage = ($this->continuePage) ? '?action=update&id='. $ticketId : '';            
+            die(header('Location: '. Core::getUrlBase('admin/tickets.php'.$continuePage)));
 
         } catch (\Exception $e) {
             Core::errorSession($e->getMessage());
