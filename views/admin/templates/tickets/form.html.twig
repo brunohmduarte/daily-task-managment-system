@@ -197,10 +197,12 @@
                             </div>
                         </div>
 
-                        <div class="mb-2 row">
+                        <div class="row" style="margin-bottom: 60px">
                             <label for="data[tickets][description]" class="col-3 form-label text-end required">Descrição do problema</label>
                             <div class="col-6">
-                                <textarea class="form-control" name="data[tickets][description]" id="data[tickets][description]" rows="5" placeholder="" autocomplete="off" required>{{ DESCRIPTION }}</textarea>
+                                <!-- <textarea class="form-control" name="data[tickets][description]" id="data[tickets][description]" rows="5" placeholder="" autocomplete="off" required>{{ DESCRIPTION }}</textarea> -->
+                                <input type="hidden" name="data[tickets][description]" id="data[tickets][description]" value="{{ DESCRIPTION }}" required />
+                                <div id="descriptionQuill">{{ DESCRIPTION }}</div>
                             </div>
                             <div class="col-3"></div>
                         </div>
@@ -217,7 +219,7 @@
                         <div class="mb-2 mt-3 row">
                             <label for="" class="col-3 form-label"></label>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary" id="btnSave">
                                     <i class="mdi mdi-18px mdi-content-save"></i>
                                     <b>Salvar</b>
                                 </button>
@@ -255,10 +257,12 @@
         var btnAppoimennt = document.getElementsByClassName('btn-add-appoiment')[0];
         var boxAppoiments = document.getElementsByClassName('box-appoiments')[0];
         var formTickets = document.getElementById('ticketManagementForm');
+        var btnSave = document.getElementById('btnSave');
         var btnSaveAndPage = document.getElementById('btnSaveAndPageContinue');
         var resolutionInput = document.getElementById('data[tickets][resolution]');
+        var descriptionInput = document.getElementById('data[tickets][description]');
         
-        // Quill Editor
+        // Quill Editor 
         const ResolutionQuill = new Quill('#resolutionQuill', {
             debug: 'info',
             modules: {
@@ -267,8 +271,22 @@
             placeholder: 'Descreva em poucas palavras como foi a resolução do problema...',
             theme: 'snow'
         })
+        const DescriptionQuill = new Quill('#descriptionQuill', {
+            debug: 'info',
+            modules: {
+                toolbar: true,
+            },
+            placeholder: 'Descreva as características e como simular o problema aqui...',
+            theme: 'snow'
+        })
 
+        btnSave.addEventListener('click', () => {
+            descriptionInput.value = JSON.stringify(DescriptionQuill.getContents());
+            resolutionInput.value = JSON.stringify(ResolutionQuill.getContents());
+            formTickets.submit();
+        });
         btnSaveAndPage.addEventListener('click', () => {
+            descriptionInput.value = JSON.stringify(DescriptionQuill.getContents());
             resolutionInput.value = JSON.stringify(ResolutionQuill.getContents());
 
             let url = formTickets.getAttribute('action')+'&continuepage=1';
@@ -276,6 +294,7 @@
             formTickets.submit();
         });
         ResolutionQuill.setContents(JSON.parse(resolutionInput.value));
+        DescriptionQuill.setContents(JSON.parse(descriptionInput.value));
 
         btnAppoimennt.addEventListener('click', (el) => {
             
