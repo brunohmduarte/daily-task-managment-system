@@ -437,7 +437,7 @@ class Tickets extends Controller
 
     public function loadSelectOpt(DataLayer $model, string $value = 'id', string $label = 'name')
     {
-        $collection = $model->getCollection();
+        $collection = $model->find()->order('name ASC')->fetch(true);
         $dataHelper = $this->_helperFactory->prepare(PrepareDataHelper::class)->create();
         $reporterSelectOpt = $dataHelper->prepareSelectOpt($collection, $value, $label);
 

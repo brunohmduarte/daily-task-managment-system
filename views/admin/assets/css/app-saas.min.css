@@ -2330,7 +2330,7 @@ progress {
     display: block;
     width: 100%;
     padding: 0.45rem 0.9rem;
-    font-size: 0.9rem;
+    font-size: var(--ct-menu-item-font-size);
     font-weight: 400;
     line-height: 1.5;
     color: var(--ct-body-color);
@@ -2590,7 +2590,7 @@ textarea.form-control-lg {
     display: block;
     width: 100%;
     padding: 0.45rem 2.7rem 0.45rem 0.9rem;
-    font-size: 0.9rem;
+    font-size: var(--ct-menu-item-font-size);
     font-weight: 400;
     line-height: 1.5;
     color: var(--ct-body-color);
@@ -3381,7 +3381,7 @@ textarea.form-control.is-invalid {
 .btn {
     --ct-btn-padding-x: 0.9rem;
     --ct-btn-padding-y: 0.45rem;
-    --ct-btn-font-size: 0.9rem;
+    --ct-btn-font-size: var(--ct-menu-item-font-size);
     --ct-btn-font-weight: 400;
     --ct-btn-line-height: 1.5;
     --ct-btn-color: var(--ct-body-color);
