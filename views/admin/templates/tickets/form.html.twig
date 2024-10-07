@@ -42,7 +42,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
-                    <a href="javascript:history.go(-1)" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                    <a href="{{ URL_BASE ~ '/admin/tickets.php' }}" class="btn btn-warning mb-2" title="Voltar para a página anterior">
                         <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
                         <b>Voltar</b>
                     </a>
@@ -223,10 +223,12 @@
                                     <i class="mdi mdi-18px mdi-content-save"></i>
                                     <b>Salvar</b>
                                 </button>
+                                {% if FORM_ACTION != 'createSave' %}
                                 <button type="button" class="btn btn-primary ms-1" id="btnSaveAndPageContinue">
                                     <i class="mdi mdi-18px mdi-content-save"></i>
                                     <b>Salvar e Continuar na Página</b>
                                 </button>
+                                {% endif %}
                             </div>
                             <div class="col-3"></div>
                         </div>
