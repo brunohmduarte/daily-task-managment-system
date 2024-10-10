@@ -21,6 +21,9 @@ class Paginator
     /** @var int $currentPage */
     public $currentPage;
 
+    /** @var bool $linkPagination */
+    public $linkPagination = true;
+
     public function __construct(
         array $records,
         string $route, 
@@ -35,6 +38,16 @@ class Paginator
         $this->startCount = $startCount;
     }
 
+    public function setLinkPagination(bool $linkPagination): void
+    {
+        $this->linkPagination = $linkPagination;
+    }
+
+    public function getLinkPagination(): bool
+    {
+        return $this->linkPagination;
+    }
+
     public function render(): array
     {
         /** @todo Gerar a URI fora do loop 'for' para preservar os parametros de outras funcionalidades. */
@@ -45,6 +58,11 @@ class Paginator
                 'url' => Core::getUrlBase($url),
                 'active' => ($this->currentPage == $i)
             ];
+        }
+
+        if ($this->getLinkPagination()) {
+            // $nav = array_chunk($nav, 5);
+            $nav = array_slice($nav, 0, 5);
         }
 
         return $nav;
