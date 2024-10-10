@@ -19221,6 +19221,7 @@ span.flatpickr-weekday {
 }
 .ql-container {
     font-family: var(--ct-font-sans-serif);
+    font-size: var(--ct-body-font-size) !important;
 }
 .ql-container.ql-snow {
     border-color: var(--ct-border-color);
