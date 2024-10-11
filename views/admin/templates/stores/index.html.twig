@@ -97,7 +97,8 @@
                                             </td>
                                             <td class="text-center">
                                                 <figure class="figure-brand-logo">
-                                                    <img src="{{ URL_BASE ~ '/views/' ~ store.brand_logo }}" alt="{{ store.name }}" title="{{ store.name }}" class="" height="48" />
+                                                    {% set BRAND_LOGO = store.brand_logo is defined ? store.brand_logo : 'admin/assets/images/store-default.jpg' %}
+                                                    <img src="{{ URL_BASE ~ '/views/' ~ BRAND_LOGO }}" alt="{{ store.name }}" title="{{ store.name }}" class="" height="48" />
                                                 </figure>
                                             </td>
                                             <td style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ store.name }}</td>
