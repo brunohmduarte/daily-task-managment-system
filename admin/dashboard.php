@@ -7,8 +7,9 @@ require_once(dirname(__DIR__).'/src/Core.php');
 
 use Application\Core;
 
-Core::existsSession('user');
+date_default_timezone_set('America/Sao_Paulo');
 
+Core::existsSession('user');
 Core::initTwig('admin');
 
 $params = ['TITLE' => 'Dashboard'];
