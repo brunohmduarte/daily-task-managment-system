@@ -21,7 +21,7 @@ use CoffeeCode\DataLayer\Connect;
 use CoffeeCode\DataLayer\DataLayer;
 use PDO;
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+date_default_timezone_set('America/Sao_Paulo');
 
 class Tickets extends Controller
 {

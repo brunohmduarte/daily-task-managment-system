@@ -6,8 +6,6 @@ session_start();
 
 require_once(dirname(__DIR__).'/vendor/autoload.php');
 
-date_default_timezone_set('America/Sao_Paulo');
-
 use Application\Controller;
 use Application\Core;
 use Application\Helper\Paginator;
@@ -16,6 +14,8 @@ use Application\Model\Stores\Store;
 use CoffeeCode\DataLayer\Connect;
 use CoffeeCode\Uploader\Image;
 use PDO;
+
+date_default_timezone_set('America/Sao_Paulo');
 
 class stores extends Controller
 {

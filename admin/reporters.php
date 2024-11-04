@@ -6,13 +6,13 @@ session_start();
 
 require_once(dirname(__DIR__).'/vendor/autoload.php');
 
-date_default_timezone_set('America/Sao_Paulo');
-
 use Application\Core;
 use Application\Helper\Paginator;
 use Application\Model\Reporters\Factory\ReporterModelFactory;
 use Application\Model\Reporters\Reporter;
 use CoffeeCode\Uploader\Image;
+
+date_default_timezone_set('America/Sao_Paulo');
 
 class Reporters extends Controller 
 {
