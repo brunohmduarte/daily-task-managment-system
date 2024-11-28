@@ -231,6 +231,36 @@ class stores extends Controller
         }
     }
 
+    /**
+     * Method responsible to uninstall the store
+     */
+    public function uninstallStoreAction()
+    {
+        try {
+            $this->params['TITLE'] = 'Desinstalação de loja';
+            $this->params['FORM_ACTION'] = 'uninstallStoreSave';
+            Core::redirect('templates/stores/uninstallStore.html.twig', $this->params);
+
+        } catch(\Exception $e) {
+            Core::errorSession($e->getMessage());
+            die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+        }
+    }
+
+    public function uninstallStoreSaveAction()
+    {
+        try {
+            print_r($_POST);
+            // $this->_storeModelFactory->create()->uninstallStore();
+            // Core::successSession('Loja desinstalada com sucesso!');
+            // die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+
+        } catch(\Exception $e) {
+            Core::errorSession($e->getMessage());
+            die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+        }
+    }
+
     public function loadStoresSearch(string $search)
     {
         $store = $this->_storeModelFactory->create();

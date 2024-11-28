@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block head %} 
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %} {{ parent() }} {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:history.go(-1)" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                        <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
+                        <b>Voltar</b>
+                    </a>
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="col-12" action="{{ URL_BASE ~ '/admin/stores.php?action=' ~ FORM_ACTION }}" method="post" name="storeManagementForm" id="storeManagementForm" enctype="multipart/form-data">
+                        <div class="mb-2 row">
+                            <label for="name" class="col-3 form-label text-end required">Nome</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[name]" id="name" value="" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-danger mb-2" title="Voltar para a página anterior">
+                                    <i class="mdi mdi-18px mdi-trash-can-outline"></i>
+                                    <b>Desinstalar</b>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+{% endblock %}
