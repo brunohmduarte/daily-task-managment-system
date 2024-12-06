@@ -250,10 +250,19 @@ class stores extends Controller
     public function uninstallStoreSaveAction()
     {
         try {
-            print_r($_POST);
+            // print_r($_POST);
             // $this->_storeModelFactory->create()->uninstallStore();
             // Core::successSession('Loja desinstalada com sucesso!');
             // die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+
+            /**
+             * TODO 
+             * 
+             * Remover a pasta da loja
+             * Remover o arquivo de mapeamento do VSCode da loja
+             * Deletar o banco de dados da loja
+             */
+            
 
         } catch(\Exception $e) {
             Core::errorSession($e->getMessage());
