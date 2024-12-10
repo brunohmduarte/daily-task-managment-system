@@ -8,7 +8,7 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 
 use Application\Controller;
 use Application\Core;
-use Application\Helper\Paginator;
+use Application\Helper\{ FilesManipulation, HelperFactory, Paginator };
 use Application\Model\Stores\Factory\StoreModelFactory;
 use Application\Model\Stores\Store;
 use CoffeeCode\DataLayer\Connect;
@@ -28,9 +28,16 @@ class stores extends Controller
     /** @var StoreModelFactory $_storeModelFactory */
     protected $_storeModelFactory;
 
-    public function __construct(StoreModelFactory $storeModelFactory) 
+    /** @var HelperFactory $_storeHelperFactory */
+    protected $_storeHelperFactory;
+
+    public function __construct(
+        StoreModelFactory $storeModelFactory,
+        HelperFactory $helperFactory
+    ) 
     {
         $this->_storeModelFactory = $storeModelFactory;
+        $this->_storeHelperFactory = $helperFactory;
         parent::__construct();
     }
 
@@ -250,11 +257,6 @@ class stores extends Controller
     public function uninstallStoreSaveAction()
     {
         try {
-            // print_r($_POST);
-            // $this->_storeModelFactory->create()->uninstallStore();
-            // Core::successSession('Loja desinstalada com sucesso!');
-            // die(header('Location: '. Core::getUrlBase('admin/stores.php')));
-
             /**
              * TODO 
              * 
@@ -263,6 +265,12 @@ class stores extends Controller
              * Deletar o banco de dados da loja
              */
             
+            // print_r($_POST);
+
+            /** @var FilesManipulation $fileManipute */
+            $fileManipute = $this->_storeHelperFactory->create();
+            $fileManipute->removeStoreFolder($this->getFormData('name'));
+
 
         } catch(\Exception $e) {
             Core::errorSession($e->getMessage());
@@ -336,5 +344,8 @@ class stores extends Controller
     }
 }
 
-$stores = new Stores(new StoreModelFactory);
+$stores = new Stores(
+    new StoreModelFactory,
+    new HelperFactory
+);
 $stores->init();
