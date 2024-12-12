@@ -77,8 +77,15 @@ final class Core
             return null;
         }
         if ($isMultiMsg === true) {
+            if (!isset($_SESSION['admin_success']['message'])) {
+                $_SESSION['admin_success']['message'] = [];
+            }
+            if (!is_array($_SESSION['admin_success']['message'])) {
+                $_SESSION['admin_success']['message'] = [$_SESSION['admin_success']['message']];
+            }
             $_SESSION['admin_success']['message'][] = $message;
         }
+
         $_SESSION['admin_success']['message'] = $message;
     }
 

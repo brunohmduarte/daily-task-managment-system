@@ -10,9 +10,10 @@ class HelperFactory implements FactoryInterface
 
     public function prepare(string $classname)
     {
-        if ((!empty($classname) && class_exists($classname)) && empty($this->_instance)) {
-            $this->_instance = $classname;
-        }
+        // if ((!empty($classname) && class_exists($classname)) && empty($this->_instance)) {
+        //     $this->_instance = $classname;
+        // }
+        $this->_instance = $classname;
         return $this;
     }
 

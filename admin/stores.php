@@ -9,9 +9,10 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 use Application\Controller;
 use Application\Core;
 use Application\Helper\{ FilesManipulation, HelperFactory, Paginator };
+use Application\Model\Resources\DataDefinition;
 use Application\Model\Stores\Factory\StoreModelFactory;
 use Application\Model\Stores\Store;
-use CoffeeCode\DataLayer\Connect;
+// use CoffeeCode\DataLayer\Connect;
 use CoffeeCode\Uploader\Image;
 use PDO;
 
@@ -256,21 +257,40 @@ class stores extends Controller
 
     public function uninstallStoreSaveAction()
     {
+        /**
+         * @todo Remover a referencia do domínio da loja no arquivo etc/hosts
+         */
         try {
-            /**
-             * TODO 
-             * 
-             * Remover a pasta da loja
-             * Remover o arquivo de mapeamento do VSCode da loja
-             * Deletar o banco de dados da loja
-             */
-            
-            // print_r($_POST);
+            $storeName = $this->getFormData('name');
+            $message = array();
 
             /** @var FilesManipulation $fileManipute */
-            $fileManipute = $this->_storeHelperFactory->create();
-            $fileManipute->removeStoreFolder($this->getFormData('name'));
+            $fileManipute = $this->_storeHelperFactory->prepare(FilesManipulation::class)->create();
 
+            // removendo a pasta com os arquivos da loja.
+            if ($fileManipute->removeStoreFolder($storeName)) {
+                $message[] = sprintf('Os arquivos da loja', $storeName);
+            }
+
+            // removendo o arquivo de mapeamento do VSCode da loja.
+            if ($fileManipute->removeWorkspaceVSCode($storeName)) {
+                $message[] = sprintf('a arquivo de mapeamento do VSCode', $storeName);
+            }
+
+            // removendo o backup do banco de dados da loja.
+            if ($fileManipute->removeDatabaseBackup($storeName)) {
+                $message[] = sprintf('o arquivo de backups da base de dados', $storeName);
+            }
+
+            // revendo o banco de dados no MySQL. <----
+            /** @var DataDefinition $dataDefinition */
+            $dataDefinition = $this->_storeHelperFactory->prepare(DataDefinition::class)->create();
+            if ($dataDefinition->dropDatabase($storeName)) {
+                $message[] = sprintf('e o banco de dados da loja %s foram todos removidos com sucesso!', $storeName);
+            }
+            
+            Core::successSession(implode(', ', $message));
+            die(header('Location: '. Core::getUrlBase('admin/stores.php?action=uninstallStore')));
 
         } catch(\Exception $e) {
             Core::errorSession($e->getMessage());
