@@ -7,6 +7,7 @@
 {% set PHONE          = DATA is defined and DATA.phone            ? DATA.phone            : '' %}
 {% set BRAND_LOGO     = DATA is defined and DATA.brand_logo       ? DATA.brand_logo       : '' %}
 {% set PLATFORM       = DATA is defined and DATA.platform_version ? DATA.platform_version : '' %}
+{% set REPOSITORY     = DATA is defined and DATA.repository       ? DATA.repository       : '' %}
 {% set URL_LOCAL      = DATA is defined and DATA.url_local        ? DATA.url_local        : '' %}
 {% set URL_SANDBOX    = DATA is defined and DATA.url_sandbox      ? DATA.url_sandbox      : '' %}
 {% set URL_PRODUCTION = DATA is defined and DATA.url_production   ? DATA.url_production   : '' %}
@@ -114,6 +115,21 @@
                                 </select>
                             </div>
                             <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="repository" class="col-3 form-label text-end">Repositório</label>
+                            <div class="col-6">
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="basic-addon1">https://</span>
+                                    <input type="text" class="form-control" name="data[repository]" id="repository" value="{{ REPOSITORY }}" placeholder="" autocomplete="off" aria-describedby="basic-addon1" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                {% if REPOSITORY %}
+                                <a href="{{ 'https://' ~ REPOSITORY }}" class="mt-auto" target="_blank"><i class="mdi mdi-18px mdi-link"></i></a>
+                                {% endif %}
+                            </div>
                         </div>
 
                         <div class="mb-2 row">
