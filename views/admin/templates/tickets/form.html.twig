@@ -38,6 +38,10 @@
 
 
 {% block content %}
+    {% block alert_message %}
+        {{ parent()}}
+    {% endblock %}
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -59,7 +63,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="col-12" action="{{ URL_BASE ~ '/admin/tickets.php?action=' ~ FORM_ACTION}}" method="post" name="ticketManagementForm" id="ticketManagementForm" enctype="multipart/form-data">
+                    <form class="col-12" action="{{ URL_BASE ~ '/admin/tickets.php?action=' ~ FORM_ACTION}}" method="post" name="ticketManagementForm" id="ticketManagementForm" onsubmit="return validateForm()" enctype="multipart/form-data">
                         <input type="hidden" name="data[tickets][ticket_id]" id="data[tickets][ticket_id]" value="{{ TICKET_ID }}" />
 
                         <div class="mb-2 row">
@@ -328,7 +332,9 @@
         btnSave.addEventListener('click', () => {
             descriptionInput.value = JSON.stringify(DescriptionQuill.getContents());
             resolutionInput.value = JSON.stringify(ResolutionQuill.getContents());
-            formTickets.submit();
+            if (validateForm()) {
+                formTickets.submit();
+            }
         });
         btnSaveAndPage.addEventListener('click', () => {
             descriptionInput.value = JSON.stringify(DescriptionQuill.getContents());
@@ -336,7 +342,9 @@
 
             let url = formTickets.getAttribute('action')+'&continuepage=1';
             formTickets.setAttribute('action', url);
-            formTickets.submit();
+            if (validateForm()) {
+                formTickets.submit();
+            }
         });
         ResolutionQuill.setContents(JSON.parse(resolutionInput.value));
         DescriptionQuill.setContents(JSON.parse(descriptionInput.value));
@@ -388,5 +396,12 @@
 
             boxAppoiments.appendChild(divRow);
         });
+
+        // Validate form
+        function validateForm() {
+            let elementRequired = document.querySelectorAll('input[required], select[required]');
+            let validate = (currentValue) => currentValue.value !== '';
+            return elementRequired.every(validate);
+        }
     </script>
 {% endblock %}
