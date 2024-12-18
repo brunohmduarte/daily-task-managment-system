@@ -73,6 +73,7 @@ class stores extends Controller
         $phone          = preg_replace('/\D/', '', $this->getFormData('phone'));
         $brandLogo      = $this->getFormData('brand_logo'); 
         $platform       = $this->getFormData('platform_version'); 
+        $repository     = $this->getFormData('repository');
         $url_local      = $this->getFormData('url_local');
         $url_sandbox    = $this->getFormData('url_sandbox');
         $url_production = $this->getFormData('url_production');
@@ -92,6 +93,7 @@ class stores extends Controller
             $store->email            = $email;
             $store->phone            = $phone;
             $store->platform_version = $platform;
+            $store->repository       = $repository;
             $store->url_local        = $url_local;
             $store->url_sandbox      = $url_sandbox;
             $store->url_production   = $url_production;
@@ -157,6 +159,7 @@ class stores extends Controller
             $store->email            = strtolower($this->getFormData('email'));
             $store->phone            = $this->getFormData('phone');
             $store->platform_version = $this->getFormData('platform_version');
+            $store->repository       = $this->getFormData('repository');
             $store->url_local        = $this->getFormData('url_local');
             $store->url_sandbox      = $this->getFormData('url_sandbox');
             $store->url_production   = $this->getFormData('url_production');
