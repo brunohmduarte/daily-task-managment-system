@@ -399,6 +399,9 @@
 
         // Validate form
         function validateForm() {
+            
+            return true;
+
             let elementRequired = document.querySelectorAll('input[required], select[required]');
             let validate = (currentValue) => currentValue.value !== '';
             return elementRequired.every(validate);
