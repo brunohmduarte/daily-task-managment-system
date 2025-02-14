@@ -8,10 +8,11 @@ require_once(dirname(__DIR__).'/vendor/autoload.php');
 
 use Application\Controller;
 use Application\Core;
-use Application\Helper\Paginator;
+use Application\Helper\{ FilesManipulation, HelperFactory, Paginator };
+use Application\Model\Resources\DataDefinition;
 use Application\Model\Stores\Factory\StoreModelFactory;
 use Application\Model\Stores\Store;
-use CoffeeCode\DataLayer\Connect;
+// use CoffeeCode\DataLayer\Connect;
 use CoffeeCode\Uploader\Image;
 use PDO;
 
@@ -28,9 +29,16 @@ class stores extends Controller
     /** @var StoreModelFactory $_storeModelFactory */
     protected $_storeModelFactory;
 
-    public function __construct(StoreModelFactory $storeModelFactory) 
+    /** @var HelperFactory $_storeHelperFactory */
+    protected $_storeHelperFactory;
+
+    public function __construct(
+        StoreModelFactory $storeModelFactory,
+        HelperFactory $helperFactory
+    ) 
     {
         $this->_storeModelFactory = $storeModelFactory;
+        $this->_storeHelperFactory = $helperFactory;
         parent::__construct();
     }
 
@@ -234,6 +242,65 @@ class stores extends Controller
         }
     }
 
+    /**
+     * Method responsible to uninstall the store
+     */
+    public function uninstallStoreAction()
+    {
+        try {
+            $this->params['TITLE'] = 'Desinstalação de loja';
+            $this->params['FORM_ACTION'] = 'uninstallStoreSave';
+            Core::redirect('templates/stores/uninstallStore.html.twig', $this->params);
+
+        } catch(\Exception $e) {
+            Core::errorSession($e->getMessage());
+            die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+        }
+    }
+
+    public function uninstallStoreSaveAction()
+    {
+        /**
+         * @todo Remover a referencia do domínio da loja no arquivo etc/hosts
+         */
+        try {
+            $storeName = $this->getFormData('name');
+            $message = array();
+
+            /** @var FilesManipulation $fileManipute */
+            $fileManipute = $this->_storeHelperFactory->prepare(FilesManipulation::class)->create();
+
+            // removendo a pasta com os arquivos da loja.
+            if ($fileManipute->removeStoreFolder($storeName)) {
+                $message[] = sprintf('Os arquivos da loja', $storeName);
+            }
+
+            // removendo o arquivo de mapeamento do VSCode da loja.
+            if ($fileManipute->removeWorkspaceVSCode($storeName)) {
+                $message[] = sprintf('a arquivo de mapeamento do VSCode', $storeName);
+            }
+
+            // removendo o backup do banco de dados da loja.
+            if ($fileManipute->removeDatabaseBackup($storeName)) {
+                $message[] = sprintf('o arquivo de backups da base de dados', $storeName);
+            }
+
+            // revendo o banco de dados no MySQL. <----
+            /** @var DataDefinition $dataDefinition */
+            $dataDefinition = $this->_storeHelperFactory->prepare(DataDefinition::class)->create();
+            if ($dataDefinition->dropDatabase($storeName)) {
+                $message[] = sprintf('e o banco de dados da loja %s foram todos removidos com sucesso!', $storeName);
+            }
+            
+            Core::successSession(implode(', ', $message));
+            die(header('Location: '. Core::getUrlBase('admin/stores.php?action=uninstallStore')));
+
+        } catch(\Exception $e) {
+            Core::errorSession($e->getMessage());
+            die(header('Location: '. Core::getUrlBase('admin/stores.php')));
+        }
+    }
+
     public function loadStoresSearch(string $search)
     {
         $store = $this->_storeModelFactory->create();
@@ -300,5 +367,8 @@ class stores extends Controller
     }
 }
 
-$stores = new Stores(new StoreModelFactory);
+$stores = new Stores(
+    new StoreModelFactory,
+    new HelperFactory
+);
 $stores->init();

@@ -1,0 +1,66 @@
+{% extends "layouts/main.html" %}
+
+
+{% use "templates/components/alert-message/alert.html.twig" %}
+
+
+{% block title %} {{ TITLE }} {% endblock %}
+
+
+{% block head %} 
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content %}
+    {% block alert_message %} {{ parent() }} {% endblock %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:history.go(-1)" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                        <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
+                        <b>Voltar</b>
+                    </a>
+                </div>
+                <h4 class="page-title">{{ TITLE }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="col-12" action="{{ URL_BASE ~ '/admin/stores.php?action=' ~ FORM_ACTION }}" method="post" name="storeManagementForm" id="storeManagementForm" enctype="multipart/form-data">
+                        <div class="mb-2 row">
+                            <div class="col-6">
+                                <label for="name" class="form-label required">Nome da loja</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="data[name]" id="name" value="" placeholder="" autocomplete="off" required />
+                                    <button type="submit" class="btn btn-danger" title="Voltar para a página anterior">
+                                        <i class="mdi mdi-18px mdi-trash-can-outline"></i>
+                                        <b>Desinstalar</b>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <h4>Funcionalidades há serem implementadas</h4>
+                <ol>
+                    <li>Criar uma funcionalidade para listar os módulos instalado na loja em produção a partir da rota 'https://dominio.com.br/<b>vendor/composer/installed.json</b>'</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+{% endblock %}
