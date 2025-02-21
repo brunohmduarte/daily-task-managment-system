@@ -250,6 +250,11 @@ class stores extends Controller
         try {
             $this->params['TITLE'] = 'Desinstalação de loja';
             $this->params['FORM_ACTION'] = 'uninstallStoreSave';
+
+            /** @var FilesManipulation $fileManipute */
+            $fileManipute = $this->_storeHelperFactory->prepare(FilesManipulation::class)->create();
+            $this->params['STORES_SELECT_OPT'] = $fileManipute->getListDirectories();
+
             Core::redirect('templates/stores/uninstallStore.html.twig', $this->params);
 
         } catch(\Exception $e) {
@@ -271,28 +276,33 @@ class stores extends Controller
             $fileManipute = $this->_storeHelperFactory->prepare(FilesManipulation::class)->create();
 
             // removendo a pasta com os arquivos da loja.
-            if ($fileManipute->removeStoreFolder($storeName)) {
-                $message[] = sprintf('Os arquivos da loja', $storeName);
-            }
+            $fileManipute->removeStoreFolder($storeName);
+            // if ($fileManipute->removeStoreFolder($storeName)) {
+            //     $message[] = sprintf('Os arquivos da loja', $storeName);
+            // }
 
             // removendo o arquivo de mapeamento do VSCode da loja.
-            if ($fileManipute->removeWorkspaceVSCode($storeName)) {
-                $message[] = sprintf('a arquivo de mapeamento do VSCode', $storeName);
-            }
+            $fileManipute->removeWorkspaceVSCode($storeName);
+            // if ($fileManipute->removeWorkspaceVSCode($storeName)) {
+            //     $message[] = sprintf('a arquivo de mapeamento do VSCode', $storeName);
+            // }
 
             // removendo o backup do banco de dados da loja.
-            if ($fileManipute->removeDatabaseBackup($storeName)) {
-                $message[] = sprintf('o arquivo de backups da base de dados', $storeName);
-            }
+            $fileManipute->removeDatabaseBackup($storeName);
+            // if ($fileManipute->removeDatabaseBackup($storeName)) {
+            //     $message[] = sprintf('o arquivo de backups da base de dados', $storeName);
+            // }
 
-            // revendo o banco de dados no MySQL. <----
+            // revendo o banco de dados no MySQL.
             /** @var DataDefinition $dataDefinition */
             $dataDefinition = $this->_storeHelperFactory->prepare(DataDefinition::class)->create();
-            if ($dataDefinition->dropDatabase($storeName)) {
-                $message[] = sprintf('e o banco de dados da loja %s foram todos removidos com sucesso!', $storeName);
-            }
+            $dataDefinition->dropDatabase($storeName);
+            // if ($dataDefinition->dropDatabase($storeName)) {
+            //     $message[] = sprintf('e o banco de dados da loja %s foram todos removidos com sucesso!', $storeName);
+            // }
             
-            Core::successSession(implode(', ', $message));
+            $message = sprintf('A loja "%s" foi desinstalada com sucesso!', $storeName);
+            Core::successSession($message);
             die(header('Location: '. Core::getUrlBase('admin/stores.php?action=uninstallStore')));
 
         } catch(\Exception $e) {

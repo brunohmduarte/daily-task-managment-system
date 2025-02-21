@@ -86,6 +86,19 @@ class FilesManipulation
         return glob($directory . '/*' . $extension);
     }
 
+    public function getListDirectories()
+    {
+        $stores = [];
+        $content = array_diff(scandir(self::DIRECTORY_PATH), ['..', '.']);
+        foreach ($content as $item) {
+            if (is_dir(self::DIRECTORY_PATH . '/' . $item)) {
+                $stores[] = $item;
+            }
+        }
+
+        return $stores;
+    }
+
     protected function isStoreInstalled(string $storeName): bool        
     {
         $filepath = $this->getFilepath($storeName);

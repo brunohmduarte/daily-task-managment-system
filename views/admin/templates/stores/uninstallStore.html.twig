@@ -12,6 +12,12 @@
 {% endblock %}
 
 
+{% block css %}
+    <!-- Select2 css -->
+    <link href="{{ URL_BASE ~ '/views/admin/assets/css/select2.min.css' }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
 {% block content %}
     {% block alert_message %} {{ parent() }} {% endblock %}
 
@@ -38,14 +44,24 @@
                             <div class="col-6">
                                 <label for="name" class="form-label required">Nome da loja</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="data[name]" id="name" value="" placeholder="" autocomplete="off" required />
-                                    <button type="submit" class="btn btn-danger" title="Voltar para a página anterior">
+                                    <select name="data[name]" id="name" class="form-control select2" data-toggle="select2">
+                                        <option value="">Selecione uma loja</option>
+                                        {% for store in STORES_SELECT_OPT %}                                        
+                                        <option value="{{ store }}">{{ store }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-6">
+                                <label for="name" class="form-label"></label>
+                                <div class="input-group">
+                                    <button type="submit" class="btn btn-danger mt-1" title="Voltar para a página anterior">
                                         <i class="mdi mdi-18px mdi-trash-can-outline"></i>
                                         <b>Desinstalar</b>
                                     </button>
                                 </div>
                             </div>
-                            
                         </div>
                     </form>
                 </div>
@@ -63,4 +79,7 @@
 
 {% block javascript %}
     <script src="{{ URL_BASE ~ '/views/admin/assets/js/demo.products.js' }}"></script>
+
+    <!-- Select2 Js -->
+    <script src="{{ URL_BASE ~ '/views/admin/assets/js/select2.min.js' }}"></script>
 {% endblock %}
