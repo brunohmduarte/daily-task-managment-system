@@ -9,10 +9,10 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=7.4",
         "ext-pdo": "*",
-        "coffeecode/datalayer": "^2.0",
-        "coffeecode/uploader": "^2.0",
+        "coffeecode/datalayer": "^1",
+        "coffeecode/uploader": "^1",
         "guzzlehttp/guzzle": "^7.8",
         "twig/twig": "^3.8"
     },
