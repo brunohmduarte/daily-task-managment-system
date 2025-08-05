@@ -128,7 +128,7 @@ class Reporters extends Controller
         $id = $_GET['id'] ?? null;
         $reporter = $this->_reporterModelFactory->create()->findById($id);
         if (empty($reporter)) {
-            Core::errorSession('O relator que você está procurndo não está cadastrado!');
+            Core::errorSession('O relator que você está procurando não está cadastrado!');
             die(header('Location: ' . Core::getUrlBase('admin/reporters.php?action=update&id='.$id)));
         }
 
