@@ -313,7 +313,8 @@ class Tickets extends Controller
                         ), 
                         '%H:%i'
                     )
-                ) AS development_hours                
+                ) AS development_hours,
+                DATE_FORMAT(wt.done_at, '%d/%m/%Y') AS done_at
             FROM tickets AS t
                 INNER JOIN working_time AS wt ON (t.ticket_id = wt.ticket_id)
                 INNER JOIN stores AS s ON(t.store_id = s.store_id)            
@@ -327,7 +328,7 @@ class Tickets extends Controller
                             ELSE SUBDATE(CURDATE(), INTERVAL 1 DAY)		
                         END
                 )                
-            GROUP BY t.ticket_id            
+            GROUP BY t.ticket_id, wt.done_at
             ORDER BY t.status DESC, t.ticket_id ASC
         ";
         $tickets = $connect->query($query);
@@ -512,6 +513,10 @@ class Tickets extends Controller
             $appoiment->development_date = $this->getFormData('development_date', 'working_time')[$appoiment->time_id];
             $appoiment->development_begin = $this->getFormData('development_begin', 'working_time')[$appoiment->time_id];
             $appoiment->development_end = $this->getFormData('development_end', 'working_time')[$appoiment->time_id];
+            // exit($this->getFormData('status'));
+            if ($this->getFormData('status') == 4) {
+                $appoiment->done_at = date('Y-m-d');
+            }
             
             $isSave = $appoiment->save();
             if (empty($isSave)) {
