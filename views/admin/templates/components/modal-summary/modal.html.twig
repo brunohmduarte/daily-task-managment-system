@@ -162,6 +162,23 @@
                 divStore.appendChild(divRefStore);
                 divStore.appendChild(divStrContent);
 
+                // Completion Date -----------------------------------------------
+
+                const divCompDate = document.createElement('div');
+                divCompDate.setAttribute('class', 'fw-semibold w-25 text-end fw-bold');
+                divCompDate.innerText = 'Finalizado em:';
+
+                const divCompDateCnt = document.createElement('div');
+                let doneAt = (summary.done_at != null) ? summary.done_at : ''
+                divCompDateCnt.setAttribute('class', 'fw-medium w-75 ms-1 my-auto');
+                divCompDateCnt.innerText = `${doneAt}`;
+
+                const divCompletionDate = document.createElement('div');
+                divCompletionDate.setAttribute('class', 'col-12 d-flex');
+
+                divCompletionDate.appendChild(divCompDate);
+                divCompletionDate.appendChild(divCompDateCnt);
+
                 // Duration ------------------------------------------------------
                 
                 const divRefDuration = document.createElement('div');
@@ -233,6 +250,7 @@
                 divRow.appendChild(divReference);
                 divRow.appendChild(divDescription);
                 divRow.appendChild(divStore);
+                divRow.appendChild(divCompletionDate);
                 divRow.appendChild(divDuration);
                 divRow.appendChild(divStatus);
                 divRow.appendChild(divObs);
