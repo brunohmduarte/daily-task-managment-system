@@ -155,6 +155,10 @@ class Tickets extends Controller
         $id = $_GET['id'] ?? null;
         $ticket = (new Ticket())->findById($id);
 
+        /**
+         * puxar os dados da loja para poder pegar os links e enviar para o template
+         */
+
         $this->params['REPORTER_SELECT_OPT'] = $this->loadSelectOpt(new Reporter(), 'reporter_id');
         $this->params['STORE_SELECT_OPT'] = $this->loadSelectOpt(new Store(), 'store_id');
         $this->params['FORM_ACTION'] = 'updateSave&id='. $id;
