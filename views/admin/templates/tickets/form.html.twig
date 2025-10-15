@@ -39,7 +39,7 @@
 
 {% block content %}
     {% block alert_message %}
-        {{ parent()}}
+        {{ parent() }}
     {% endblock %}
 
     <div class="row">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-3">
                                 {% if REFERENCE %}
-                                <a href="{{ 'https://helpdesk.bis2bis.com.br/Ticket/Edit/' ~ REFERENCE }}" class="mt-auto" target="_blank"><i class="mdi mdi-18px mdi-link"></i></a>
+                                <a href="{{ 'https://helpdesk.bis2bis.com.br/Ticket/Edit/' ~ REFERENCE }}" class="fs-6" target="_blank">Helpdesk</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -111,7 +111,12 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-3"></div>
+                            <div class="col-3">
+                                <a href="{{ 'https://' ~ DATA.store.repository }}" class="fs-6 d-block" target="_blank">Repositório</a>
+                                <a href="{{ 'https://' ~ DATA.store.url_local }}" class="fs-6" target="_blank">Local</a> |
+                                <a href="{{ 'https://' ~ DATA.store.url_sandbox }}" class="fs-6" target="_blank">Homologação</a> |
+                                <a href="{{ 'https://' ~ DATA.store.url_production }}" class="fs-6" target="_blank">Produção</a>
+                            </div>
                         </div>
 
                         <div class="mb-2 row">

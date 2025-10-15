@@ -155,11 +155,19 @@ class Tickets extends Controller
         $id = $_GET['id'] ?? null;
         $ticket = (new Ticket())->findById($id);
 
+        /**
+         * puxar os dados da loja para poder pegar os links e enviar para o template
+         */
+
         $this->params['REPORTER_SELECT_OPT'] = $this->loadSelectOpt(new Reporter(), 'reporter_id');
         $this->params['STORE_SELECT_OPT'] = $this->loadSelectOpt(new Store(), 'store_id');
         $this->params['FORM_ACTION'] = 'updateSave&id='. $id;
         $this->params['LINK'] = Core::getUrlBase("admin/tickets.php?action=delete&id={$id}");
         $this->params['DATA'] = $ticket->data();
+        
+        /** @var Store $storeModel */
+        $storeModel = $this->_helperFactory->prepare(Store::class)->create();
+        $this->params['DATA']->store = $storeModel->findById($ticket->store_id)->data();
 
         $appoiments = $this->_workingTimeModelFactory
             ->create()
