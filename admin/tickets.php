@@ -164,6 +164,10 @@ class Tickets extends Controller
         $this->params['FORM_ACTION'] = 'updateSave&id='. $id;
         $this->params['LINK'] = Core::getUrlBase("admin/tickets.php?action=delete&id={$id}");
         $this->params['DATA'] = $ticket->data();
+        
+        /** @var Store $storeModel */
+        $storeModel = $this->_helperFactory->prepare(Store::class)->create();
+        $this->params['DATA']->store = $storeModel->findById($ticket->store_id)->data();
 
         $appoiments = $this->_workingTimeModelFactory
             ->create()
