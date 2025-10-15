@@ -11,6 +11,11 @@
 {% set SITUATION    = DATA is defined and DATA.status      ? DATA.status      : '' %}
 {% set PRIORITY     = DATA is defined and DATA.priority    ? DATA.priority    : '' %}
 
+{% set REPOSITORY   = DATA is defined and DATA.store.repository      ? DATA.store.repository      : '' %}
+{% set STORE_LOCAL  = DATA is defined and DATA.store.url_local       ? DATA.store.url_local       : '' %}
+{% set STORE_SAND   = DATA is defined and DATA.store.url_sandbox     ? DATA.store.url_sandbox     : '' %}
+{% set STORE_PROD   = DATA is defined and DATA.store.url_production  ? DATA.store.url_production  : '' %}
+
 
 {% use "templates/components/alert-message/alert.html.twig" %}
 {% use "templates/components/modal-form/modal.html.twig" %}
@@ -112,10 +117,10 @@
                                 </select>
                             </div>
                             <div class="col-3">
-                                <a href="{{ 'https://' ~ DATA.store.repository }}" class="fs-6 d-block" target="_blank">Repositório</a>
-                                <a href="{{ 'https://' ~ DATA.store.url_local }}" class="fs-6" target="_blank">Local</a> |
-                                <a href="{{ 'https://' ~ DATA.store.url_sandbox }}" class="fs-6" target="_blank">Homologação</a> |
-                                <a href="{{ 'https://' ~ DATA.store.url_production }}" class="fs-6" target="_blank">Produção</a>
+                                {% if REPOSITORY %} <a href="{{ 'https://' ~ REPOSITORY }}" class="fs-6 d-block" target="_blank">Repositório</a> {% endif %}
+                                {% if STORE_LOCAL %} <a href="{{ 'https://' ~ STORE_LOCAL }}" class="fs-6" target="_blank">Local</a> | {% endif %}
+                                {% if STORE_SAND %} <a href="{{ 'https://' ~ STORE_SAND }}" class="fs-6" target="_blank">Homologação</a> | {% endif %}
+                                {% if STORE_PROD %} <a href="{{ 'https://' ~ STORE_PROD }}" class="fs-6" target="_blank">Produção</a> {% endif %}
                             </div>
                         </div>
 
