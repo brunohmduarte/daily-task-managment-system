@@ -8,7 +8,7 @@ PASSWORD="magento"
 CHARSET="utf8"
 
 DATE_CURRENT=$(date '+%Y%m%d')
-ROOT_FOLDER="$HOME/projects/stores/daily"
+ROOT_FOLDER="$HOME/.corsair/projects/daily"
 BACKUPFOLDER="$ROOT_FOLDER/backups"
 BACKUP_FILEPATH="$BACKUPFOLDER/db_"$DBNAME"_"$DATE_CURRENT".sql"
 FILE_LOG="$ROOT_FOLDER/var/log/backup.log"
