@@ -1,6 +1,0 @@
-.devilbox/
-.vscode/
-vendor/
-var/
-composer.lock
-teste.sh
