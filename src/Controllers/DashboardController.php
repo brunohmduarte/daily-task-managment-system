@@ -4,6 +4,7 @@ namespace Application\Controllers;
 
 use Application\Controllers\Controller;
 use Application\Factory\Factory;
+use Application\Helpers\Calculate as CalculateHelper;
 use Application\Model\Dashboard as DashboardModel;
 
 class DashboardController extends Controller
@@ -12,10 +13,14 @@ class DashboardController extends Controller
     public $ticketsResolved;
     public $ticketsOpen;
     public $ticketsClosed;
+    public $ticketsResolvedPercentage;
+    public $ticketsOpenPercentage;
+    public $ticketsClosedPercentage;
 
     public function init()
     {
         $this->getTicketStats();
+        $this->getTicketStatsPercentage();
     }
 
     public function getTicketStats()
@@ -29,6 +34,20 @@ class DashboardController extends Controller
         $this->ticketsResolved  = $data['resolved'] ?? 0;
         $this->ticketsOpen      = $data['open']     ?? 0;
         $this->ticketsClosed    = $data['closed']   ?? 0;
+    }
+
+    public function getTicketStatsPercentage()
+    {
+        /** @var CalculateHelper  $calculateHelper */
+        $calculateHelper = Factory::create(CalculateHelper::class);
+        
+        $resolvedPercentage = $calculateHelper->percentage($this->ticketsResolved, $this->totalTickets);
+        $openPercentage     = $calculateHelper->percentage($this->ticketsOpen, $this->totalTickets);
+        $closedPercentage   = $calculateHelper->percentage($this->ticketsClosed, $this->totalTickets);
+
+        $this->ticketsResolvedPercentage  = $calculateHelper->percentageFormat($resolvedPercentage);
+        $this->ticketsOpenPercentage      = $calculateHelper->percentageFormat($openPercentage);
+        $this->ticketsClosedPercentage    = $calculateHelper->percentageFormat($closedPercentage);
     }
 
     public function getTotalNumberOfTickets()
@@ -49,5 +68,20 @@ class DashboardController extends Controller
     public function getTicketsClosed()
     {
         return $this->ticketsClosed;
+    }
+
+    public function getTicketsResolvedPercentage()
+    {
+        return $this->ticketsResolvedPercentage;
+    }
+
+    public function getTicketsOpenPercentage()
+    {
+        return $this->ticketsOpenPercentage;
+    }
+
+    public function getTicketsClosedPercentage()
+    {
+        return $this->ticketsClosedPercentage;
     }
 }

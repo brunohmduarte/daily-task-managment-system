@@ -83,7 +83,7 @@
                     <div class="align-self-center flex-shrink-0">
                         <div id="today-new-customer-chart" class="apex-charts"></div>
                         <span class="text-success fw-bold fs-13">
-                            <i class='uil uil-arrow-up'></i> 25.16%
+                            <i class='uil uil-arrow-up'></i> <?= $controller->getTicketsResolvedPercentage() ?>
                         </span>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="align-self-center flex-shrink-0">
                         <div id="today-new-visitors-chart" class="apex-charts"></div>
                         <span class="text-danger fw-bold fs-13">
-                            <i class='uil uil-arrow-down'></i> 5.05%
+                            <i class='uil uil-arrow-down'></i> <?= $controller->getTicketsOpenPercentage() ?>
                         </span>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                     <div class="align-self-center flex-shrink-0">
                         <div id="today-product-sold-chart" class="apex-charts"></div>
                         <span class="text-danger fw-bold fs-13">
-                            <i class='uil uil-arrow-down'></i> 5.05%
+                            <i class='uil uil-arrow-down'></i> <?= $controller->getTicketsClosedPercentage() ?>
                         </span>
                     </div>
                 </div>
