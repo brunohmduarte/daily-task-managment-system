@@ -48,8 +48,23 @@ class DashboardController extends Controller
 
         $this->totalTickets     = $data['total']    ?? 0;
         $this->ticketsResolved  = $data['resolved'] ?? 0;
-        $this->ticketsOpen      = $data['open']     ?? 0;
-        $this->ticketsClosed    = $data['closed']   ?? 0;
+    }
+
+    /**
+     * API Action: Returns ticket statistics as JSON
+     * Usage: /admin/request/dashboard.php?action=getTicketStatsJson
+     *
+     * @return array
+     */
+    public function getTicketStatsJson()
+    {
+        /** @var DashboardModel $model */
+        $dashboard = Factory::create(DashboardModel::class);
+        $stats = $dashboard->getTicketStats();
+
+        return $stats;
+        // $this->ticketsOpen      = $data['open']     ?? 0;
+        // $this->ticketsClosed    = $data['closed']   ?? 0;
     }
 
     /**
