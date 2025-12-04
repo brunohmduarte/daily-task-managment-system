@@ -1,9 +1,10 @@
 <?php
     require_once dirname(__DIR__) . '/vendor/autoload.php';
-
+    
     use Application\Middleware\AuthMiddleware;
     use Application\Controllers\AdminController;
     use Application\Factory\Factory;
+
 
     AuthMiddleware::checkAccess();
 
@@ -27,7 +28,8 @@
     <link href="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.css'); ?>" rel="stylesheet" type="text/css" />
 
     <!-- Icons CSS -->
-    <link href="<?php echo getUrlFull('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" />
+    <!-- <link href="<?php echo getUrlFull('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 
     <!-- App CSS -->
     <link href="<?php echo getUrlFull('assets/css/app.min.css'); ?>" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
@@ -838,6 +840,9 @@
     <script src="<?php echo getUrlFull('assets/libs/moment/min/moment.min.js'); ?>"></script>
     <script src="<?php echo getUrlFull('assets/libs/apexcharts/apexcharts.min.js'); ?>"></script>
     <script src="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.js'); ?>"></script>
+
+    <!-- Axios JS -->
+     <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 
     <!-- page js -->
     <script src="<?php echo getUrlFull('assets/js/pages/dashboard.init.js'); ?>"></script>

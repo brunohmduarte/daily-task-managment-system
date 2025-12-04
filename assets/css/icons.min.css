@@ -1,6 +1,6 @@
 @font-face {
   font-family: bootstrap-icons;
-  src: url(../../fonts/bootstrap-icons.woff2) format("woff2"), url(../../fonts/bootstrap-icons.woff) format("woff");
+  src: url(../fonts/bootstrap-icons.woff2) format("woff2"), url(../fonts/bootstrap-icons.woff) format("woff");
 }
 [class*=" bi-"]::before, [class^=bi-]::before {
   display: inline-block;
@@ -5497,8 +5497,8 @@
 
 @font-face {
   font-family: unicons;
-  src: url(../fonts/unicons.eot?2256574);
-  src: url(../fonts/unicons.eot?2256574#iefix) format("embedded-opentype"), url(../fonts/unicons.woff2?2256574) format("woff2"), url(../fonts/unicons.woff?2256574) format("woff"), url(../fonts/unicons.ttf?2256574) format("truetype"), url(../fonts/unicons.svg?2256574#unicons) format("svg");
+  src: url(../../fonts/unicons.eot);
+  src: url(../../fonts/unicons.eot#iefix) format("embedded-opentype"), url(../../fonts/unicons.woff2) format("woff2"), url(../../fonts/unicons.woff) format("woff"), url(../../fonts/unicons.ttf) format("truetype"), url(../../fonts/unicons.svg#unicons) format("svg");
   font-weight: 400;
   font-style: normal;
 }

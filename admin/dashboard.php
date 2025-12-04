@@ -52,6 +52,7 @@
     </div>
 </div><!-- end page title -->
 
+<!-- stats boxes -->
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card">
@@ -132,6 +133,7 @@
 
 <!-- stats + charts -->
 <div class="row">
+    <!-- Overview stats -->
     <div class="col-xl-3">
         <div class="card">
             <div class="card-body p-0">
@@ -166,7 +168,8 @@
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalNumberOfTickets() ?></h4>
                         <span class="text-muted">Total Tickets</span>
                     </div>
-                    <i data-feather="users" class="align-self-center icon-dual icon-md"></i>
+                    <!-- <i data-feather="users" class="align-self-center icon-dual icon-md"></i> -->
+                    <span class="mdi mdi-ticket-confirmation fs-1"></span>
                 </div>
 
                 <!-- stat 2 -->
@@ -175,7 +178,8 @@
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalStores() ?></h4>
                         <span class="text-muted">Total Lojas</span>
                     </div>
-                    <i data-feather="image" class="align-self-center icon-dual icon-md"></i>
+                    <!-- <i data-feather="image" class="align-self-center icon-dual icon-md"></i> -->
+                     <span class="mdi mdi-store fs-1"></span>
                 </div>
 
                 <!-- stat 3 -->
@@ -184,7 +188,8 @@
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalReporters() ?></h4>
                         <span class="text-muted">Relatores</span>
                     </div>
-                    <i data-feather="shopping-bag" class="align-self-center icon-dual icon-md"></i>
+                    <!-- <i data-feather="shopping-bag" class="align-self-center icon-dual icon-md"></i> -->
+                     <span class="mdi mdi-account-group fs-1"></span>
                 </div>
 
                 <a href="" class="p-2 d-block text-end">View All <i class="uil-arrow-right"></i></a>
@@ -228,7 +233,7 @@
                         </a>
                     </div>
                 </div>
-                <h5 class="card-title mb-0 header-title">Revenue</h5>
+                <h5 class="card-title mb-0 header-title">Volume de Tickets</h5>
 
                 <div id="revenue-chart" class="apex-charts mt-3" dir="ltr"></div>
             </div>

@@ -1,11 +1,4 @@
-
-/*
-Template Name: Shreyu - Responsive Bootstrap 5 Admin Dashboard
-Author: CoderThemes
-Website: https://coderthemes.com/
-Contact: support@coderthemes.com
-File: Dashboard init js
-*/
+// const axios = require('axios');
 
 
 !function($) {
@@ -159,7 +152,7 @@ function ($) {
             var idx = 0;
             while (date.getMonth() === month && idx < 15) {
                 var d = new Date(date);
-               days.push(d.getDate() + " " +  d.toLocaleString('en-us', { month: 'short' }));
+               days.push(d.getDate() + " " +  d.toLocaleString('pt-BR', { month: 'short' }));
                date.setDate(date.getDate() + 1);
                idx += 1;
             }
@@ -182,7 +175,7 @@ function ($) {
                 width: 4
             },
             series: [{
-                name: 'Revenue',
+                name: 'Tickets',
                 data: [10, 20, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40, 30, 50, 35]
             }],
             zoom: {
@@ -208,7 +201,7 @@ function ($) {
             yaxis: {
                 labels: {
                     formatter: function (val) {
-                        return val + "k"
+                        return val //+ "k"
                     }
                 }
             },
@@ -371,8 +364,31 @@ function ($) {
     $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard
 
 }(window.jQuery),
+
+function ($) {
+    "use strict";
+    
+    var AjaxRequest = function() { };
+
+    AjaxRequest.prototype.dashboard = function() {
+        $.ajax({
+            url: 'request/dashboard.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                
+            }
+        });
+    },
+
+    //initializing
+    $.AjaxRequest = new AjaxRequest, $.AjaxRequest.Constructor = AjaxRequest
+}(window.jQuery),
+
 //initializing main application module
 function ($) {
     "use strict";
     $.Dashboard.init();
+    $.AjaxRequest.dashboard();
 }(window.jQuery);
