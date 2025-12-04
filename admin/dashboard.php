@@ -157,14 +157,14 @@
                         </div>
                     </div>
 
-                    <h5 class="card-title header-title mb-0">Overview</h5>
+                    <h5 class="card-title header-title mb-0">Visão Geral</h5>
                 </div>
 
                 <!-- stat 1 -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
-                        <h4 class="mt-0 mb-1 fs-22">121,000</h4>
-                        <span class="text-muted">Total Visitors</span>
+                        <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalNumberOfTickets() ?></h4>
+                        <span class="text-muted">Total Tickets</span>
                     </div>
                     <i data-feather="users" class="align-self-center icon-dual icon-md"></i>
                 </div>
@@ -172,8 +172,8 @@
                 <!-- stat 2 -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
-                        <h4 class="mt-0 mb-1 fs-22">21,000</h4>
-                        <span class="text-muted">Total Product Views</span>
+                        <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalStores() ?></h4>
+                        <span class="text-muted">Total Lojas</span>
                     </div>
                     <i data-feather="image" class="align-self-center icon-dual icon-md"></i>
                 </div>
@@ -181,8 +181,8 @@
                 <!-- stat 3 -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
-                        <h4 class="mt-0 mb-1 fs-22">$21.5</h4>
-                        <span class="text-muted">Revenue Per Visitor</span>
+                        <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalReporters() ?></h4>
+                        <span class="text-muted">Relatores</span>
                     </div>
                     <i data-feather="shopping-bag" class="align-self-center icon-dual icon-md"></i>
                 </div>

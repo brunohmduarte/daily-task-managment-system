@@ -2,13 +2,16 @@
 
 namespace Application\Controllers;
 
-use Application\Controllers\Controller;
 use Application\Factory\Factory;
 use Application\Helpers\Calculate as CalculateHelper;
 use Application\Model\Dashboard as DashboardModel;
+use Application\Model\Reporter as ReporterModel;
+use Application\Model\Store as StoreModel;
 
 class DashboardController extends Controller
 {
+    public $totalStores;
+    public $totalReporters;
     public $totalTickets;
     public $ticketsResolved;
     public $ticketsOpen;
@@ -26,6 +29,7 @@ class DashboardController extends Controller
     {
         $this->getTicketStats();
         $this->getTicketStatsPercentage();
+        $this->getOverviewStats();
     }
 
     /**
@@ -69,6 +73,17 @@ class DashboardController extends Controller
         $this->ticketsResolvedPercentage  = $helper->percentageFormat($resolvedPercentage);
         $this->ticketsOpenPercentage      = $helper->percentageFormat($openPercentage);
         $this->ticketsClosedPercentage    = $helper->percentageFormat($closedPercentage);
+    }
+    
+    public function getOverviewStats()
+    {
+        /** @var StoreModel $store */
+        $store = Factory::create(StoreModel::class);
+        $this->totalStores = $store->getStoresTotalNumber();
+
+        /** @var ReporterModel $reporter */
+        $reporter = Factory::create(ReporterModel::class);
+        $this->totalReporters = $reporter->getReportersTotalNumber();
     }
 
     /**
@@ -135,5 +150,24 @@ class DashboardController extends Controller
     {
         return $this->ticketsClosedPercentage;
     }
-    
+
+    /**
+     * Returns the total number of stores.
+     *
+     * @return int
+     */
+    public function getTotalStores(): int
+    {
+        return $this->totalStores;
+    }
+
+    /**
+     * Returns the total number of reporters.
+     *
+     * @return int
+     */
+    public function getTotalReporters(): int
+    {
+        return $this->totalReporters;
+    }
 }
