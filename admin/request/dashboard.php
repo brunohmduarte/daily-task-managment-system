@@ -13,9 +13,9 @@
  * });
  */
 
-session_start();
+// session_start();
 
-require_once(__DIR__ . '/../../vendor/autoload.php');
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use Application\Core\Router;
 use Application\Controllers\DashboardController;
@@ -28,7 +28,7 @@ AuthMiddleware::checkAccess();
 $dashboardController = new DashboardController();
 
 // Registrar ações disponíveis
-Router::on('getTicketStatsJson', [$dashboardController, 'getTicketStatsJson']);
+Router::on('getAllTimeStatistics', [$dashboardController, 'getAllTimeStatistics']);
 
 // Você pode adicionar mais ações assim:
 // Router::on('getTicketById', [$dashboardController, 'getTicketById']);

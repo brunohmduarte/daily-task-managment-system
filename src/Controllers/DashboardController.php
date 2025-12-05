@@ -7,6 +7,7 @@ use Application\Helpers\Calculate as CalculateHelper;
 use Application\Model\Dashboard as DashboardModel;
 use Application\Model\Reporter as ReporterModel;
 use Application\Model\Store as StoreModel;
+use Application\Model\Ticket as TicketModel;
 
 class DashboardController extends Controller
 {
@@ -48,23 +49,23 @@ class DashboardController extends Controller
 
         $this->totalTickets     = $data['total']    ?? 0;
         $this->ticketsResolved  = $data['resolved'] ?? 0;
+        $this->ticketsOpen      = $data['open']     ?? 0;
+        $this->ticketsClosed    = $data['closed']   ?? 0;
     }
 
     /**
-     * API Action: Returns ticket statistics as JSON
-     * Usage: /admin/request/dashboard.php?action=getTicketStatsJson
+     * API Action: Returns all-time ticket statistics as JSON
+     * Usage: /admin/request/dashboard.php?action=getAllTimeStatistics
      *
      * @return array
      */
-    public function getTicketStatsJson()
+    public function getAllTimeStatistics()
     {
-        /** @var DashboardModel $model */
-        $dashboard = Factory::create(DashboardModel::class);
-        $stats = $dashboard->getTicketStats();
+        /** @var TicketModel $model */
+        $dashboard = Factory::create(TicketModel::class);
+        $stats = $dashboard->getAllTimeStatistics();
 
         return $stats;
-        // $this->ticketsOpen      = $data['open']     ?? 0;
-        // $this->ticketsClosed    = $data['closed']   ?? 0;
     }
 
     /**

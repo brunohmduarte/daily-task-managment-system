@@ -4,6 +4,7 @@ namespace Application\Model;
 
 // use Application\Model\Resources\SearchTrait;
 use CoffeeCode\DataLayer\DataLayer;
+use CoffeeCode\DataLayer\Connect;
 
 class Ticket extends DataLayer 
 {
@@ -41,4 +42,35 @@ class Ticket extends DataLayer
         parent::__construct($this->entity, $this->fieldsAllowed, $this->fieldIdentifier, $this->timestamp);
     }
     
+    /**
+     * Returns an array of ticket statistics for the last 12 months.
+     * The statistics are grouped by year and month, and contain the total number of tickets created for each period.
+     * The result is ordered by year in descending order and month in descending order.
+     * 
+     * @return array
+     */
+    public function getAllTimeStatistics() 
+    {
+        $pdo = Connect::getInstance();
+        $query = "
+            SELECT 
+                YEAR(created_at) AS ano,
+                MONTH(created_at) AS mes_numero,
+                COUNT(*) AS total_tickets
+            FROM
+                tickets
+            WHERE
+                created_at >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+            GROUP BY
+                ano,
+                mes_numero
+            ORDER BY
+                ano DESC,
+                mes_numero DESC;
+        ";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 }

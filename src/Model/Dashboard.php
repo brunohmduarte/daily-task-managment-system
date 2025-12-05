@@ -3,7 +3,6 @@
 namespace Application\Model;
 
 use Application\Factory\Factory;
-use Application\Model\Ticket;
 use CoffeeCode\DataLayer\Connect;
 
 class Dashboard
@@ -30,9 +29,6 @@ class Dashboard
      */
     public function getTicketStats(): array
     {
-        /** @var Ticket $ticketModel */
-        $ticketModel = $this->getModel(Ticket::class);
-
         try {
             // Using raw SQL for better performance - single query approach
             $pdo = Connect::getInstance();

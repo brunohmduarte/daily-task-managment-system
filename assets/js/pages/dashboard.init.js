@@ -372,12 +372,11 @@ function ($) {
 
     AjaxRequest.prototype.dashboard = function() {
         $.ajax({
-            url: 'request/dashboard.php',
+            url: 'request/dashboard.php?action=getAllTimeStatistics',
             method: 'GET',
             dataType: 'json',
-            success: function(data) {
-                console.log(data);
-                
+            success: function(response) {
+                console.log('DEBUG', response);                
             }
         });
     },
