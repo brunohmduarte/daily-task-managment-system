@@ -218,12 +218,13 @@ function ($) {
             },
         }
 
-        var chart = new ApexCharts(
+        // Expose chart instance so it can be updated later when AJAX data arrives
+        this.revenueChart = new ApexCharts(
             document.querySelector("#revenue-chart"),
             options
         );
 
-        chart.render();
+        this.revenueChart.render();
 
         /* ------------- target */
         var options = {
@@ -365,29 +366,68 @@ function ($) {
 
 }(window.jQuery),
 
+// Ajax helper to load data from backend and notify when ready
 function ($) {
     "use strict";
-    
-    var AjaxRequest = function() { };
+    var AjaxRequest = function() {
+        this.allTimeStatistics = [];
+    };
 
-    AjaxRequest.prototype.dashboard = function() {
+    AjaxRequest.prototype.init = function() {
+        this.getAllTimeStatistics();
+    };
+
+    AjaxRequest.prototype.getAllTimeStatistics = function() {
         $.ajax({
             url: 'request/dashboard.php?action=getAllTimeStatistics',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                console.log('DEBUG', response);                
+            success: (response) => {
+                // store only the data array returned by router
+                this.allTimeStatistics = (response && response.data) ? response.data : [];
+                // trigger global event so charts can update
+                $(document).trigger('dashboard:allTimeStatsLoaded');
+                // console.log('DEBUG', this.allTimeStatistics);
+                
+            },
+            error: (xhr, status, err) => {
+                console.error('Failed to load all-time statistics', status, err);
+                this.allTimeStatistics = [];
+                $(document).trigger('dashboard:allTimeStatsLoaded');
             }
         });
-    },
+    };
 
-    //initializing
-    $.AjaxRequest = new AjaxRequest, $.AjaxRequest.Constructor = AjaxRequest
-}(window.jQuery),
+    // expose instance
+    $.AjaxRequest = new AjaxRequest();
+    $.AjaxRequest.Constructor = AjaxRequest;
 
-//initializing main application module
-function ($) {
-    "use strict";
-    $.Dashboard.init();
-    $.AjaxRequest.dashboard();
+    // when data arrives update charts
+    $(document).on('dashboard:allTimeStatsLoaded', function() {
+        var stats = $.AjaxRequest.allTimeStatistics || [];
+        if (!stats.length) return;
+
+        // Sort ascending by month so chart displays chronologically
+        stats.sort(function(a,b){ return new Date(a.month) - new Date(b.month); });
+
+        var labels = stats.map(function(item){
+            var d = new Date(item.month);
+            return d.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
+        });
+
+        var data = stats.map(function(item){ return Number(item.count); });
+
+        // Update revenue chart if exists
+        if ($.Dashboard && $.Dashboard.revenueChart) {
+            $.Dashboard.revenueChart.updateOptions({ xaxis: { categories: labels } });
+            $.Dashboard.revenueChart.updateSeries([{ name: 'Tickets', data: data }]);
+        }
+    });
+
+    // init sequence: load data then init dashboard (dashboard will render and then receive update)
+    $(function(){
+        $.AjaxRequest.init();
+        $.Dashboard.init();
+    });
+
 }(window.jQuery);

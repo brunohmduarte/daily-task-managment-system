@@ -63,4 +63,11 @@ class Dashboard
             ];
         }
     }
+
+    public function getAllTimeStatistics()
+    {
+        /** @var Ticket $ticketModel */
+        $ticketModel = Factory::create(Ticket::class);
+        return $ticketModel->getAllTimeStatistics();
+    }
 }

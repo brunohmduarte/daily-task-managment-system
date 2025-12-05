@@ -61,9 +61,9 @@ class DashboardController extends Controller
      */
     public function getAllTimeStatistics()
     {
-        /** @var TicketModel $model */
-        $dashboard = Factory::create(TicketModel::class);
-        $stats = $dashboard->getAllTimeStatistics();
+        /** @var DashboardModel $dashboardModel */
+        $dashboardModel = Factory::create(DashboardModel::class);
+        $stats = $dashboardModel->getAllTimeStatistics();
 
         return $stats;
     }
