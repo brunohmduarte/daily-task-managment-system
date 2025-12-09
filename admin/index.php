@@ -28,7 +28,7 @@
     <link href="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.css'); ?>" rel="stylesheet" type="text/css" />
 
     <!-- Icons CSS -->
-    <!-- <link href="<?php echo getUrlFull('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="<?php //echo getUrlFull('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 
     <!-- App CSS -->
@@ -42,6 +42,7 @@
 </head>
 <body>
     <div id="wrapper">
+        <!-- Topbar Start -->
         <div class="navbar-custom">
             <div class="container-fluid">
                 <ul class="list-unstyled topnav-menu float-end mb-0">
@@ -447,202 +448,58 @@
                 <!--- Sidemenu -->
                 <div id="sidebar-menu">
                     <ul class="side-menu">
-                        <!-- <li class="menu-title">Navigation</li> -->
                         <li>
                             <a href="index.php" data-bs-toggle="collapse">
-                                <!-- <span class="badge bg-success float-end">02</span> -->
-                                <i data-feather="home"></i>
-                                <span> Dashboards </span>
-                                <!-- <span class="menu-arrow"></span> -->
-                            </a>
-                            <div class="collapse" id="sidebarDashboard">
-                                <ul class="nav-second-level">
-                                    <li><a href="index.html">Ecommerce</a></li>
-                                    <li><a href="dashboard-analytics.html">Analytics</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="menu-title mt-2">Apps</li>
-                        <li>
-                            <a href="apps-calendar.html">
-                                <i data-feather="calendar"></i>
-                                <span> Calendar </span>
+                                <span class="mdi mdi-home fs-4"></span>
+                                <span>Dashboards</span>
                             </a>
                         </li>
+                        
+                        <li class="menu-title mt-2 fw-semibold">Tickets</li>
                         <li>
-                            <a href="apps-chat.html">
-                                <i data-feather="message-square"></i>
-                                <span> Chat </span>
+                            <a href="tickets.php" data-bs-toggle="collapse">
+                                <span class="mdi mdi-ticket-confirmation"></span>
+                                <span>Tickets</span>
+                            </a>
+                        </li>
+
+                        <li class="menu-title mt-2 fw-semibold">Lojas</li>
+                        <li>
+                            <a href="stores.php">
+                                <span class="mdi mdi-store fs-4"></span>
+                                <span>Lojas</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#sidebarEmail" data-bs-toggle="collapse">
-                                <i data-feather="mail"></i>
-                                <span> Email </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarEmail">
-                                <ul class="nav-second-level">
-                                    <li><a href="email-inbox.html">Inbox</a></li>
-                                    <li><a href="email-read.html">Read Email</a></li>
-                                    <li><a href="email-compose.html">Compose Email</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#sidebarProjects" data-bs-toggle="collapse">
-                                <i data-feather="briefcase"></i>
-                                <span> Projects </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarProjects">
-                                <ul class="nav-second-level">
-                                    <li><a href="project-list.html">List</a></li>
-                                    <li><a href="project-detail.html">Detail</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#sidebarTasks" data-bs-toggle="collapse">
-                                <i data-feather="clipboard"></i>
-                                <span> Tasks </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarTasks">
-                                <ul class="nav-second-level">
-                                    <li><a href="task-list.html">List</a></li>
-                                    <li><a href="task-board.html">Kanban Board</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="apps-file-manager.html">
-                                <i data-feather="file-plus"></i>
-                                <span> File Manager </span>
+                            <a href="storeuninstall.php">
+                                <span class="mdi mdi-store-remove fs-4"></span>
+                                <span>Desinstalar</span>
                             </a>
                         </li>
-                        <li class="menu-title mt-2">Custom</li>
+
+                        <li class="menu-title mt-2 fw-semibold">Módulos</li>
                         <li>
-                            <a href="#sidebarExpages" data-bs-toggle="collapse">
-                                <i data-feather="file-text"></i>
-                                <span> Pages </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarExpages">
-                                <ul class="nav-second-level">
-                                    <li><a href="pages-starter.html">Starter</a></li>
-                                    <li><a href="pages-profile.html">Profile</a></li>
-                                    <li><a href="pages-activity.html">Activity</a></li>
-                                    <li><a href="pages-invoice.html">Invoice</a></li>
-                                    <li><a href="pages-pricing.html">Pricing</a></li>
-                                    <li><a href="pages-maintenance.html">Maintenance</a></li>
-                                    <li><a href="pages-login.html">Login</a></li>
-                                    <li><a href="pages-register.html">Register</a></li>
-                                    <li><a href="pages-logout.html">Logout</a></li>
-                                    <li><a href="pages-recoverpw.html">Recover Password</a></li>
-                                    <li><a href="pages-lock-screen.html">Lock Screen</a></li>
-                                    <li><a href="pages-confirm-mail.html">Confirm</a></li>
-                                    <li><a href="pages-404.html">Error 404</a></li>
-                                    <li><a href="pages-500.html">Error 500</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#sidebarLayouts" data-bs-toggle="collapse">
-                                <i data-feather="layout"></i>
-                                <span class="badge bg-danger float-end">New</span>
-                                <span> Layouts </span>
-                            </a>
-                            <div class="collapse" id="sidebarLayouts">
-                                <ul class="nav-second-level">
-                                    <li><a href="layouts-horizontal.html" target="_blank">Horizontal</a></li>
-                                    <li><a href="layouts-two-column.html" target="_blank">Two Column Menu</a></li>
-                                    <li><a href="layouts-preloader.html" target="_blank">Preloader</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="landing.html" target="_blank">
-                                <i data-feather="globe"></i>
-                                <span> Landing </span>
-                            </a>
-                        </li>
-                        <li class="menu-title mt-2">Components</li>
-                        <li>
-                            <a href="ui-elements.html">
-                                <i data-feather="package"></i>
-                                <span> UI Elements </span>
+                            <a href="magentoone.php">
+                                <span class="mdi mdi-package-up fs-4"></span>
+                                <span>Magento 1</span>
                             </a>
                         </li>
                         <li>
-                            <a href="widgets.html">
-                                <i data-feather="gift"></i>
-                                <span> Widgets </span>
+                            <a href="magentotwo.php">
+                                <span class="mdi mdi-package-up fs-4"></span>
+                                <span>Magento 2</span>
                             </a>
                         </li>
+
+                        <li class="menu-title mt-2 fw-semibold">Relatores</li>
                         <li>
-                            <a href="#sidebarIcons" data-bs-toggle="collapse">
-                                <i data-feather="cpu"></i>
-                                <span> Icons </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarIcons">
-                                <ul class="nav-second-level">
-                                    <li><a href="icons-unicons.html">Unicons</a></li>
-                                    <li><a href="icons-feather.html">Feather</a></li>
-                                    <li><a href="icons-bootstrap.html">Bootstrap</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#sidebarForms" data-bs-toggle="collapse">
-                                <i data-feather="bookmark"></i>
-                                <span> Forms </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarForms">
-                                <ul class="nav-second-level">
-                                    <li><a href="forms-basic.html">Basic Elements</a></li>
-                                    <li><a href="forms-advanced.html">Advanced</a></li>
-                                    <li><a href="forms-validation.html">Validation</a></li>
-                                    <li><a href="forms-wizard.html">Wizard</a></li>
-                                    <li><a href="forms-editor.html">Editor</a></li>
-                                    <li><a href="forms-file-uploads.html">File Uploads</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="charts.html">
-                                <i data-feather="bar-chart-2"></i>
-                                <span> Charts </span>
+                            <a href="reporters.php">
+                                <span class="mdi mdi-account-arrow-up fs-4"></span>
+                                <span>Relatores</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#sidebarTables" data-bs-toggle="collapse">
-                                <i data-feather="grid"></i>
-                                <span> Tables </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarTables">
-                                <ul class="nav-second-level">
-                                    <li><a href="tables-basic.html">Basic</a></li>
-                                    <li><a href="tables-datatables.html">Data Tables</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#sidebarMaps" data-bs-toggle="collapse">
-                                <i data-feather="map"></i>
-                                <span> Maps </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarMaps">
-                                <ul class="nav-second-level">
-                                    <li><a href="maps-google.html">Google Maps</a></li>
-                                    <li><a href="maps-vector.html">Vector Maps</a></li>
-                                </ul>
-                            </div>
-                        </li>
+
+                        <!--
                         <li>
                             <a href="#sidebarMultilevel" data-bs-toggle="collapse">
                                 <i data-feather="share-2"></i>
@@ -687,9 +544,9 @@
                                 </ul>
                             </div>
                         </li>
+                        -->
                     </ul>
-                </div><!-- End Sidebar -->
-
+                </div>
                 <div class="clearfix"></div>
             </div><!-- Sidebar -left -->
         </div>
@@ -702,18 +559,16 @@
                 </div>
             </div>
         </div>
-    </div><!-- END wrapper -->
+    </div>
 
     <!-- Theme Settings -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="theme-settings-offcanvas" style="width: 260px;">
         <div class="px-3 m-0 py-2 text-uppercase bg-light offcanvas-header">
             <h6 class="fw-medium d-block mb-0">Theme Settings</h6>
-
             <button type="button" class="btn-close fs-14" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <div class="offcanvas-body" data-simplebar style="height: calc(100% - 50px);">
-
             <div class="alert alert-warning" role="alert">
                 <strong>Customize </strong> the overall color scheme, sidebar menu, etc.
             </div>
@@ -801,7 +656,6 @@
                 </div>
             </div>
 
-
             <!-- Topbar -->
             <h6 class="fw-medium mt-4 mb-2 pb-1">Topbar</h6>
 
@@ -821,11 +675,8 @@
             </div>
         </div>
 
-
         <div class="d-flex flex-column gap-2 px-3 py-2 offcanvas-header border-top border-dashed">
-
             <button class="btn btn-primary w-100" id="resetBtn">Reset to Default</button>
-
             <a href="https://1.envato.market/shreyu_admin" class="btn btn-danger w-100" target="_blank">
                 <i class="mdi mdi-basket me-1"></i> Purchase Now
             </a>
@@ -833,8 +684,11 @@
 
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
     <!-- Vendor js -->
-    <script src="<?php echo getUrlFull('assets/js/vendor.min.js'); ?>"></script>
+    <script src="<?php echo getUrlFull('assets/js/vendor.js'); ?>"></script>
 
     <!-- optional plugins -->
     <script src="<?php echo getUrlFull('assets/libs/moment/min/moment.min.js'); ?>"></script>

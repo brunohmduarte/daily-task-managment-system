@@ -1,0 +1,1 @@
+<h1>Página de Módulo para Magento 2</h1>
