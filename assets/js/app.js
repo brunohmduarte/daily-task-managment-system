@@ -14,10 +14,14 @@ class App {
     initComponents() {
 
         // Feather Icons
-        feather.replace()
+        if (typeof feather !== 'undefined' && feather.replace) {
+            feather.replace()
+        }
 
         // Lucide Icons
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
 
         // loader - Preloader
         $(window).on('load', function () {

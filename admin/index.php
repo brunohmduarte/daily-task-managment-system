@@ -205,7 +205,6 @@
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">Russian</span>
                             </a>
-
                         </div>
                     </li>
 
@@ -215,8 +214,6 @@
                             <span class="badge bg-danger rounded-circle noti-icon-badge">6</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-lg">
-
-                            <!-- item-->
                             <div class="dropdown-item noti-title">
                                 <h5 class="m-0">
                                     <span class="float-end">
@@ -226,8 +223,6 @@
                             </div>
 
                             <div class="noti-scroll" data-simplebar>
-
-                                <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item border-bottom">
                                     <div class="notify-icon bg-primary"><i class="uil uil-user-plus"></i></div>
                                     <p class="notify-details">New user registered.<small class="text-muted">5 hours ago</small>
@@ -283,11 +278,9 @@
                                 </a>
                             </div>
 
-                            <!-- All-->
                             <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
                                 View all <i class="fe-arrow-right"></i>
                             </a>
-
                         </div>
                     </li>
 
@@ -299,26 +292,27 @@
                             </span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                            <!-- item-->
+                        <div class="dropdown-menu dropdown-menu-end profile-dropdown">                            
                             <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Bem-vindo!</h6>
                             </div>
 
                             <a href="pages-profile.html" class="dropdown-item notify-item">
-                                <i data-feather="user" class="icon-dual icon-xs me-1"></i><span>Minha Conta</span>
+                                <i data-feather="user" class="icon-dual icon-xs me-1"></i>
+                                <span>Minha Conta</span>
                             </a>
 
                             <a href="pages-lock-screen.html" class="dropdown-item notify-item">
-                                <i data-feather="lock" class="icon-dual icon-xs me-1"></i><span>Lock Screen</span>
+                                <i data-feather="lock" class="icon-dual icon-xs me-1"></i>
+                                <span>Lock Screen</span>
                             </a>
 
                             <div class="dropdown-divider"></div>
 
                             <a href="logout.php" class="dropdown-item notify-item">
-                                <i data-feather="log-out" class="icon-dual icon-xs me-1"></i><span>Sair</span>
+                                <i data-feather="log-out" class="icon-dual icon-xs me-1"></i>
+                                <span>Sair</span>
                             </a>
-
                         </div>
                     </li>
 
@@ -328,7 +322,6 @@
                             <i data-feather="settings"></i>
                         </button>
                     </li>
-
                 </ul>
 
                 <!-- LOGO -->
@@ -438,7 +431,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i data-feather="logout.php" class="icon-dual icon-xs me-1"></i><span>Sair</span>
+                                <i data-feather="log-out" class="icon-dual icon-xs me-1"></i><span>Sair</span>
                             </a>
                         </div>
                     </div>
@@ -684,25 +677,40 @@
 
     </div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Vendor js -->
-    <script src="<?php echo getUrlFull('assets/js/vendor.js'); ?>"></script>
+    <!-- Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Feather Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js" defer></script>
+
+    <!-- Initialize Feather Icons -->
+    <script defer>
+        if (typeof feather !== 'undefined' && feather.replace) {
+            document.addEventListener('DOMContentLoaded', function() {
+                feather.replace();
+            });
+        }
+    </script>
 
     <!-- optional plugins -->
-    <script src="<?php echo getUrlFull('assets/libs/moment/min/moment.min.js'); ?>"></script>
-    <script src="<?php echo getUrlFull('assets/libs/apexcharts/apexcharts.min.js'); ?>"></script>
-    <script src="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.js'); ?>"></script>
+    <script src="<?php echo getUrlFull('assets/libs/moment/min/moment.min.js'); ?>" defer></script>
+    <script src="<?php echo getUrlFull('assets/libs/apexcharts/apexcharts.min.js'); ?>" defer></script>
+    <script src="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.js'); ?>" defer></script>
 
     <!-- Axios JS -->
      <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 
-    <!-- page js -->
-    <script src="<?php echo getUrlFull('assets/js/pages/dashboard.init.js'); ?>"></script>
+    <!-- page js - MUST come after jQuery and moment -->
+    <script src="<?php echo getUrlFull('assets/js/pages/dashboard.init.js'); ?>" defer></script>
 
     <!-- App js -->
-    <script src="<?php echo getUrlFull('assets/js/app.js'); ?>"></script>
+    <script src="<?php echo getUrlFull('assets/js/app.js'); ?>" defer></script>
 
     <!-- Js Externals -->
     <?= $adminController->getJsExternal(); ?>

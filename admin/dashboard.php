@@ -140,7 +140,7 @@
                 <div class="p-3">
                     <div class="dropdown float-end">
                         <a href="#" class="dropdown-toggle arrow-none text-muted" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="uil uil-ellipsis-v"></i>
+                            <span class="mdi mdi-dots-vertical fs-4"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
@@ -162,7 +162,7 @@
                     <h5 class="card-title header-title mb-0">Visão Geral</h5>
                 </div>
 
-                <!-- stat 1 -->
+                <!-- Total Tickets -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalNumberOfTickets() ?></h4>
@@ -172,7 +172,7 @@
                     <span class="mdi mdi-ticket-confirmation fs-1"></span>
                 </div>
 
-                <!-- stat 2 -->
+                <!-- Total Lojas -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalStores() ?></h4>
@@ -182,7 +182,7 @@
                      <span class="mdi mdi-store fs-1"></span>
                 </div>
 
-                <!-- stat 3 -->
+                <!-- Relatores -->
                 <div class="d-flex p-3 border-bottom">
                     <div class="flex-grow-1">
                         <h4 class="mt-0 mb-1 fs-22"><?= $controller->getTotalReporters() ?></h4>
@@ -192,45 +192,30 @@
                      <span class="mdi mdi-account-group fs-1"></span>
                 </div>
 
-                <a href="" class="p-2 d-block text-end">View All <i class="uil-arrow-right"></i></a>
+                <a href="" class="p-2 d-block text-end d-flex justify-content-end align-items-center text-primary">
+                    Ver mais <span class="mdi mdi-arrow-right ms-1 fs-5"></span>
+                </a>
             </div>
         </div>
     </div>
 
+    <!-- Tickets during the period -->
     <div class="col-xl-6">
         <div class="card">
             <div class="card-body">
                 <div class="dropdown float-end">
                     <a href="#" class="dropdown-toggle arrow-none text-muted" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="uil uil-ellipsis-v"></i>
+                        <span class="mdi mdi-dots-vertical fs-4"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            Today
-                        </a>
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            7 Days
-                        </a>
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            15 Days
-                        </a>
+                        <a href="javascript:void(0);" class="dropdown-item">Hoje</a>
+                        <a href="javascript:void(0);" class="dropdown-item">Últimos 7 Dias</a>
+                        <a href="javascript:void(0);" class="dropdown-item">Últimos 15 Dias</a>
                         <div class="dropdown-divider"></div>
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            1 Months
-                        </a>
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            6 Months
-                        </a>
+                        <a href="javascript:void(0);" class="dropdown-item">Último Mês</a>
+                        <a href="javascript:void(0);" class="dropdown-item">Últimos 6 Mês</a>
                         <div class="dropdown-divider"></div>
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            1 Year
-                        </a>
+                        <a href="javascript:void(0);" class="dropdown-item">Último Ano</a>
                     </div>
                 </div>
                 <h5 class="card-title mb-0 header-title">Volume de Tickets</h5>

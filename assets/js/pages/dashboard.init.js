@@ -1,5 +1,9 @@
 // const axios = require('axios');
 
+// Ensure jQuery is available
+if (typeof $ === 'undefined' && typeof jQuery !== 'undefined') {
+    window.$ = jQuery;
+}
 
 !function($) {
     "use strict";
@@ -152,17 +156,18 @@ function ($) {
             var idx = 0;
             while (date.getMonth() === month && idx < 15) {
                 var d = new Date(date);
-               days.push(d.getDate() + " " +  d.toLocaleString('pt-BR', { month: 'short' }));
-               date.setDate(date.getDate() + 1);
-               idx += 1;
+                days.push(d.getDate() + " " +  d.toLocaleString('pt-BR', { month: 'short' }));
+                date.setDate(date.getDate() + 1);
+                idx += 1;
             }
             return days;
-       }
+        }
 
-       var now = new Date();
-       var labels = getDaysInMonth(now.getMonth(), now.getFullYear());
-       
-       var options = {
+        var now = new Date();
+        var labels = getDaysInMonth(now.getMonth(), now.getFullYear());
+        var alltimeStatsData = [];
+        var alltimeStatsCategories = [];
+        var options = {
             chart: {
                 height: 329,
                 type: 'area'
@@ -176,7 +181,8 @@ function ($) {
             },
             series: [{
                 name: 'Tickets',
-                data: [10, 20, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40, 30, 50, 35]
+                data: alltimeStatsData
+                // data: [10, 20, 5, 15, 10, 20, 15, 25, 20, 30, 25, 40, 30, 50, 35]
             }],
             zoom: {
                 enabled: false
@@ -187,7 +193,7 @@ function ($) {
             colors: ['#43d39e'],
             xaxis: {
                 type: 'string',
-                categories: labels,
+                categories: alltimeStatsCategories,
                 tooltip: {
                     enabled: false
                 },
@@ -336,8 +342,6 @@ function ($) {
         );
 
         chart.render();
-
-        
     },
 
     //initializing
@@ -386,9 +390,17 @@ function ($) {
                 // store only the data array returned by router
                 this.allTimeStatistics = (response && response.data) ? response.data : [];
                 // trigger global event so charts can update
-                $(document).trigger('dashboard:allTimeStatsLoaded');
-                // console.log('DEBUG', this.allTimeStatistics);
-                
+                // $(document).trigger('dashboard:allTimeStatsLoaded');
+                console.log('DEBUG', this.allTimeStatistics);
+
+                Dashboard.alltimeStatsData = this.allTimeStatistics.map(function(item){
+                    return Number(item.total_tickets);
+                });
+
+                Dashboard.alltimeStatsCategories = this.allTimeStatistics.map(function(item){
+                    var d = new Date(item.mes_numero);
+                    return d.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
+                });
             },
             error: (xhr, status, err) => {
                 console.error('Failed to load all-time statistics', status, err);
