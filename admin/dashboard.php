@@ -1,7 +1,7 @@
 <?php
     require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-    use Application\Factory\Factory;
+    use Application\Core\Factory;
     use Application\Controllers\DashboardController;
 
     /** @var DashboardController $controller */
@@ -50,7 +50,7 @@
             -->
         </div>
     </div>
-</div><!-- end page title -->
+</div>
 
 <!-- stats boxes -->
 <div class="row">
@@ -97,13 +97,13 @@
             <div class="card-body">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        <span class="text-muted text-uppercase fs-12 fw-bold">Abertos</span>
-                        <h3 class="mb-0"><?= $controller->getTicketsOpen() ?></h3>
+                        <span class="text-muted text-uppercase fs-12 fw-bold">Pausado</span>
+                        <h3 class="mb-0"><?= $controller->getTicketsPaused() ?></h3>
                     </div>
                     <div class="align-self-center flex-shrink-0">
                         <div id="today-new-visitors-chart" class="apex-charts"></div>
                         <span class="text-danger fw-bold fs-13">
-                            <i class='uil uil-arrow-down'></i> <?= $controller->getTicketsOpenPercentage() ?>
+                            <i class='uil uil-arrow-down'></i> <?= $controller->getTicketsPausedPercentage() ?>
                         </span>
                     </div>
                 </div>

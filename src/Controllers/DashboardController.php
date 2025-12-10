@@ -2,7 +2,7 @@
 
 namespace Application\Controllers;
 
-use Application\Factory\Factory;
+use Application\Core\Factory;
 use Application\Helpers\Calculate as CalculateHelper;
 use Application\Model\Dashboard as DashboardModel;
 use Application\Model\Reporter as ReporterModel;
@@ -15,10 +15,10 @@ class DashboardController extends Controller
     public $totalReporters;
     public $totalTickets;
     public $ticketsResolved;
-    public $ticketsOpen;
+    public $ticketsPaused;
     public $ticketsClosed;
     public $ticketsResolvedPercentage;
-    public $ticketsOpenPercentage;
+    public $ticketsPausedPercentage;
     public $ticketsClosedPercentage;
 
     /**
@@ -37,7 +37,7 @@ class DashboardController extends Controller
      * Retrieves the ticket statistics for the dashboard.
      *
      * This method retrieves the total number of tickets, the number of resolved tickets,
-     * the number of open tickets, and the number of closed tickets, and stores them in
+     * the number of paused tickets, and the number of closed tickets, and stores them in
      * the respective class properties.
      */
     public function getTicketStats()
@@ -49,7 +49,7 @@ class DashboardController extends Controller
 
         $this->totalTickets     = $data['total']    ?? 0;
         $this->ticketsResolved  = $data['resolved'] ?? 0;
-        $this->ticketsOpen      = $data['open']     ?? 0;
+        $this->ticketsPaused      = $data['paused']   ?? 0;
         $this->ticketsClosed    = $data['closed']   ?? 0;
     }
 
@@ -74,7 +74,7 @@ class DashboardController extends Controller
      * This method uses the CalculateHelper to calculate the percentage of each ticket status type.
      * The percentages are then formatted to two decimal places and stored in the respective class properties:
      * - $this->ticketsResolvedPercentage
-     * - $this->ticketsOpenPercentage
+     * - $this->ticketsPausedPercentage
      * - $this->ticketsClosedPercentage
      */
     public function getTicketStatsPercentage()
@@ -83,11 +83,11 @@ class DashboardController extends Controller
         $helper = Factory::create(CalculateHelper::class);
         
         $resolvedPercentage = $helper->percentage($this->ticketsResolved, $this->totalTickets);
-        $openPercentage     = $helper->percentage($this->ticketsOpen, $this->totalTickets);
+        $pausedPercentage   = $helper->percentage($this->ticketsPaused, $this->totalTickets);
         $closedPercentage   = $helper->percentage($this->ticketsClosed, $this->totalTickets);
 
         $this->ticketsResolvedPercentage  = $helper->percentageFormat($resolvedPercentage);
-        $this->ticketsOpenPercentage      = $helper->percentageFormat($openPercentage);
+        $this->ticketsPausedPercentage    = $helper->percentageFormat($pausedPercentage);
         $this->ticketsClosedPercentage    = $helper->percentageFormat($closedPercentage);
     }
     
@@ -127,9 +127,9 @@ class DashboardController extends Controller
      *
      * @return int
      */
-    public function getTicketsOpen()
+    public function getTicketsPaused()
     {
-        return $this->ticketsOpen;
+        return $this->ticketsPaused;
     }
 
     /**
@@ -153,13 +153,13 @@ class DashboardController extends Controller
     }
 
     /**
-     * Returns the percentage of open tickets.
+     * Returns the percentage of paused tickets.
      *
      * @return string
      */
-    public function getTicketsOpenPercentage()
+    public function getTicketsPausedPercentage()
     {
-        return $this->ticketsOpenPercentage;
+        return $this->ticketsPausedPercentage;
     }
     
     /**

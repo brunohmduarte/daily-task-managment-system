@@ -3,7 +3,7 @@
     
     use Application\Middleware\AuthMiddleware;
     use Application\Controllers\AdminController;
-    use Application\Factory\Factory;
+    use Application\Core\Factory;
 
 
     AuthMiddleware::checkAccess();
@@ -138,12 +138,12 @@
                         </a>
                     </li>
 
+                    <!--
                     <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i data-feather="grid"></i>
                         </a>
                         <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-
                             <div class="p-1">
                                 <div class="row g-0">
                                     <div class="col">
@@ -166,48 +166,45 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </li>
+                    -->
 
+                    <!--
                     <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i data-feather="globe"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/us.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">English</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">German</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">Italian</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">Spanish</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <img src="https://coderthemes.com/shreyu/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12">
                                 <span class="align-middle">Russian</span>
                             </a>
                         </div>
                     </li>
+                    -->
 
+                    <!-- Notification -->
                     <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link dropdown-toggle position-relative" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i data-feather="bell"></i>
@@ -302,10 +299,12 @@
                                 <span>Minha Conta</span>
                             </a>
 
+                            <!--
                             <a href="pages-lock-screen.html" class="dropdown-item notify-item">
                                 <i data-feather="lock" class="icon-dual icon-xs me-1"></i>
                                 <span>Lock Screen</span>
                             </a>
+                            -->
 
                             <div class="dropdown-divider"></div>
 
@@ -316,9 +315,9 @@
                         </div>
                     </li>
 
+                    <!-- Settings -->
                     <li class="dropdown notification-list">
                         <button class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" type="button">
-                            <i class="mdi mdi-cog-outline font-22"></i>
                             <i data-feather="settings"></i>
                         </button>
                     </li>
@@ -329,11 +328,9 @@
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
                             <img src="https://coderthemes.com/shreyu/assets/images/logo-sm.png" alt="" height="24">
-                            <!-- <span class="logo-lg-text-light">Shreyu</span> -->
                         </span>
                         <span class="logo-lg">
                             <img src="https://coderthemes.com/shreyu/assets/images/logo-dark.png" alt="" height="24">
-                            <!-- <span class="logo-lg-text-light">S</span> -->
                         </span>
                     </a>
 
@@ -347,6 +344,7 @@
                     </a>
                 </div>
 
+                <!-- Menu Mobile -->
                 <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                     <li>
                         <button class="button-menu-mobile">
@@ -363,45 +361,38 @@
                                 <span></span>
                             </div>
                         </a>
-                        <!-- End mobile menu toggle-->
                     </li>
-
+                    <!--
                     <li class="dropdown d-none d-xl-block">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             Create New
                             <i class="uil uil-angle-down"></i>
                         </a>
                         <div class="dropdown-menu">
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <i class="uil uil-bag me-1"></i><span>New Projects</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <i class="uil uil-user-plus me-1"></i><span>Create Users</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <i class="uil uil-chart-pie me-1"></i><span>Revenue Report</span>
                             </a>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <i class="uil uil-cog me-1"></i><span>Settings</span>
                             </a>
 
                             <div class="dropdown-divider"></div>
 
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
                                 <i class="uil uil-question-circle me-1"></i><span>Help & Support</span>
                             </a>
-
                         </div>
                     </li>
-
+                    -->
                 </ul>
 
                 <div class="clearfix"></div>
@@ -486,7 +477,7 @@
 
                         <li class="menu-title mt-2 fw-semibold">Relatores</li>
                         <li>
-                            <a href="reporters.php">
+                            <a href="index.php?route=reporters">
                                 <span class="mdi mdi-account-arrow-up fs-4"></span>
                                 <span>Relatores</span>
                             </a>

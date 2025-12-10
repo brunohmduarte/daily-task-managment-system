@@ -37,8 +37,10 @@ class AdminController extends Controller
             $file = dirname(__DIR__, 2). '/admin/'.$_GET['route'].'.php';
             if (file_exists($file)) {
                 require_once $file;
+                return;
             } else {
                 require_once dirname(__DIR__, 2). '/admin/404.php';
+                return;
             }
         }
 

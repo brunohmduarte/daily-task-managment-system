@@ -382,7 +382,7 @@ function ($) {
     AjaxRequest.prototype.getAllTimeStatistics = function() {
         var self = this;
         $.ajax({
-            url: 'api/router.php?action=getAllTimeStatistics',
+            url: 'api/index.php?action=getAllTimeStatistics',
             method: 'GET',
             dataType: 'json',
             success: function(response) {

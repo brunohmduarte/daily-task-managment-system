@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Factory;
+namespace Application\Core;
 
 class Factory
 {

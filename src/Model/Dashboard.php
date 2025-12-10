@@ -2,7 +2,7 @@
 
 namespace Application\Model;
 
-use Application\Factory\Factory;
+use Application\Core\Factory;
 use CoffeeCode\DataLayer\Connect;
 
 class Dashboard
@@ -37,7 +37,7 @@ class Dashboard
                 SELECT 
                     COUNT(*) AS total,
                     COUNT(CASE WHEN status = 'Resolvido' THEN 1 END) AS resolved,
-                    COUNT(CASE WHEN status = 'Fazendo' THEN 1 END) AS open,
+                    COUNT(CASE WHEN status = 'Pausado' THEN 1 END) AS paused,
                     COUNT(CASE WHEN status = 'Fechado' THEN 1 END) AS closed
                 FROM tickets
             ";
@@ -49,7 +49,7 @@ class Dashboard
             return [
                 'total' => (int)$result['total'],
                 'resolved' => (int)$result['resolved'],
-                'open' => (int)$result['open'],
+                'paused' => (int)$result['paused'],
                 'closed' => (int)$result['closed'],
             ];
 
@@ -58,7 +58,7 @@ class Dashboard
             return [
                 'total' => 0,
                 'resolved' => 0,
-                'open' => 0,
+                'paused' => 0,
                 'closed' => 0,
             ];
         }

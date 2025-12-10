@@ -10,6 +10,12 @@ class Ticket extends DataLayer
 {
     // use SearchTrait;
 
+    public const TICKET_STATUS_OPEN = 'Fazendo';
+    public const TICKET_STATUS_BLOCKED = 'Bloqueado';
+    public const TICKET_STATUS_PAUSED = 'Pausado';
+    public const TICKET_STATUS_RESOLVED = 'Resolvido';
+    public const TICKET_STATUS_CLOSED = 'Fechado';
+
     /**
      * Entity name in database
      * @var string $entity

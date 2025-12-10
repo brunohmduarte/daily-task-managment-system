@@ -13998,6 +13998,9 @@ body {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+.left-side-menu:hover {
+  overflow-y: auto;
+}
 
 #sidebar-menu > ul {
   list-style: none;
