@@ -215,7 +215,7 @@
                         <a href="javascript:void(0);" class="dropdown-item">Último Mês</a>
                         <a href="javascript:void(0);" class="dropdown-item">Últimos 6 Mês</a>
                         <div class="dropdown-divider"></div>
-                        <a href="javascript:void(0);" class="dropdown-item">Último Ano</a>
+                        <a href="javascript:void(0);" class="dropdown-item active">Último Ano</a>
                     </div>
                 </div>
                 <h5 class="card-title mb-0 header-title">Volume de Tickets</h5>

@@ -41,6 +41,19 @@ class Ticket extends DataLayer
     {
         parent::__construct($this->entity, $this->fieldsAllowed, $this->fieldIdentifier, $this->timestamp);
     }
+
+    /**
+     * Executes a raw SQL query and returns the result as an array of objects.
+     * 
+     * @param string $query The raw SQL query to be executed.
+     * @return array An array of objects containing the result of the query.
+     */
+    public function executeQuery(string $query) 
+    {
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
     
     /**
      * Returns an array of ticket statistics for the last 12 months.
@@ -51,7 +64,6 @@ class Ticket extends DataLayer
      */
     public function getAllTimeStatistics() 
     {
-        $pdo = Connect::getInstance();
         $query = "
             SELECT 
                 YEAR(created_at) AS ano,
@@ -68,9 +80,7 @@ class Ticket extends DataLayer
                 ano DESC,
                 mes_numero DESC;
         ";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        return $result;
+        
+        return $this->executeQuery($query);
     }
 }

@@ -3,12 +3,12 @@
  * API Router para Dashboard
  * 
  * Uso (jQuery/AJAX):
- * $.get('admin/request/dashboard.php?action=getTicketStatsJson', function(response) {
+ * $.get('admin/api/dashboard.php?action=getTicketStatsJson', function(response) {
  *     console.log(response.data);
  * });
  * 
  * Ou com parâmetros:
- * $.get('admin/request/dashboard.php?action=getTicketById&id=123', function(response) {
+ * $.get('admin/api/dashboard.php?action=getTicketById&id=123', function(response) {
  *     console.log(response.data);
  * });
  */

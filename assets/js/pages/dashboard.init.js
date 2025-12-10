@@ -87,11 +87,6 @@ function ($) {
             }
         };
 
-
-        // 
-        // Stats
-        //
-
         var options2 = {
             chart: {
                 type: 'area',
@@ -164,7 +159,7 @@ function ($) {
         }
 
         var now = new Date();
-        var labels = getDaysInMonth(now.getMonth(), now.getFullYear());
+        // var labels = getDaysInMonth(now.getMonth(), now.getFullYear());
         var alltimeStatsData = [];
         var alltimeStatsCategories = [];
         var options = {
@@ -370,74 +365,97 @@ function ($) {
 
 }(window.jQuery),
 
-// Ajax helper to load data from backend and notify when ready
+// Ajax helper to load data from backend and update charts
 function ($) {
     "use strict";
     var AjaxRequest = function() {
         this.allTimeStatistics = [];
+        this.alltimeStatsData = [];
+        this.alltimeStatsCategories = [];
     };
 
     AjaxRequest.prototype.init = function() {
         this.getAllTimeStatistics();
     };
 
+    // Fetch all-time statistics from backend API
     AjaxRequest.prototype.getAllTimeStatistics = function() {
+        var self = this;
         $.ajax({
-            url: 'request/dashboard.php?action=getAllTimeStatistics',
+            url: 'api/router.php?action=getAllTimeStatistics',
             method: 'GET',
             dataType: 'json',
-            success: (response) => {
-                // store only the data array returned by router
-                this.allTimeStatistics = (response && response.data) ? response.data : [];
-                // trigger global event so charts can update
-                // $(document).trigger('dashboard:allTimeStatsLoaded');
-                console.log('DEBUG', this.allTimeStatistics);
-
-                Dashboard.alltimeStatsData = this.allTimeStatistics.map(function(item){
-                    return Number(item.total_tickets);
-                });
-
-                Dashboard.alltimeStatsCategories = this.allTimeStatistics.map(function(item){
-                    var d = new Date(item.mes_numero);
-                    return d.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
-                });
+            success: function(response) {
+                // Store raw data
+                self.allTimeStatistics = (response && response.data) ? response.data : [];
+                
+                // Process data for chart
+                self.processChartData();
+                
+                // Update chart with new data
+                self.updateCharts();
             },
-            error: (xhr, status, err) => {
+            error: function(xhr, status, err) {
                 console.error('Failed to load all-time statistics', status, err);
-                this.allTimeStatistics = [];
-                $(document).trigger('dashboard:allTimeStatsLoaded');
+                self.allTimeStatistics = [];
+                self.alltimeStatsData = [];
+                self.alltimeStatsCategories = [];
             }
         });
     };
 
-    // expose instance
+    // Process data for chart ticket volume
+    AjaxRequest.prototype.processChartData = function() {
+        var stats = this.allTimeStatistics || [];
+        
+        if (!stats.length) {
+            this.alltimeStatsData = [];
+            this.alltimeStatsCategories = [];
+            return;
+        }
+
+        // Sort ascending by month so chart displays chronologically
+        stats.sort(function(a, b) { 
+            return new Date(a.month || a.mes_numero) - new Date(b.month || b.mes_numero); 
+        });
+
+        // Extract labels and data
+        this.alltimeStatsCategories = stats.map(function(item) {
+            var date = new Date(item.month || item.mes_numero);
+            return date.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
+        });
+
+        this.alltimeStatsData = stats.map(function(item) {
+            return Number(item.count || item.total_tickets);
+        });
+
+        // console.log('Chart Data Processed:', {
+        //     categories: this.alltimeStatsCategories,
+        //     data: this.alltimeStatsData
+        // });
+    };
+
+    AjaxRequest.prototype.updateCharts = function() {
+        // Update revenue chart if exists
+        if ($.Dashboard && $.Dashboard.revenueChart) {
+            $.Dashboard.revenueChart.updateOptions({ 
+                xaxis: { 
+                    categories: this.alltimeStatsCategories 
+                } 
+            });
+            $.Dashboard.revenueChart.updateSeries([{ 
+                name: 'Tickets', 
+                data: this.alltimeStatsData 
+            }]);
+        }
+    };
+
+    // Expose instance so you can access data anywhere
     $.AjaxRequest = new AjaxRequest();
     $.AjaxRequest.Constructor = AjaxRequest;
 
-    // when data arrives update charts
-    $(document).on('dashboard:allTimeStatsLoaded', function() {
-        var stats = $.AjaxRequest.allTimeStatistics || [];
-        if (!stats.length) return;
-
-        // Sort ascending by month so chart displays chronologically
-        stats.sort(function(a,b){ return new Date(a.month) - new Date(b.month); });
-
-        var labels = stats.map(function(item){
-            var d = new Date(item.month);
-            return d.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
-        });
-
-        var data = stats.map(function(item){ return Number(item.count); });
-
-        // Update revenue chart if exists
-        if ($.Dashboard && $.Dashboard.revenueChart) {
-            $.Dashboard.revenueChart.updateOptions({ xaxis: { categories: labels } });
-            $.Dashboard.revenueChart.updateSeries([{ name: 'Tickets', data: data }]);
-        }
-    });
-
-    // init sequence: load data then init dashboard (dashboard will render and then receive update)
-    $(function(){
+    // Init sequence: load data then init dashboard
+    $(function() {
         $.AjaxRequest.init();
         $.Dashboard.init();
     });

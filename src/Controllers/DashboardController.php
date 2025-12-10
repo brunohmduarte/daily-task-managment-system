@@ -121,6 +121,7 @@ class DashboardController extends Controller
     {
         return $this->ticketsResolved;
     }
+
     /**
      * Returns the total number of open tickets.
      *
@@ -130,6 +131,7 @@ class DashboardController extends Controller
     {
         return $this->ticketsOpen;
     }
+
     /**
      * Returns the total number of closed tickets.
      *
@@ -139,6 +141,7 @@ class DashboardController extends Controller
     {
         return $this->ticketsClosed;
     }
+
     /**
      * Returns the percentage of resolved tickets.
      *
@@ -148,6 +151,7 @@ class DashboardController extends Controller
     {
         return $this->ticketsResolvedPercentage;
     }
+
     /**
      * Returns the percentage of open tickets.
      *
@@ -157,6 +161,7 @@ class DashboardController extends Controller
     {
         return $this->ticketsOpenPercentage;
     }
+    
     /**
      * Returns the percentage of closed tickets.
      *
