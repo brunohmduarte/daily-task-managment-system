@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0 | <=8.2",
         "ext-pdo": "*",
         "coffeecode/datalayer": "^1",
         "coffeecode/uploader": "^1",
