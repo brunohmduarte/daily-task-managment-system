@@ -4,6 +4,10 @@ namespace Application\Controllers;
 
 class AdminController extends Controller
 {
+    public $route;
+    public $action;
+    public $id;
+
     /**
      * Initializes the admin controller.
      *
@@ -12,8 +16,16 @@ class AdminController extends Controller
      */
     public function init(): void
     {
+        $this->getParams();
         // $this->setCssExternal('assets/css/admin-custom.css');
         // $this->setJsExternal('assets/js/admin-custom.js');
+    }
+
+    public function getParams(): void
+    {
+        $this->route  = $_GET['route'] ?? '';
+        $this->action = $_GET['action'] ?? '';
+        $this->id     = $_GET['id'] ?? '';
     }
 
     /**
@@ -46,4 +58,6 @@ class AdminController extends Controller
 
         require_once $fileDashboard;
     }
+
+    
 }

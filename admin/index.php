@@ -10,7 +10,7 @@
 
     /** @var AdminController $adminController */
     $adminController = Factory::create(AdminController::class);
-    $adminController->init();
+    // $adminController->init();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -31,14 +31,16 @@
     <!-- <link href="<?php //echo getUrlFull('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 
+    <?php if (!isset($_GET['action'])): ?>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
+    <?php endif; ?>
+
     <!-- App CSS -->
     <link href="<?php echo getUrlFull('assets/css/app.min.css'); ?>" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
     <!-- Config js -->
     <script src="<?php echo getUrlFull('assets/js/config.js'); ?>"></script>
-
-    <!-- Css Externals -->
-    <?= $adminController->getCssExternal(); ?>
 </head>
 <body>
     <div id="wrapper">
@@ -545,7 +547,7 @@
         </div>
     </div>
 
-    <!-- Theme Settings -->
+    <!-- Theme Settings --
     <div class="offcanvas offcanvas-end" tabindex="-1" id="theme-settings-offcanvas" style="width: 260px;">
         <div class="px-3 m-0 py-2 text-uppercase bg-light offcanvas-header">
             <h6 class="fw-medium d-block mb-0">Theme Settings</h6>
@@ -568,7 +570,7 @@
                 <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
             </div>
 
-            <!-- Width -->
+            <!-- Width --
             <h6 class="fw-medium mt-4 mb-2 pb-1">Width</h6>
             <div class="form-switch d-flex align-items-center gap-1 mb-1">
                 <input type="checkbox" class="form-check-input mt-0" name="layout-width" value="fluid" id="fluid-check" checked />
@@ -579,7 +581,7 @@
                 <label class="form-check-label" for="boxed-check">Boxed</label>
             </div>
 
-            <!-- Menu positions -->
+            <!-- Menu positions --
             <h6 class="fw-medium mt-4 mb-2 pb-1">Menu Position</h6>
 
             <div class="form-switch d-flex align-items-center gap-1 mb-1">
@@ -592,7 +594,7 @@
                 <label class="form-check-label" for="scrollable-check">Scrollable</label>
             </div>
 
-            <!-- Left Sidebar-->
+            <!-- Left Sidebar--
             <h6 class="fw-medium mt-4 mb-2 pb-1">Menu Color</h6>
 
             <div class="form-switch d-flex align-items-center gap-1 mb-1">
@@ -608,9 +610,9 @@
             <!-- <div class="form-switch d-flex align-items-center gap-1 mb-1">
                 <input type="checkbox" class="form-check-input mt-0" name="menu-color" value="brand" id="brand-check" />
                 <label class="form-check-label" for="brand-check">Brand</label>
-            </div> -->
+            </div> --
 
-            <!-- size -->
+            <!-- size --
             <div id="sidebarSize">
                 <h6 class="fw-medium mt-4 mb-2 pb-1">Left Sidebar Size</h6>
 
@@ -630,7 +632,7 @@
                 </div>
             </div>
 
-            <!-- User info -->
+            <!-- User info --
             <div id="sidebarUser">
                 <h6 class="fw-medium mt-4 mb-2 pb-1">Sidebar User Info</h6>
 
@@ -640,7 +642,7 @@
                 </div>
             </div>
 
-            <!-- Topbar -->
+            <!-- Topbar --
             <h6 class="fw-medium mt-4 mb-2 pb-1">Topbar</h6>
 
             <div class="form-switch d-flex align-items-center gap-1 mb-1">
@@ -665,8 +667,8 @@
                 <i class="mdi mdi-basket me-1"></i> Purchase Now
             </a>
         </div>
-
     </div>
+    -->
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -689,23 +691,20 @@
         }
     </script>
 
+    <?php if (!isset($_GET['action'])): ?>
+    <!-- DataTables JS -->
+    <script src="https//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
+    <?php endif; ?>
+
     <!-- optional plugins -->
     <script src="<?php echo getUrlFull('assets/libs/moment/min/moment.min.js'); ?>" defer></script>
     <script src="<?php echo getUrlFull('assets/libs/apexcharts/apexcharts.min.js'); ?>" defer></script>
     <script src="<?php echo getUrlFull('assets/libs/flatpickr/flatpickr.min.js'); ?>" defer></script>
-
-    <!-- Axios JS -->
-     <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
 
     <!-- page js - MUST come after jQuery and moment -->
     <script src="<?php echo getUrlFull('assets/js/pages/dashboard.init.js'); ?>" defer></script>
 
     <!-- App js -->
     <script src="<?php echo getUrlFull('assets/js/app.js'); ?>" defer></script>
-
-    <!-- Js Externals -->
-    <?= $adminController->getJsExternal(); ?>
-
-    <script></script>
 </body>
 </html>

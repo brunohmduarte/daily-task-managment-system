@@ -99,11 +99,11 @@ features:
   # PHP-FPM will not be applied to a reverse proxy!
   php_fpm: |
     # PHP-FPM Definition
-    set $php 172.16.238.74:__PHP_PORT__;
+    set $php 172.16.238.82:__PHP_PORT__;
     set $root "__DOCUMENT_ROOT__";
     if ( -f __DOCUMENT_ROOT__bin/magento) {
         set $root "__DOCUMENT_ROOT__pub";
-        set $php 172.16.238.74:__PHP_PORT__;
+        set $php 172.16.238.82:__PHP_PORT__;
     }
     root $root;
 
