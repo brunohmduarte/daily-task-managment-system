@@ -36,9 +36,9 @@ class Factory
         // Normalize class name: allow passing short names like "Model\User" or "Model\\User"
         $fqcn = $class;
         // If class does not start with backslash and does not already start with Application\, prefix it
-        if ($fqcn !== '' && $fqcn[0] !== '\\' && strncmp($fqcn, 'Application\\', 12) !== 0) {
-            $fqcn = 'Application\\' . ltrim($fqcn, '\\');
-        }
+        // if ($fqcn !== '' && $fqcn[0] !== '\\' && strncmp($fqcn, 'Application\\', 12) !== 0) {
+        //     $fqcn = 'Application\\' . ltrim($fqcn, '\\');
+        // }
 
         // If user passed a leading backslash, strip it for class_exists
         $check = ltrim($fqcn, '\\');

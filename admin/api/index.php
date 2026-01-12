@@ -19,16 +19,23 @@ require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use Application\Core\Router;
 use Application\Controllers\DashboardController;
+use Application\Controllers\ReportersController;
 use Application\Middleware\AuthMiddleware;
 
 // Verificar autenticação
 AuthMiddleware::checkAccess();
 
-// Instanciar controller
+// Rotas para o Dashboard
 $dashboardController = new DashboardController();
-
-// Registrar ações disponíveis
 Router::on('getAllTimeStatistics', [$dashboardController, 'getAllTimeStatistics']);
+
+// Rotas para Reporters
+$reportersController = new ReportersController();
+Router::on('createReporter', [$reportersController, 'create']);
+Router::on('updateReporter', [$reportersController, 'update']);
+Router::on('deleteReporter', [$reportersController, 'delete']);
+Router::on('listTicketReporters', [$reportersController, 'read']);
+
 
 // Você pode adicionar mais ações assim:
 // Router::on('getTicketById', [$dashboardController, 'getTicketById']);

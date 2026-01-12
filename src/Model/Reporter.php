@@ -50,4 +50,12 @@ class Reporter extends DataLayer
     {
         return $this->find()->count();
     }
+
+
+    public function listReporters() 
+    {
+        return $this->find()->fetch(true);
+        // return $this->find('reporter_id = :reporter_id', ':reporter_id=1000')->fetch(true);
+    }
+
 }

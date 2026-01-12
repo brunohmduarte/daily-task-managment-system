@@ -42,7 +42,6 @@ if (typeof $ === 'undefined' && typeof jQuery !== 'undefined') {
             }
         });
 
-
         //binding send button click
         $this.$chatForm.on('submit', function (ev) {
             ev.preventDefault();
@@ -421,7 +420,8 @@ function ($) {
 
         // Extract labels and data
         this.alltimeStatsCategories = stats.map(function(item) {
-            var date = new Date(item.month || item.mes_numero);
+            console.log('Processing item month:', item);
+            var date = new Date(item.ano, item.mes_numero, 1);
             return date.toLocaleString('pt-BR', { month: 'short', year: 'numeric' });
         });
 
@@ -429,10 +429,10 @@ function ($) {
             return Number(item.count || item.total_tickets);
         });
 
-        // console.log('Chart Data Processed:', {
-        //     categories: this.alltimeStatsCategories,
-        //     data: this.alltimeStatsData
-        // });
+        console.log('Chart Data Processed:', {
+            categories: this.alltimeStatsCategories,
+            data: this.alltimeStatsData
+        });
     };
 
     AjaxRequest.prototype.updateCharts = function() {

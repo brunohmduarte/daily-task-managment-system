@@ -9,12 +9,10 @@
         }
     ],
     "require": {
-        "php": ">=8.0 | <=8.2",
+        "php": ">=8.0",
         "ext-pdo": "*",
         "coffeecode/datalayer": "^1",
-        "coffeecode/uploader": "^1",
-        "guzzlehttp/guzzle": "^7.8",
-        "twig/twig": "^3.8"
+        "coffeecode/uploader": "^2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.9",

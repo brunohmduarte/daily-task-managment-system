@@ -430,6 +430,11 @@ tbody, td, tfoot, th, thead, tr {
 label {
   display: inline-block;
 }
+label.required::after {
+  content: "*";
+  color: red;
+  margin-left: 2px;
+}
 
 button {
   border-radius: 0;

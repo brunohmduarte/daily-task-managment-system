@@ -1,2 +1,9 @@
 vendor/
 var/
+.devilbox/
+.idea/
+.vscode/
+*.log
+*.cache
+*.env
+*.sqlite

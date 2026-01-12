@@ -6,6 +6,7 @@ class Controller
 {
     public $cssExternal = [];
     public $jsExternal = [];
+    public $action = 'list';
 
     protected $linkCssExternal = '<link href="%s" rel="stylesheet" type="text/css" />';
     protected $linkJsExternal = '<script src="%s" type="text/javascript"></script>';
@@ -39,11 +40,15 @@ class Controller
      * 
      * @return string
      */
-    public function getCssExternal() 
+    public function getCssExternal(bool $urlDefault = true) 
     {
         $links = '';
+        // $domain = dirname(__DIR__, 2).'/';
+        $domain = URL_BASE;
+
         foreach ($this->cssExternal as $link) {
-            $links .= sprintf($this->linkCssExternal, dirname(__DIR__, 2).'/'.ltrim($link));
+            $url = ($urlDefault) ? $domain .'/'. ltrim($link) : $link;
+            $links .= sprintf($this->linkCssExternal, $url);
         }
 
         return $links;
@@ -57,10 +62,18 @@ class Controller
     public function getJsExternal() 
     {
         $links = '';
+        $domain = URL_BASE;
         foreach ($this->jsExternal as $link) {
-            $links .= sprintf($this->linkJsExternal, dirname(__DIR__, 2).'/'.ltrim($link));
+            $links .= sprintf($this->linkJsExternal, $domain .'/'. ltrim($link));
         }
 
         return $links;
+    }
+
+    public function defineAction(): void
+    {
+        if (isset($_GET['action'])) {
+            $this->action = $_GET['action'];
+        } 
     }
 }

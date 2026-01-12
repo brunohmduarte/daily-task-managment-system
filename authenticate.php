@@ -58,7 +58,7 @@ if ($userData->active != 1) {
 
 // Session initialized
 if (!empty($_SESSION['user'])) {
-    die(header('Location: '. URL_BASE .'/admin/index.php'));
+    die(header('Location: '. URL_BASE .'/admin/dashboard.php'));
 }
 
 // Session create
@@ -73,4 +73,4 @@ $_SESSION['user']['updated_at']       = $userData->updated_at;
 $_SESSION['user']['is_authenticated'] = true;
 $_SESSION['user']['role']             = 'Administrator'; // futura implementação de múltiplos níveis de acesso
 
-die(header('Location: '. URL_BASE .'/admin/index.php'));
+die(header('Location: '. URL_BASE .'/admin/dashboard.php'));

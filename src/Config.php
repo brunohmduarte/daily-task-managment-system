@@ -2,7 +2,7 @@
 
 $protocol = ($_SERVER['HTTPS'] !== 'on') ? 'http://' : 'https://';
 
-define('URL_BASE', $protocol . 'daily.dvl.to');
+define('URL_BASE', $protocol . 'daily2.dvl.to');
 define('URL_EXTERNAL', 'https://coderthemes.com/shreyu');
 define('LOAD_LINK_EXTERNAL', false);
 define('DATA_LAYER_CONFIG', [

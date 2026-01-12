@@ -4,6 +4,15 @@ namespace Application\Controllers;
 
 class AdminController extends Controller
 {
+    const ALLOWED_PAGES = [
+        'dashboard',
+        'stores',
+        'products',
+        'categories',
+        'users',
+        'reporters',
+    ];
+
     public $route;
     public $action;
     public $id;
@@ -17,15 +26,23 @@ class AdminController extends Controller
     public function init(): void
     {
         $this->getParams();
-        // $this->setCssExternal('assets/css/admin-custom.css');
-        // $this->setJsExternal('assets/js/admin-custom.js');
+        $this->loadExternalLinks();
     }
 
     public function getParams(): void
     {
+        // validar e sanitizar os parâmetros de entrada
         $this->route  = $_GET['route'] ?? '';
         $this->action = $_GET['action'] ?? '';
         $this->id     = $_GET['id'] ?? '';
+    }
+
+    public function loadExternalLinks() 
+    {
+        if (!empty($this->route) && in_array($this->route, self::ALLOWED_PAGES) && empty($this->action)) {
+            $this->setCssExternal('https//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css');
+            $this->setJsExternal('https//cdn.datatables.net/2.3.5/js/dataTables.min.js');
+        }
     }
 
     /**

@@ -71,20 +71,11 @@ class Ticket extends DataLayer
     public function getAllTimeStatistics() 
     {
         $query = "
-            SELECT 
-                YEAR(created_at) AS ano,
-                MONTH(created_at) AS mes_numero,
-                COUNT(*) AS total_tickets
-            FROM
-                tickets
-            WHERE
-                created_at >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-            GROUP BY
-                ano,
-                mes_numero
-            ORDER BY
-                ano DESC,
-                mes_numero DESC;
+            SELECT   YEAR(created_at) AS ano, MONTH(created_at) AS mes_numero, COUNT(*) AS total_tickets
+            FROM     tickets
+            WHERE    created_at >= DATE_SUB(CURDATE(), INTERVAL 11 MONTH)
+            GROUP BY ano, mes_numero
+            ORDER BY ano, mes_numero;
         ";
         
         return $this->executeQuery($query);
