@@ -351,7 +351,7 @@ class Tickets extends Controller
         }
 
         $query = "
-            SELECT s.name AS store, t.reference, t.title, t.resolution, t.`status`, 
+            SELECT DISTINCT s.name AS store, t.reference, t.title, t.resolution, t.`status`, t.ticket_id, 
                 (
                     SELECT TIME_FORMAT(
                         SEC_TO_TIME(
@@ -566,6 +566,10 @@ class Tickets extends Controller
             $wokingTimeModel->development_date  = $this->getFormData('development_date', 'working_time')[$key];
             $wokingTimeModel->development_begin = $this->getFormData('development_begin', 'working_time')[$key];
             $wokingTimeModel->development_end   = $this->getFormData('development_end', 'working_time')[$key];
+
+            if ($this->getFormData('status') == 4) {
+                $wokingTimeModel->done_at = date('Y-m-d');
+            }
 
             $isSave = $wokingTimeModel->save();
             if (empty($isSave)) {
