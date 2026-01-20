@@ -26,21 +26,6 @@
         $btnDisabled = ($controller->action === 'delete') ? 'disabled' : '';
         $btnColor = ($controller->action === 'delete') ? 'btn-danger' : 'btn-primary';
     }
-
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
-    //     $action = $_GET['action'];
-    //     if (method_exists($controller, $action)) {
-    //         $controller->$action();
-    //     } else {
-    //         // Handle unknown action
-    //         http_response_code(400);
-    //         echo "Ação desconhecida.";
-    //         exit;
-    //     }
-    // }
-
-    // echo '<pre>'. print_r($_SERVER, true) .'</pre>';
-    // exit;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -198,6 +183,9 @@
         </div>
     </div>
 
+    <!-- Sidebar Settings -->
+    <?php include_once(__DIR__ . '/components/sidebar-settings.php'); ?>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap Bundle (includes Popper) -->
@@ -289,7 +277,7 @@
                 messages: {
                     name: {
                         required: "Por favor, insira o nome do relator.",
-                        minlength: "O nome deve ter nom mínimo 3 caracteres."
+                        minlength: "O nome deve ter no mínimo 3 caracteres."
                     }
                 },
                 errorElement: 'div',

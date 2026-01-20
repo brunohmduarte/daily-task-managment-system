@@ -19,7 +19,7 @@ class Store extends DataLayer
      * List of required fields in the database
      * @var array $fieldsAllowed
      */
-    public $fieldsAllowed = ['responsible', 'email'];
+    public $fieldsAllowed = ['name', 'responsible', 'email'];
 
     /**
      * Identifier field in the User table
@@ -49,5 +49,10 @@ class Store extends DataLayer
     public function getStoresTotalNumber(): int
     {
         return $this->find()->count();
+    }
+
+    public function listStores() 
+    {
+        return $this->find()->fetch(true);
     }
 }

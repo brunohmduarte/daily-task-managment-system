@@ -29,4 +29,23 @@ class Data
 
         return $response;
     }
+
+    public function formatPhone(string $phone): ?string 
+    {
+        $number = preg_replace('/\D/', '', $phone);
+        if (!is_numeric($number)) {
+            return false;
+        }
+
+        $length = strlen($number);
+        if ($length == 10) {
+            return preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $number);
+        }
+
+        if ($length == 11) {
+            return preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $number);
+        }
+
+        return false;
+    }
 }

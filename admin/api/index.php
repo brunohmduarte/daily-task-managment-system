@@ -20,6 +20,7 @@ require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 use Application\Core\Router;
 use Application\Controllers\DashboardController;
 use Application\Controllers\ReportersController;
+use Application\Controllers\StoresController;
 use Application\Middleware\AuthMiddleware;
 
 // Verificar autenticação
@@ -35,6 +36,13 @@ Router::on('createReporter', [$reportersController, 'create']);
 Router::on('updateReporter', [$reportersController, 'update']);
 Router::on('deleteReporter', [$reportersController, 'delete']);
 Router::on('listTicketReporters', [$reportersController, 'read']);
+
+// Rotas para Lojas
+$storesController = new StoresController();
+Router::on('createStore', [$storesController, 'create']);
+Router::on('updateStore', [$storesController, 'update']);
+Router::on('deleteStore', [$storesController, 'delete']);
+Router::on('listStores', [$storesController, 'read']);
 
 
 // Você pode adicionar mais ações assim:
