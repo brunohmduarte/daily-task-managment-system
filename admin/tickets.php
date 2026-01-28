@@ -522,6 +522,7 @@ class Tickets extends Controller
             $appoiment->development_begin = $this->getFormData('development_begin', 'working_time')[$appoiment->time_id];
             $appoiment->development_end = $this->getFormData('development_end', 'working_time')[$appoiment->time_id];
             // exit($this->getFormData('status'));
+            $appoiment->done_at = null;
             if ($this->getFormData('status') == 4) {
                 $appoiment->done_at = date('Y-m-d');
             }
@@ -567,6 +568,7 @@ class Tickets extends Controller
             $wokingTimeModel->development_begin = $this->getFormData('development_begin', 'working_time')[$key];
             $wokingTimeModel->development_end   = $this->getFormData('development_end', 'working_time')[$key];
 
+            $wokingTimeModel->done_at = null;
             if ($this->getFormData('status') == 4) {
                 $wokingTimeModel->done_at = date('Y-m-d');
             }
