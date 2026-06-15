@@ -42,7 +42,8 @@ $storesController = new StoresController();
 Router::on('createStore', [$storesController, 'create']);
 Router::on('updateStore', [$storesController, 'update']);
 Router::on('deleteStore', [$storesController, 'delete']);
-Router::on('listStores', [$storesController, 'read']);
+Router::on('listStores', [$storesController, 'listStores']);
+Router::on('storeUninstall', [$storesController, 'storeUninstall']);
 
 
 // Você pode adicionar mais ações assim:

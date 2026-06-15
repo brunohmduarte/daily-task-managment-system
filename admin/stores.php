@@ -50,11 +50,12 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
-    <title>Daily | Gerenciamento de Lojas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Página de gerenciamento das lojas." name="description" />
     <meta content="Coderthemes" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />    
+    <title>Daily | Gerenciamento de Lojas</title>
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo getUrlFull('assets/images/favicon.ico'); ?>">
 
@@ -283,6 +284,7 @@
                             </form>
 
                         <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -292,7 +294,7 @@
     <?php include_once(__DIR__ . '/components/sidebar-settings.php'); ?>
 
     <!-- Modal Spinner -->
-     <div class="modal " id="centermodal" tabindex="-1" aria-labelledby="myCenterModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal " id="centermodal" tabindex="-1" aria-labelledby="myCenterModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="d-flex justify-content-center align-items-center" >
@@ -304,6 +306,7 @@
             </div>
         </div>
     </div>
+
     <div class="offcanvas-backdrop fade show" id="backcentermodal" style="display: none;"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

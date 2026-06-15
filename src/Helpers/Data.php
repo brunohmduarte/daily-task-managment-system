@@ -30,22 +30,30 @@ class Data
         return $response;
     }
 
-    public function formatPhone(string $phone): ?string 
+    public function formatPhone(string $phone): mixed 
     {
-        $number = preg_replace('/\D/', '', $phone);
-        if (!is_numeric($number)) {
-            return false;
+        $number = $this->removeNonNumericCharacter($phone);
+        if ($this->isValidNumberPhone($number)) {
+            $length = strlen($number);
+            if ($length == 10) {
+                return preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $number);
+            }
+    
+            if ($length == 11) {
+                return preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $number);
+            }
         }
+        
+        return null;
+    }
 
-        $length = strlen($number);
-        if ($length == 10) {
-            return preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $number);
-        }
+    public function removeNonNumericCharacter(string $string): string
+    {
+        return preg_replace('/\D/', '', $string);
+    }
 
-        if ($length == 11) {
-            return preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $number);
-        }
-
-        return false;
+    public function isValidNumberPhone(string $numberPhone): bool
+    {
+        return is_numeric($numberPhone) && (strlen($numberPhone) === 10 || strlen($numberPhone) === 11);
     }
 }

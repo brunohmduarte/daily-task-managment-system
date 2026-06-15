@@ -5,8 +5,10 @@ namespace Application\Controllers;
 use Application\Core\ApplicationException;
 use Application\Core\Factory;
 use Application\Helpers\Data as DataHelper;
+use Application\Helpers\FilesManipulation as FilesHelper;
 use Application\Helpers\Image as ImageHelper;
 use Application\Model\Store as StoreModel;
+use Application\Model\Resource\DataDefinition;
 use Application\Interfaces\CrudInterfaces;
 
 class StoresController extends Controller implements CrudInterfaces
@@ -88,36 +90,14 @@ class StoresController extends Controller implements CrudInterfaces
         }
     }
 
-    public function read() 
+    public function read(): array
     {
         $data = $this->getStoreModel()->listStores();
         if (!is_array($data)) {
             return [];
         }
 
-        /** @var DataHelper $helper */
-        $helper = Factory::create(DataHelper::class);
-
-        $response = [];
-        foreach ($data as $datalayer) {
-            $record = (array) $datalayer->data();
-            $html['store']       = "<img src=\"" . URL_BASE . "/{$record['brand_logo']}\" class=\"rounded\" alt=\"{$record['name']}\" height=\"32\" width=\"32\"> {$record['name']}";
-            $html['responsible'] = $record['responsible'];
-            $html['email']       = $record['email'];
-            $html['phone']       = (!empty($record['phone'])) ? $helper->formatPhone($record['phone']) : '';
-            $html['isActive']    = $record['is_active'] ? '<span class="badge badge-soft-success">Ativa</span>' : '<span class="badge badge-soft-danger">Inativa</span>';
-            $html['actions']     = "
-                <a href=\"?action=update&id={$record['store_id']}\" class=\"me-1 text-body-secondary\" title=\"Editar o registro\">
-                    <span class=\"mdi mdi-text-box-edit fs-3\"></span>
-                </a>
-                <a href=\"?action=delete&id={$record['store_id']}\" class=\"text-body-secondary\" title=\"Deletar o registro\">
-                    <span class=\"mdi mdi-delete fs-3\"></span>
-                </a>
-            ";
-            array_push($response, $html);
-        }
-
-        return $response;
+        return $data;
     }
 
     public function update()
@@ -255,6 +235,38 @@ class StoresController extends Controller implements CrudInterfaces
         }
     }
 
+    public function listStores() 
+    {
+        $data = $this->read();
+        if (!is_array($data)) {
+            return [];
+        }
+
+        /** @var DataHelper $helper */
+        $helper = Factory::create(DataHelper::class);
+
+        $response = [];
+        foreach ($data as $datalayer) {
+            $record = (array) $datalayer->data();
+            $html['store']       = "<img src=\"" . URL_BASE . "/{$record['brand_logo']}\" class=\"rounded\" alt=\"{$record['name']}\" height=\"32\" width=\"32\"> {$record['name']}";
+            $html['responsible'] = $record['responsible'];
+            $html['email']       = $record['email'];
+            $html['phone']       = (!empty($record['phone'])) ? $helper->formatPhone($record['phone']) : '';
+            $html['isActive']    = $record['is_active'] ? '<span class="badge badge-soft-success">Ativa</span>' : '<span class="badge badge-soft-danger">Inativa</span>';
+            $html['actions']     = "
+                <a href=\"?action=update&id={$record['store_id']}\" class=\"me-1 text-body-secondary\" title=\"Editar o registro\">
+                    <span class=\"mdi mdi-text-box-edit fs-3\"></span>
+                </a>
+                <a href=\"?action=delete&id={$record['store_id']}\" class=\"text-body-secondary\" title=\"Deletar o registro\">
+                    <span class=\"mdi mdi-delete fs-3\"></span>
+                </a>
+            ";
+            array_push($response, $html);
+        }
+
+        return $response;
+    }
+
     public function storeExists(int $id): bool
     {
         if (empty($id)) {
@@ -278,4 +290,59 @@ class StoresController extends Controller implements CrudInterfaces
         }
     }
 
+    public function storeUninstall() 
+    {
+        $name = trim($_POST['store_name']) ?? null;
+        try {
+            if (empty($name)) {
+                throw new ApplicationException("Loja não encontrada", 404);
+            }
+
+            /** @var FileHelper $fileHelper */
+            $fileHelper = Factory::create(FilesHelper::class);
+            if (!$fileHelper->isStoreInstalled($name)) {
+                throw new ApplicationException("Loja não encontrada", 404);
+            }
+
+            $fileHelper->removeWorkspaceVSCode($name);            
+            $fileHelper->removeStoreFolder($name);
+            $fileHelper->removeDatabaseBackup($name);
+
+            /** @var DataDefinition $dataDefinition */
+            $dataDefinition = Factory::create(DataDefinition::class);
+            if (!$dataDefinition->dropDatabase($name)) {
+                throw new ApplicationException("Não foi possível remover o banco de dados da loja.", 500);
+            }
+            
+        } catch (ApplicationException $e) {
+            return [
+                'status' => 'error',
+                'message' => $e->getUserMessage()
+            ];
+            /**
+             * @todo 
+             * 1. Criar um mecânismo de padronização de mensagens. Ex: crud messages
+             * 2. Registrar o erro real em um arquivo de log
+             * 3. Enviar a mensagem amigável para a tela
+             */
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        } finally {
+            return [
+                'status' => 'success',
+                'message' => 'Loja desinstalada com sucesso!'
+            ];
+        }
+    }
+
+    public function getNamesInstalledProjectsFolders(): array
+    {
+        /** @var FilesHelper $filesHelper */
+        $filesHelper = Factory::create(FilesHelper::class);
+        
+        return $filesHelper->getListDirectories();
+    }
 }

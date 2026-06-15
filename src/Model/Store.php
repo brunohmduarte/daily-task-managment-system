@@ -55,4 +55,9 @@ class Store extends DataLayer
     {
         return $this->find()->fetch(true);
     }
+
+    public function findByName(string $name) 
+    {
+        return $this->find("name = :name", "name={$name}")->fetch();
+    }
 }
