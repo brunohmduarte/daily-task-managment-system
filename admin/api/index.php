@@ -21,6 +21,7 @@ use Application\Core\Router;
 use Application\Controllers\DashboardController;
 use Application\Controllers\ReportersController;
 use Application\Controllers\StoresController;
+use Application\Controllers\TicketsController;
 use Application\Middleware\AuthMiddleware;
 
 // Verificar autenticação
@@ -44,6 +45,13 @@ Router::on('updateStore', [$storesController, 'update']);
 Router::on('deleteStore', [$storesController, 'delete']);
 Router::on('listStores', [$storesController, 'listStores']);
 Router::on('storeUninstall', [$storesController, 'storeUninstall']);
+
+// Rotas para Tickets
+$ticketsController = new TicketsController();
+// Router::on('createTicket', [$ticketsController, 'create']);
+// Router::on('updateTicket', [$ticketsController, 'update']);
+// Router::on('deleteTicket', [$ticketsController, 'delete']);
+Router::on('listTickets', [$ticketsController, 'listTickets']);
 
 
 // Você pode adicionar mais ações assim:

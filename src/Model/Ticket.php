@@ -80,4 +80,9 @@ class Ticket extends DataLayer
         
         return $this->executeQuery($query);
     }
+
+    public function listTickets() 
+    {
+        return $this->find()->fetch(true);
+    }
 }

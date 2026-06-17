@@ -39,7 +39,7 @@
                 
                 <li class="menu-title mt-2 fw-semibold">Tickets</li>
                 <li>
-                    <a href="tickets.php" data-bs-toggle="collapse">
+                    <a href="tickets.php">
                         <span class="mdi mdi-ticket-confirmation"></span>
                         <span>Tickets</span>
                     </a>
