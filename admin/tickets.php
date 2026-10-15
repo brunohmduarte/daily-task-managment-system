@@ -85,8 +85,8 @@
                     <div class="col-12">
                         <div class="page-title-box">
                             <div class="" style="width: 70%">
-                                <h4 class="page-title fs-3">Gerenciamento de Lojas</h4>
-                                <p class="text-muted mt-1">Aqui vocês pode gerenciar as informações das lojas cadastradas que receberão os devidos cuidados para manter a loja estável, navegável e com maior performance.</p>
+                                <h4 class="page-title fs-3">Gerenciamento de Tickets</h4>
+                                <p class="text-muted mt-1">Aqui vocês pode gerenciar as informações dos tickets cadastrados que receberão os devidos cuidados para manter o sistema estável, navegável e com maior performance.</p>
                                 
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
@@ -94,8 +94,8 @@
                                     <i class="mdi mdi-arrow-left"></i> Voltar
                                 </a>
                                 <?php if ($controller->action == 'list'): ?>
-                                <a href="stores.php?action=create" class="btn btn-sm btn-primary fw-meidum fs-6">
-                                    <i class="mdi mdi-plus"></i> Adicionar Loja
+                                <a href="tickets.php?action=create" class="btn btn-sm btn-primary fw-meidum fs-6">
+                                    <i class="mdi mdi-plus"></i> Adicionar Ticket
                                 </a>
                                 <?php endif; ?>
                             </div>

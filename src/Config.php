@@ -1,6 +1,8 @@
 <?php
 
-$protocol = ($_SERVER['HTTPS'] !== 'on') ? 'http://' : 'https://';
+// echo "<pre>", print_r($_SERVER), "</pre>";
+
+$protocol = ($_SERVER['REQUEST_SCHEME'] !== 'on') ? 'http://' : 'https://';
 
 define('URL_BASE', $protocol . 'daily2.dvl.to');
 define('URL_EXTERNAL', 'https://coderthemes.com/shreyu');

@@ -7,6 +7,8 @@ use Application\Core\Factory;
 use Application\Helpers\Data as DataHelper;
 use Application\Helpers\FilesManipulation as FilesHelper;
 use Application\Helpers\Image as ImageHelper;
+use Application\Model\Reporter as ReporterModel;
+use Application\Model\Store as StoreModel;
 use Application\Model\Ticket as TicketModel;
 use Application\Model\Resource\DataDefinition;
 use Application\Interfaces\CrudInterfaces;
@@ -245,13 +247,56 @@ class TicketsController extends Controller implements CrudInterfaces
         /* @var DataHelper $helper */
         // $helper = Factory::create(DataHelper::class);
 
+        $stores = Factory::create(StoreModel::class)->listStores();
+        $storesById = [];
+        if (is_array($stores)) {
+            foreach ($stores as $store) {
+                $storeRecord = (array) $store->data();
+                $storesById[$storeRecord['store_id']] = $storeRecord;
+            }
+        }
+
+        $reporters = Factory::create(ReporterModel::class)->listReporters();
+        $reportersById = [];
+        if (is_array($reporters)) {
+            foreach ($reporters as $reporter) {
+                $reporterRecord = (array) $reporter->data();
+                $reportersById[$reporterRecord['reporter_id']] = $reporterRecord;
+            }
+        }
+
         $response = [];
         foreach ($data as $datalayer) {
             $record = (array) $datalayer->data();
+            $storeId = $record['store_id'] ?? '';
+            $store = $storesById[$storeId] ?? [];
+            $storeName = (string) ($store['name'] ?? $storeId);
+            $storeNameHtml = htmlspecialchars($storeName, ENT_QUOTES, 'UTF-8');
+            $storeImage = '';
+
+            if (!empty($store['brand_logo'])) {
+                $storeImageUrl = htmlspecialchars(
+                    URL_BASE . '/' . ltrim($store['brand_logo'], '/'),
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
+                $storeImage = "<img src=\"{$storeImageUrl}\" alt=\"{$storeNameHtml}\" title=\"{$storeNameHtml}\" class=\"rounded-circle me-3 shadow\" height=\"48\">";
+            }
+
+            $reporterId = $record['reporter_id'] ?? '';
+            $reporter = $reportersById[$reporterId] ?? [];
+            $reporterName = htmlspecialchars(
+                (string) ($reporter['name'] ?? $reporterId),
+                ENT_QUOTES,
+                'UTF-8'
+            );
+
             $html['reference'] = $record['reference'];
             $html['title']     = $record['title'];
-            $html['store']     = $record['store_id'];
-            $html['reporter']  = $record['reporter_id'];
+            $html['store']     = $storeImage . $storeNameHtml;
+            $html['reporter']  = !empty($reporterId)
+                ? "<a href=\"reporters.php?action=update&id=" . rawurlencode((string) $reporterId) . "\">{$reporterName}</a>"
+                : $reporterName;
             $html['status']    = $this->badgeHtml($record['status']);
             $html['create_at'] = date('d/m/Y', strtotime($record['created_at']));
             $html['actions']   = "
