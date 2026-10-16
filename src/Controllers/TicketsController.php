@@ -4,13 +4,9 @@ namespace Application\Controllers;
 
 use Application\Core\ApplicationException;
 use Application\Core\Factory;
-use Application\Helpers\Data as DataHelper;
-use Application\Helpers\FilesManipulation as FilesHelper;
-use Application\Helpers\Image as ImageHelper;
 use Application\Model\Reporter as ReporterModel;
 use Application\Model\Store as StoreModel;
 use Application\Model\Ticket as TicketModel;
-use Application\Model\Resource\DataDefinition;
 use Application\Interfaces\CrudInterfaces;
 
 class TicketsController extends Controller implements CrudInterfaces
@@ -26,70 +22,19 @@ class TicketsController extends Controller implements CrudInterfaces
         return Factory::create(TicketModel::class);
     }
 
+    public function getStoreModel(): StoreModel
+    {
+        return Factory::create(StoreModel::class);
+    }
+
+    public function getReporterModel(): ReporterModel
+    {
+        return Factory::create(ReporterModel::class);
+    }
+
     public function create()
     {
-        try {
-            $name            = trim($_POST['name']);
-            $responsible     = trim($_POST['responsible']);
-            $email           = $_POST['email'];
-            $phone           = $_POST['phone'];
-            $platformVersion = $_POST['platform_version'];
-            $repository      = $_POST['repository'];
-            $urlLocal        = $_POST['url_local'];
-            $urlSandbox      = $_POST['url_sandbox'];
-            $urlProduction   = $_POST['url_production'];
-            $isActive        = $_POST['is_active'];
-            $picture = '';
-
-            // Upload de imagem
-            $file = $_FILES['brand_logo'] ?? null;
-            if ($file && $file['error'] == 0) {
-                /** @var ImageHelper $imageHelper */
-                $imageHelper = Factory::create(ImageHelper::class);
-
-                $picture = $imageHelper->upload($file, $name, 'stores');
-            }
-
-            $storeModel = $this->getStoreModel();
-            $storeModel->name             = $name;
-            $storeModel->responsible      = $responsible;
-            $storeModel->email            = $email;
-            $storeModel->phone            = preg_replace('/\D/', '', $phone);
-            $storeModel->platform_version = $platformVersion;
-            $storeModel->repository       = $repository;
-            $storeModel->url_local        = $urlLocal;
-            $storeModel->url_sandbox      = $urlSandbox;
-            $storeModel->url_production   = $urlProduction;
-            $storeModel->is_active        = $isActive;
-            $storeModel->brand_logo       = $picture;
-
-            $isSaved = $storeModel->save();
-            if (!$isSaved) {
-                throw new ApplicationException("Não foi possível criar a nova loja.", 500);
-            }
-
-            return [
-                'status' => 'success',
-                'message' => 'Loja criada com sucesso!'
-            ];
-
-        } catch (ApplicationException $e) {
-            return [
-                'status' => 'error',
-                'message' => $e->getUserMessage()
-            ];
-            /**
-             * @todo 
-             * 1. Criar um mecânismo de padronização de mensagens. Ex: crud messages
-             * 2. Registrar o erro real em um arquivo de log
-             * 3. Enviar a mensagem amigável para a tela
-             */
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ];
-        }
+        return $this->saveTicket();
     }
 
     public function read(): array
@@ -104,78 +49,36 @@ class TicketsController extends Controller implements CrudInterfaces
 
     public function update()
     {
+        return $this->saveTicket(true);
+    }
+
+    public function delete()
+    {
         try {
-            $name            = trim($_POST['name']) ?? null;
-            $responsible     = trim($_POST['responsible']) ?? null;
-            $email           = $_POST['email'] ?? null;
-            $phone           = $_POST['phone'] ?? null;
-            $platformVersion = $_POST['platform_version'] ?? null;
-            $repository      = $_POST['repository'] ?? null;
-            $urlLocal        = $_POST['url_local'] ?? null;
-            $urlSandbox      = $_POST['url_sandbox'] ?? null;
-            $urlProduction   = $_POST['url_production'] ?? null;
-            $isActive        = $_POST['is_active'] ?? null;
-            $id              = $_POST['store_id'] ?? null;
-            $file            = $_FILES['brand_logo'] ?? null;
-            $picture         = '';
-
-            if (empty($id)) {
-                throw new ApplicationException("Loja não encontrada", 404);
+            $id = filter_var($_POST['ticket_id'] ?? null, FILTER_VALIDATE_INT);
+            if (!$id || $id < 1) {
+                throw new ApplicationException("Ticket não encontrado.", "Invalid ticket ID", 400);
             }
 
-            $store = $this->getStoreModel()->findById($id);
-            if (!$store) {
-                throw new ApplicationException("Loja não encontrada", 404);
+            $ticket = $this->getTicketModel()->findById($id);
+            if (!$ticket) {
+                throw new ApplicationException("Ticket não encontrado.", "Ticket not found", 404);
             }
 
-            if ($file && $file['error'] == 0) {
-                // Removendo a foto antiga.
-                $removePhoto = $_POST['picture_remove'] ?? 'off'; 
-                if ($removePhoto == 'on' && !empty($store->brand_logo) && file_exists($store->brand_logo)) {
-                    unlink($store->brand_logo);
-                    $store->brand_logo = '';
-                }
-
-                /** @var ImageHelper $imageHelper */
-                $imageHelper = Factory::create(ImageHelper::class);
-                $picture = $imageHelper->upload($file, $name, 'stores');
-
-                $store->brand_logo = $picture;
-            }
-
-            $store->name             = $name;
-            $store->responsible      = $responsible;
-            $store->email            = $email;
-            $store->phone            = preg_replace('/\D/', '', $phone);
-            $store->platform_version = $platformVersion;
-            $store->repository       = $repository;
-            $store->url_local        = $urlLocal;
-            $store->url_sandbox      = $urlSandbox;
-            $store->url_production   = $urlProduction;
-            $store->is_active        = $isActive;
-
-            $save = $store->save();
-
-            if (!$save) {
-                throw new ApplicationException("Não foi possível atualizar os dados da loja.", 500);
+            if (!$ticket->destroy()) {
+                throw new ApplicationException("Não foi possível remover o ticket.", "Ticket deletion failed", 500);
             }
 
             return [
                 'status' => 'success',
-                'message' => 'Loja atualizada com sucesso!'
+                'message' => 'Ticket removido com sucesso!'
             ];
-        
+
         } catch (ApplicationException $e) {
             return [
                 'status' => 'error',
                 'message' => $e->getUserMessage()
             ];
-            /**
-             * @todo 
-             * 1. Criar um mecânismo de padronização de mensagens. Ex: crud messages
-             * 2. Registrar o erro real em um arquivo de log
-             * 3. Enviar a mensagem amigável para a tela
-             */
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
@@ -184,46 +87,75 @@ class TicketsController extends Controller implements CrudInterfaces
         }
     }
 
-    public function delete()
+    private function saveTicket(bool $isUpdate = false): array
     {
         try {
-            $name            = trim($_POST['name']) ?? null;
-            $responsible     = trim($_POST['responsible']) ?? null;
-            $email           = $_POST['email'] ?? null;
-            $phone           = $_POST['phone'] ?? null;
-            $platformVersion = $_POST['platform_version'] ?? null;
-            $repository      = $_POST['repository'] ?? null;
-            $urlLocal        = $_POST['url_local'] ?? null;
-            $urlSandbox      = $_POST['url_sandbox'] ?? null;
-            $urlProduction   = $_POST['url_production'] ?? null;
-            $isActive        = $_POST['is_active'] ?? null;
-            $id              = $_POST['store_id'] ?? null;
-            $file            = $_FILES['brand_logo'] ?? null;
-
-            if (empty($id)) {
-                throw new ApplicationException("Loja não encontrada", 404);
-            }
-            
-            $store = $this->getStoreModel()->findById($id);
-            if (!$store) {
-                throw new ApplicationException("Loja não encontrada", 404);
+            $input = $_POST['data']['tickets'] ?? $_POST;
+            if (!is_array($input)) {
+                throw new ApplicationException("Os dados do ticket são inválidos.", "Invalid ticket payload", 400);
             }
 
-            // Removendo a foto antiga.
-            if (!empty($store->brand_logo) && file_exists($store->brand_logo)) {
-                unlink($store->brand_logo);
+            $ticketId = filter_var($input['ticket_id'] ?? $_POST['ticket_id'] ?? null, FILTER_VALIDATE_INT);
+            if ($isUpdate && (!$ticketId || $ticketId < 1)) {
+                throw new ApplicationException("Ticket não encontrado.", "Invalid ticket ID", 400);
             }
 
-            $isDestroyed = $store->destroy();
-            if (!$isDestroyed) {
-                throw new ApplicationException("Não foi possivel remover a loja.", 500);
+            $requiredFields = ['reference', 'title', 'description', 'reporter_id', 'store_id', 'status', 'priority'];
+            foreach ($requiredFields as $field) {
+                if (!isset($input[$field]) || !is_scalar($input[$field]) || trim((string) $input[$field]) === '') {
+                    throw new ApplicationException("Preencha todos os campos obrigatórios.", "Missing field: {$field}", 400);
+                }
+            }
+
+            if (strlen(trim((string) $input['title'])) < 3
+                || strlen(trim((string) $input['description'])) < 3
+            ) {
+                throw new ApplicationException("O título e a descrição devem ter pelo menos 3 caracteres.", "Ticket text is too short", 400);
+            }
+
+            $reporterId = filter_var($input['reporter_id'], FILTER_VALIDATE_INT);
+            $storeId = filter_var($input['store_id'], FILTER_VALIDATE_INT);
+            $status = filter_var($input['status'], FILTER_VALIDATE_INT);
+            $priority = filter_var($input['priority'], FILTER_VALIDATE_INT);
+
+            if (!$reporterId || !$storeId || !$status || !$priority
+                || $status < 1 || $status > 5
+                || $priority < 1 || $priority > 3
+            ) {
+                throw new ApplicationException("Selecione um relator, uma loja, uma situação e uma prioridade válidos.", "Invalid ticket selection", 400);
+            }
+
+            if (!$this->getReporterModel()->findById($reporterId)
+                || !$this->getStoreModel()->findById($storeId)
+            ) {
+                throw new ApplicationException("O relator ou a loja selecionados não foram encontrados.", "Invalid reporter or store", 400);
+            }
+
+            $ticket = $isUpdate
+                ? $this->getTicketModel()->findById($ticketId)
+                : $this->getTicketModel();
+
+            if (!$ticket) {
+                throw new ApplicationException("Ticket não encontrado.", "Ticket not found", 404);
+            }
+
+            $ticket->reference = trim((string) $input['reference']);
+            $ticket->title = trim((string) $input['title']);
+            $ticket->description = trim((string) $input['description']);
+            $ticket->resolution = trim((string) ($input['resolution'] ?? ''));
+            $ticket->reporter_id = $reporterId;
+            $ticket->store_id = $storeId;
+            $ticket->status = $status;
+            $ticket->priority = $priority;
+
+            if (!$ticket->save()) {
+                throw new ApplicationException("Não foi possível salvar o ticket.", "Ticket save failed", 500);
             }
 
             return [
                 'status' => 'success',
-                'message' => 'Loja removida com sucesso!'
+                'message' => $isUpdate ? 'Ticket atualizado com sucesso!' : 'Ticket criado com sucesso!'
             ];
-
         } catch (ApplicationException $e) {
             return [
                 'status' => 'error',

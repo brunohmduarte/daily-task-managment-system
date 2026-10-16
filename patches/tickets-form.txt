@@ -1,0 +1,1013 @@
+<div class="content-page">
+                <div class="content">
+                    <div class="container-fluid">
+                                        <div class="row">
+        <div class="col-12">
+            
+
+            
+                    </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="https://daily.dvl.to/admin/tickets.php" class="btn btn-warning mb-2" title="Voltar para a página anterior">
+                        <i class="mdi mdi-18px mdi-arrow-u-left-top"></i>
+                        <b>Voltar</b>
+                    </a>
+                                    </div>
+                <h4 class="page-title">Gerenciamento de tickets</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="col-12" action="https://daily.dvl.to/admin/tickets.php?action=createSave" method="post" name="ticketManagementForm" id="ticketManagementForm" onsubmit="return validateForm()" enctype="multipart/form-data">
+                        <input type="hidden" name="data[tickets][ticket_id]" id="data[tickets][ticket_id]" value="" />
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][reporter_id]" class="col-3 form-label text-end required">Relator</label>
+                            <div class="col-6">
+                                <select class="form-control select2" name="data[tickets][reporter_id]" id="data[tickets][reporter_id]" data-toggle="select2" required>
+                                                                            <option value=""  selected >
+                                            Selecione
+                                        </option>
+                                                                            <option value="2" >
+                                            Adriana Silva
+                                        </option>
+                                                                            <option value="1" >
+                                            Amanda Teixeira
+                                        </option>
+                                                                            <option value="6" >
+                                            Ana Pereira
+                                        </option>
+                                                                            <option value="14" >
+                                            Anthon Hax
+                                        </option>
+                                                                            <option value="12" >
+                                            Eduardo Sanches
+                                        </option>
+                                                                            <option value="17" >
+                                            Felipe Della Rosa
+                                        </option>
+                                                                            <option value="15" >
+                                            Higor Evangelista
+                                        </option>
+                                                                            <option value="19" >
+                                            Igor Araújo
+                                        </option>
+                                                                            <option value="16" >
+                                            Implantação Bis2Bis
+                                        </option>
+                                                                            <option value="18" >
+                                            Italo Silva
+                                        </option>
+                                                                            <option value="4" >
+                                            Josiane Costa
+                                        </option>
+                                                                            <option value="3" >
+                                            Kelly Silva
+                                        </option>
+                                                                            <option value="13" >
+                                            Lariana Cardoso Alves
+                                        </option>
+                                                                            <option value="9" >
+                                            Matheus Pacheco
+                                        </option>
+                                                                            <option value="7" >
+                                            Rafael Kieski Duarte
+                                        </option>
+                                                                            <option value="5" >
+                                            Vivi Peres
+                                        </option>
+                                                                    </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][reference]" class="col-3 form-label text-end required">Código de referência</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[tickets][reference]" id="data[tickets][reference]" value="" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3">
+                                                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][title]" class="col-3 form-label text-end required">Título</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="data[tickets][title]" id="data[tickets][title]" value="" placeholder="" autocomplete="off" required />
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][store_id]" class="col-3 form-label text-end required">Loja</label>
+                            <div class="col-6">
+                                <select class="form-control select2" name="data[tickets][store_id]" id="data[tickets][store_id]" data-toggle="select2" required>
+                                                                        <option value=""  selected >
+                                        Selecione
+                                    </option>
+                                                                        <option value="77" >
+                                        4x4 Racer
+                                    </option>
+                                                                        <option value="70" >
+                                        A Trolha
+                                    </option>
+                                                                        <option value="83" >
+                                        Acácia de Americana
+                                    </option>
+                                                                        <option value="114" >
+                                        Alfa Store
+                                    </option>
+                                                                        <option value="40" >
+                                        Alimentar Equipamentos
+                                    </option>
+                                                                        <option value="194" >
+                                        Alternativa Foto Produto
+                                    </option>
+                                                                        <option value="67" >
+                                        Amo Lindices
+                                    </option>
+                                                                        <option value="113" >
+                                        Anabolic Food
+                                    </option>
+                                                                        <option value="115" >
+                                        Ar Pneumática
+                                    </option>
+                                                                        <option value="170" >
+                                        Armarinho Ambar
+                                    </option>
+                                                                        <option value="20" >
+                                        Arte e Ouro
+                                    </option>
+                                                                        <option value="160" >
+                                        Astro Distribuidora
+                                    </option>
+                                                                        <option value="96" >
+                                        Aura e Pele
+                                    </option>
+                                                                        <option value="217" >
+                                        Auto Posto Tietê
+                                    </option>
+                                                                        <option value="84" >
+                                        Banana Brasil
+                                    </option>
+                                                                        <option value="101" >
+                                        Banana da Terra Brasil
+                                    </option>
+                                                                        <option value="72" >
+                                        Bellenzier
+                                    </option>
+                                                                        <option value="215" >
+                                        Belli Roots
+                                    </option>
+                                                                        <option value="27" >
+                                        Beretta do Brasil
+                                    </option>
+                                                                        <option value="116" >
+                                        Bio Jardin
+                                    </option>
+                                                                        <option value="154" >
+                                        Biohervas
+                                    </option>
+                                                                        <option value="175" >
+                                        Black Store
+                                    </option>
+                                                                        <option value="117" >
+                                        Boss Computer
+                                    </option>
+                                                                        <option value="118" >
+                                        Buckaroo Store
+                                    </option>
+                                                                        <option value="9" >
+                                        Buddy Toys
+                                    </option>
+                                                                        <option value="257" >
+                                        Butiá Lonas
+                                    </option>
+                                                                        <option value="32" >
+                                        Cachimbos Online
+                                    </option>
+                                                                        <option value="104" >
+                                        Calçados para Trabalhar
+                                    </option>
+                                                                        <option value="250" >
+                                        Calita Calçados
+                                    </option>
+                                                                        <option value="108" >
+                                        Cama Carro do Brasil
+                                    </option>
+                                                                        <option value="26" >
+                                        Cama In Box
+                                    </option>
+                                                                        <option value="159" >
+                                        Carfy Shop
+                                    </option>
+                                                                        <option value="56" >
+                                        Carioca Decor
+                                    </option>
+                                                                        <option value="73" >
+                                        Carol Papelaria Corporativo
+                                    </option>
+                                                                        <option value="42" >
+                                        Casa Allegro
+                                    </option>
+                                                                        <option value="202" >
+                                        Casa Ancora
+                                    </option>
+                                                                        <option value="119" >
+                                        Casa da Limpeza
+                                    </option>
+                                                                        <option value="173" >
+                                        Casa Médica
+                                    </option>
+                                                                        <option value="142" >
+                                        Casa Silva Alimentos
+                                    </option>
+                                                                        <option value="120" >
+                                        Casa Vivaz
+                                    </option>
+                                                                        <option value="190" >
+                                        Central Gospel Music
+                                    </option>
+                                                                        <option value="148" >
+                                        Cerealista Express
+                                    </option>
+                                                                        <option value="24" >
+                                        Charutos Online
+                                    </option>
+                                                                        <option value="180" >
+                                        Chocolate Doce
+                                    </option>
+                                                                        <option value="189" >
+                                        Cikala
+                                    </option>
+                                                                        <option value="236" >
+                                        Cimparts
+                                    </option>
+                                                                        <option value="196" >
+                                        Citex
+                                    </option>
+                                                                        <option value="97" >
+                                        CKTex
+                                    </option>
+                                                                        <option value="12" >
+                                        Clube da Luta Shop
+                                    </option>
+                                                                        <option value="226" >
+                                        Comercial Chocolandia
+                                    </option>
+                                                                        <option value="223" >
+                                        Compre Conosco
+                                    </option>
+                                                                        <option value="157" >
+                                        Concorde
+                                    </option>
+                                                                        <option value="258" >
+                                        Consertar Compressores
+                                    </option>
+                                                                        <option value="161" >
+                                        Cowboy Store
+                                    </option>
+                                                                        <option value="109" >
+                                        Cristallimp
+                                    </option>
+                                                                        <option value="143" >
+                                        Croth Uniformes
+                                    </option>
+                                                                        <option value="146" >
+                                        Crown do Brasil
+                                    </option>
+                                                                        <option value="241" >
+                                        Cutelaria Costal
+                                    </option>
+                                                                        <option value="192" >
+                                        Da Mata Café
+                                    </option>
+                                                                        <option value="186" >
+                                        Da Mata Comestíveis
+                                    </option>
+                                                                        <option value="252" >
+                                        Dafoods
+                                    </option>
+                                                                        <option value="13" >
+                                        Daniel Calçados
+                                    </option>
+                                                                        <option value="133" >
+                                        Decor Lumen
+                                    </option>
+                                                                        <option value="14" >
+                                        Decorações Móveis
+                                    </option>
+                                                                        <option value="263" >
+                                        Dellicate
+                                    </option>
+                                                                        <option value="231" >
+                                        Dental Fernandes
+                                    </option>
+                                                                        <option value="162" >
+                                        Dental Odonthomaz
+                                    </option>
+                                                                        <option value="121" >
+                                        Design e Mais
+                                    </option>
+                                                                        <option value="78" >
+                                        Dias Bike
+                                    </option>
+                                                                        <option value="122" >
+                                        Dismafe Ferramentas
+                                    </option>
+                                                                        <option value="221" >
+                                        Display Max
+                                    </option>
+                                                                        <option value="182" >
+                                        Distribuidora Megamix
+                                    </option>
+                                                                        <option value="66" >
+                                        Divinah Store
+                                    </option>
+                                                                        <option value="123" >
+                                        Doggy Store
+                                    </option>
+                                                                        <option value="85" >
+                                        Domco Store
+                                    </option>
+                                                                        <option value="99" >
+                                        Domus Utilidades
+                                    </option>
+                                                                        <option value="87" >
+                                        Dona Castanha
+                                    </option>
+                                                                        <option value="208" >
+                                        Donna Mocinha Modas
+                                    </option>
+                                                                        <option value="86" >
+                                        Dricota
+                                    </option>
+                                                                        <option value="214" >
+                                        Dumont Porcelanas
+                                    </option>
+                                                                        <option value="124" >
+                                        Duty Ótica
+                                    </option>
+                                                                        <option value="49" >
+                                        Editora Cultura Cristã
+                                    </option>
+                                                                        <option value="98" >
+                                        Editora Mizuno
+                                    </option>
+                                                                        <option value="191" >
+                                        Editora Vestseller
+                                    </option>
+                                                                        <option value="1" >
+                                        Editora Vida
+                                    </option>
+                                                                        <option value="251" >
+                                        Ekko Parts
+                                    </option>
+                                                                        <option value="39" >
+                                        Eletron Service
+                                    </option>
+                                                                        <option value="88" >
+                                        Empório Rafaella
+                                    </option>
+                                                                        <option value="74" >
+                                        Empório Rosa
+                                    </option>
+                                                                        <option value="153" >
+                                        Epilê
+                                    </option>
+                                                                        <option value="112" >
+                                        Equipa Center
+                                    </option>
+                                                                        <option value="125" >
+                                        Espaço Kids Calçados
+                                    </option>
+                                                                        <option value="126" >
+                                        Esquina Real Store
+                                    </option>
+                                                                        <option value="127" >
+                                        Estação das Palavras
+                                    </option>
+                                                                        <option value="261" >
+                                        Estilo Nobre
+                                    </option>
+                                                                        <option value="61" >
+                                        Estrela Evangélica
+                                    </option>
+                                                                        <option value="89" >
+                                        Evidence Online
+                                    </option>
+                                                                        <option value="33" >
+                                        Fábrica de Bandeiras
+                                    </option>
+                                                                        <option value="60" >
+                                        Fam DVD Movie
+                                    </option>
+                                                                        <option value="128" >
+                                        Farmácia Quallitá
+                                    </option>
+                                                                        <option value="165" >
+                                        Ferragens Conquista
+                                    </option>
+                                                                        <option value="177" >
+                                        Fiobase
+                                    </option>
+                                                                        <option value="37" >
+                                        Fisico Farma
+                                    </option>
+                                                                        <option value="36" >
+                                        Fisio Medic
+                                    </option>
+                                                                        <option value="129" >
+                                        Fit Curitiba
+                                    </option>
+                                                                        <option value="232" >
+                                        Fixsafe
+                                    </option>
+                                                                        <option value="145" >
+                                        Floresta Flores
+                                    </option>
+                                                                        <option value="111" >
+                                        Floricultura Higienopolis
+                                    </option>
+                                                                        <option value="131" >
+                                        Floricultura Paraíso
+                                    </option>
+                                                                        <option value="132" >
+                                        Fonte Mix
+                                    </option>
+                                                                        <option value="134" >
+                                        Fotay Plus
+                                    </option>
+                                                                        <option value="244" >
+                                        Full Turbos Parts
+                                    </option>
+                                                                        <option value="158" >
+                                        Fun Pro
+                                    </option>
+                                                                        <option value="201" >
+                                        Gama 4x4
+                                    </option>
+                                                                        <option value="149" >
+                                        Getrotech
+                                    </option>
+                                                                        <option value="135" >
+                                        Good Pufes
+                                    </option>
+                                                                        <option value="248" >
+                                        Graal Seg
+                                    </option>
+                                                                        <option value="136" >
+                                        Gran Natural
+                                    </option>
+                                                                        <option value="230" >
+                                        Grow Plant
+                                    </option>
+                                                                        <option value="260" >
+                                        Grupar Auto Peças
+                                    </option>
+                                                                        <option value="62" >
+                                        Grupo Pronto Distribuidora
+                                    </option>
+                                                                        <option value="137" >
+                                        GWR
+                                    </option>
+                                                                        <option value="59" >
+                                        Harmônia Musical
+                                    </option>
+                                                                        <option value="256" >
+                                        Help Distribuidora
+                                    </option>
+                                                                        <option value="31" >
+                                        Henrilustres
+                                    </option>
+                                                                        <option value="11" >
+                                        Hs Merch
+                                    </option>
+                                                                        <option value="43" >
+                                        Ikebana Flores
+                                    </option>
+                                                                        <option value="5" >
+                                        Indupropil
+                                    </option>
+                                                                        <option value="253" >
+                                        Info CWB Tecnologia
+                                    </option>
+                                                                        <option value="138" >
+                                        Ink Paper Suprimentos
+                                    </option>
+                                                                        <option value="30" >
+                                        Ipê Ervas
+                                    </option>
+                                                                        <option value="141" >
+                                        Isomedical
+                                    </option>
+                                                                        <option value="15" >
+                                        Izzat
+                                    </option>
+                                                                        <option value="139" >
+                                        Joalheria  Ouro e Prata
+                                    </option>
+                                                                        <option value="50" >
+                                        Julia Quitutes
+                                    </option>
+                                                                        <option value="58" >
+                                        Kimonos Dojô
+                                    </option>
+                                                                        <option value="169" >
+                                        Kindmo Kids
+                                    </option>
+                                                                        <option value="102" >
+                                        King House
+                                    </option>
+                                                                        <option value="140" >
+                                        Lar Shopping
+                                    </option>
+                                                                        <option value="166" >
+                                        Lazer Store
+                                    </option>
+                                                                        <option value="57" >
+                                        Lemon Paper Store
+                                    </option>
+                                                                        <option value="107" >
+                                        Leve Barras
+                                    </option>
+                                                                        <option value="10" >
+                                        Lightsweet - B2B
+                                    </option>
+                                                                        <option value="205" >
+                                        Loja Bejo
+                                    </option>
+                                                                        <option value="3" >
+                                        Loja Bom Trabalho
+                                    </option>
+                                                                        <option value="75" >
+                                        Loja de Móveis Online
+                                    </option>
+                                                                        <option value="163" >
+                                        Loja do Cake Design
+                                    </option>
+                                                                        <option value="254" >
+                                        Loja Filipaper
+                                    </option>
+                                                                        <option value="183" >
+                                        Loja Ludica
+                                    </option>
+                                                                        <option value="53" >
+                                        Loja Shokan
+                                    </option>
+                                                                        <option value="246" >
+                                        Loja Teste
+                                    </option>
+                                                                        <option value="147" >
+                                        Lojas Agrupadas
+                                    </option>
+                                                                        <option value="144" >
+                                        Luiza Botto
+                                    </option>
+                                                                        <option value="255" >
+                                        Lumax EPI
+                                    </option>
+                                                                        <option value="207" >
+                                        Lumitec Foto
+                                    </option>
+                                                                        <option value="238" >
+                                        M Victoria Perfume Decor
+                                    </option>
+                                                                        <option value="90" >
+                                        Makeup 10
+                                    </option>
+                                                                        <option value="187" >
+                                        Max Marketplace
+                                    </option>
+                                                                        <option value="79" >
+                                        Maxx Móveis
+                                    </option>
+                                                                        <option value="218" >
+                                        MedClean Produtos Hospitalares
+                                    </option>
+                                                                        <option value="235" >
+                                        Mercantil Beleski
+                                    </option>
+                                                                        <option value="17" >
+                                        Meu Anel
+                                    </option>
+                                                                        <option value="103" >
+                                        Mirão Distribuidora
+                                    </option>
+                                                                        <option value="110" >
+                                        Mivino
+                                    </option>
+                                                                        <option value="216" >
+                                        Mocassim Calçados
+                                    </option>
+                                                                        <option value="229" >
+                                        Moregreen
+                                    </option>
+                                                                        <option value="54" >
+                                        Moveis Bom de Preço
+                                    </option>
+                                                                        <option value="155" >
+                                        Móveis Sonia
+                                    </option>
+                                                                        <option value="178" >
+                                        MTC Shop
+                                    </option>
+                                                                        <option value="18" >
+                                        Mult Comercial
+                                    </option>
+                                                                        <option value="200" >
+                                        Mundo Briller
+                                    </option>
+                                                                        <option value="35" >
+                                        Mundo Encantado
+                                    </option>
+                                                                        <option value="51" >
+                                        Muscle Box
+                                    </option>
+                                                                        <option value="156" >
+                                        Neopecuária
+                                    </option>
+                                                                        <option value="179" >
+                                        Neurosaber
+                                    </option>
+                                                                        <option value="188" >
+                                        New Old Man
+                                    </option>
+                                                                        <option value="243" >
+                                        NH Som
+                                    </option>
+                                                                        <option value="4" >
+                                        O Bonsai
+                                    </option>
+                                                                        <option value="212" >
+                                        O Loco Bicho
+                                    </option>
+                                                                        <option value="206" >
+                                        Oásis Tabacaria
+                                    </option>
+                                                                        <option value="199" >
+                                        Oceann
+                                    </option>
+                                                                        <option value="80" >
+                                        Odebrecht Coffee
+                                    </option>
+                                                                        <option value="16" >
+                                        Ofertamo
+                                    </option>
+                                                                        <option value="225" >
+                                        Oliveira Rolamentos
+                                    </option>
+                                                                        <option value="197" >
+                                        OMK Couro
+                                    </option>
+                                                                        <option value="82" >
+                                        Ommbo
+                                    </option>
+                                                                        <option value="222" >
+                                        Onça Preta
+                                    </option>
+                                                                        <option value="164" >
+                                        Ótica Leader
+                                    </option>
+                                                                        <option value="237" >
+                                        Ótica Rio Branco
+                                    </option>
+                                                                        <option value="224" >
+                                        Paito Motors
+                                    </option>
+                                                                        <option value="150" >
+                                        Palas Athena
+                                    </option>
+                                                                        <option value="181" >
+                                        Paralego Racing
+                                    </option>
+                                                                        <option value="19" >
+                                        Perfatta
+                                    </option>
+                                                                        <option value="91" >
+                                        Perpetua Cosméticos
+                                    </option>
+                                                                        <option value="92" >
+                                        Pets Du monde
+                                    </option>
+                                                                        <option value="195" >
+                                        Pitoni Pneus
+                                    </option>
+                                                                        <option value="167" >
+                                        Planeta Tênis
+                                    </option>
+                                                                        <option value="220" >
+                                        Playeasy
+                                    </option>
+                                                                        <option value="29" >
+                                        Ponto da Eletronica
+                                    </option>
+                                                                        <option value="210" >
+                                        Ponto da Eletrônica
+                                    </option>
+                                                                        <option value="213" >
+                                        Porto Soft
+                                    </option>
+                                                                        <option value="211" >
+                                        Potencial Suprimentos
+                                    </option>
+                                                                        <option value="198" >
+                                        Pratik Pro
+                                    </option>
+                                                                        <option value="130" >
+                                        Qualitech
+                                    </option>
+                                                                        <option value="6" >
+                                        Recopeças
+                                    </option>
+                                                                        <option value="209" >
+                                        Revest Paper
+                                    </option>
+                                                                        <option value="63" >
+                                        RM Ferramentas
+                                    </option>
+                                                                        <option value="242" >
+                                        RM Makeup
+                                    </option>
+                                                                        <option value="171" >
+                                        Rodas &amp; Cia
+                                    </option>
+                                                                        <option value="76" >
+                                        Romero Atacadista
+                                    </option>
+                                                                        <option value="38" >
+                                        Rosa Make
+                                    </option>
+                                                                        <option value="262" >
+                                        Rugol
+                                    </option>
+                                                                        <option value="152" >
+                                        SDTronic
+                                    </option>
+                                                                        <option value="228" >
+                                        Selaria Couro Moda
+                                    </option>
+                                                                        <option value="233" >
+                                        ShopTendtudo
+                                    </option>
+                                                                        <option value="219" >
+                                        Silicontech
+                                    </option>
+                                                                        <option value="64" >
+                                        Sofá Casa
+                                    </option>
+                                                                        <option value="93" >
+                                        Sofisticato Estofados
+                                    </option>
+                                                                        <option value="34" >
+                                        Sonhart
+                                    </option>
+                                                                        <option value="259" >
+                                        SOS Eletrônicos
+                                    </option>
+                                                                        <option value="8" >
+                                        Star Móveis Ubá
+                                    </option>
+                                                                        <option value="106" >
+                                        Stick Out Adesivos
+                                    </option>
+                                                                        <option value="193" >
+                                        Syma
+                                    </option>
+                                                                        <option value="151" >
+                                        Tabacaria da Mata
+                                    </option>
+                                                                        <option value="245" >
+                                        Tabacaria da Mata - M2
+                                    </option>
+                                                                        <option value="100" >
+                                        Tecnoar Compressores
+                                    </option>
+                                                                        <option value="28" >
+                                        Texas Farm Oficial
+                                    </option>
+                                                                        <option value="203" >
+                                        Tritons
+                                    </option>
+                                                                        <option value="176" >
+                                        Tudo Delas Make UP
+                                    </option>
+                                                                        <option value="55" >
+                                        Tycket
+                                    </option>
+                                                                        <option value="185" >
+                                        Ubu Editora
+                                    </option>
+                                                                        <option value="174" >
+                                        Um Pouko De Tudo
+                                    </option>
+                                                                        <option value="48" >
+                                        Um Tok Estofados
+                                    </option>
+                                                                        <option value="41" >
+                                        Up Mais
+                                    </option>
+                                                                        <option value="22" >
+                                        Varanda
+                                    </option>
+                                                                        <option value="65" >
+                                        Veg.in
+                                    </option>
+                                                                        <option value="2" >
+                                        Veloce Pneus
+                                    </option>
+                                                                        <option value="204" >
+                                        Virtual Bike
+                                    </option>
+                                                                        <option value="71" >
+                                        Viso Store
+                                    </option>
+                                                                        <option value="249" >
+                                        Vivo Farma
+                                    </option>
+                                                                        <option value="105" >
+                                        Vlp Comercial
+                                    </option>
+                                                                        <option value="172" >
+                                        VM Jalecos e Acessórios
+                                    </option>
+                                                                        <option value="81" >
+                                        WarSoft Brasil
+                                    </option>
+                                                                        <option value="69" >
+                                        Way Suplementos
+                                    </option>
+                                                                        <option value="25" >
+                                        Welle Decor
+                                    </option>
+                                                                        <option value="168" >
+                                        Wilson Atacado
+                                    </option>
+                                                                        <option value="184" >
+                                        Wings Custom Cycles
+                                    </option>
+                                                                        <option value="94" >
+                                        Wooks
+                                    </option>
+                                                                        <option value="23" >
+                                        World Combat
+                                    </option>
+                                                                        <option value="95" >
+                                        World Importados
+                                    </option>
+                                                                        <option value="52" >
+                                        Zanutto Home and Garden
+                                    </option>
+                                                                        <option value="68" >
+                                        Zoing
+                                    </option>
+                                                                    </select>
+                            </div>
+                            <div class="col-3">
+                                                                                                                                                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][status]" class="col-3 form-label text-end required">Situação</label>
+                            <div class="col-6">
+                                <select class="form-select" name="data[tickets][status]" id="data[tickets][status]" required>
+                                    <option value="">Selecione uma situação</option>
+                                    <option value="1" >Fazendo</option>
+                                    <option value="2" >Bloqueado</option>
+                                    <option value="3" >Pausado</option>
+                                    <option value="4" >Resolvido</option>
+                                    <option value="5" >Fechado</option>
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][priority]" class="col-3 form-label text-end required">Nível de prioridade</label>
+                            <div class="col-6">
+                                <select class="form-select" name="data[tickets][priority]" id="data[tickets][priority]" required>
+                                    <option value="">Selecione uma nível</option>
+                                    <option value="1" >Baixa</option>
+                                    <option value="2" >Média</option>
+                                    <option value="3" >Alta</option>
+                                </select>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="priority" class="col-3 form-label text-end">Período de desenvolvimento</label>
+                            <div class="col-6 box-appoiments">
+                                
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_date][]" class="form-label">Data</label>
+                                            <input type="date" class="form-control" name="data[working_time][development_date][]" id="data[working_time][development_date][]" value="" />
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_begin][]" class="form-label">Início</label>
+                                            <input type="time" class="form-control" name="data[working_time][development_begin][]" id="data[working_time][development_begin][]" value="" min="00:00" max="24:00" />                                    
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="data[working_time][development_end][]" class="form-label">Término</label>
+                                            <input type="time" class="form-control" name="data[working_time][development_end][]" id="data[working_time][development_end][]" value="" min="00:00" max="24:00" />                                    
+                                        </div>
+                                    </div>
+
+                                                            </div>
+                            <div class="col-3 mt-auto">
+                                <button type="button" class="btn btn-primary btn-add-appoiment" title="Adicionar um novo item" >
+                                    <i class="mdi mdi-18px mdi-plus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom: 15px">
+                            <label for="data[tickets][description]" class="col-3 form-label text-end required">Descrição do problema</label>
+                            <div class="col-6">
+                                <input type="hidden" name="data[tickets][description]" id="data[tickets][description]" value="" required />
+                                <div id="toolbarDescriptionQuill">
+                                    <span class="ql-formats">
+                                        <select class="ql-font"></select>
+                                        <select class="ql-size"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                        <button class="ql-code-block"></button>
+                                        <button class="ql-image"></button>
+                                        <button class="ql-video"></button>
+                                    </span>
+                                </div>
+                                <div id="descriptionQuill"></div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <label for="data[tickets][resolution]" class="col-3 form-label text-end">Como foi resolvido?</label>
+                            <div class="col-6">
+                                <input type="hidden" name="data[tickets][resolution]" id="data[tickets][resolution]" value="" />
+                                <div id="toolbarResolutionQuill">
+                                    <span class="ql-formats">
+                                        <select class="ql-font"></select>
+                                        <select class="ql-size"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                        <button class="ql-code-block"></button>
+                                        <button class="ql-image"></button>
+                                        <button class="ql-video"></button>
+                                    </span>
+                                </div>
+                                <div id="resolutionQuill"></div>
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                        
+                        <div class="mb-2 mt-3 row">
+                            <label for="" class="col-3 form-label"></label>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary" id="btnSave">
+                                    <i class="mdi mdi-18px mdi-content-save"></i>
+                                    <b>Salvar</b>
+                                </button>
+                                                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

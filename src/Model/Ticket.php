@@ -26,7 +26,16 @@ class Ticket extends DataLayer
      * List of required fields in the database
      * @var array $fieldsAllowed
      */
-    public $fieldsAllowed = ['reference', 'title', 'description', 'status', 'reporter_id', 'priority'];
+    public $fieldsAllowed = [
+        'reference',
+        'title',
+        'description',
+        'status',
+        'reporter_id',
+        'store_id',
+        'priority',
+        'resolution',
+    ];
 
     /**
      * Identifier field in the User table

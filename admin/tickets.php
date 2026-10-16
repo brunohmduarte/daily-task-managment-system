@@ -10,33 +10,37 @@
     /** @var TicketsController $controller */
     $controller = Factory::create(TicketsController::class);
 
-    list(
-        $reporterId, $storeId, $reference, $title, $description, $resolution, $status, $priority, $open
-    ) = [
-        '', '', '', '', '', '', '', '', ''
-    ];
+    $controller->init();
+    $ticketRecord = [];
+    $reporters = [];
+    $stores = [];
+    $formError = '';
+    $escape = static function ($value): string {
+        return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+    };
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $controller->init();
+    if (in_array($controller->action, ['create', 'update', 'delete'], true)) {
+        $reporters = $controller->getReporterModel()->listReporters() ?: [];
+        $stores = $controller->getStoreModel()->listStores() ?: [];
 
-        if (isset($_GET['action']) && isset($_GET['id']) && $controller->ticketExists($_GET['id'])) {
-            $data        = $controller->getTicketModel()->findById($_GET['id'])->data();
-            $reporterId  = $data->reporter;
-            $storeId     = $data->store;
-            $reference   = $data->reference;
-            $title       = $data->title;
-            $description = $data->description;
-            $resolution  = $data->resolution;
-            $status      = $data->status;
-            $priority    = $data->priority;
-            $open        = $data->open;
+        if ($controller->action !== 'create') {
+            $ticketId = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
+            $ticket = ($ticketId && $ticketId > 0)
+                ? $controller->getTicketModel()->findById($ticketId)
+                : null;
+
+            if ($ticket) {
+                $ticketRecord = (array) $ticket->data();
+            } else {
+                $formError = 'O ticket solicitado não foi encontrado.';
+                $controller->action = 'list';
+            }
         }
-
-        $readonly    = ($controller->action === 'delete') ? 'readonly' : '';
-        $disabled    = ($controller->action === 'delete') ? 'disabled' : '';
-        $btnDisabled = ($controller->action === 'delete') ? 'disabled' : '';
-        $btnColor    = ($controller->action === 'delete') ? 'btn-danger' : 'btn-primary';
     }
+
+    $isDelete = $controller->action === 'delete';
+    $isForm = in_array($controller->action, ['create', 'update', 'delete'], true);
+    $isReadOnly = $isDelete ? 'disabled' : '';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,6 +69,9 @@
 
     <!-- App CSS -->
     <link href="<?php echo getUrlFull('assets/css/app.min.css'); ?>" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+    <!-- Select2 CSS -->
+    <link href="<?php echo getUrlFull('assets/libs/select2/css/select2.min.css'); ?>" rel="stylesheet" type="text/css" />
 
     <!-- Config js -->
     <script src="<?php echo getUrlFull('assets/js/config.js'); ?>"></script>
@@ -100,7 +107,7 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <?php if ($controller->action == 'delete'): ?>
+                        <?php if ($isDelete): ?>
                             <div class="alert alert-danger">
                                 <h4 class="alert-heading">Atenção!</h4>
                                 <p class="text-danger mb-1">Você está prestes a remover este registro, certifique-se de que esteja certo disso pois uma vez feito essa ação não poderá ser desfeito futuramente.</p>
@@ -113,7 +120,11 @@
                 <!-- Content -->
                 <div class="row">
                     <div class="col-12">
-                        <?php if ($controller->action == 'list') : ?>
+                        <?php if ($formError !== ''): ?>
+                            <div class="alert alert-danger" role="alert"><?= $escape($formError) ?></div>
+                        <?php endif; ?>
+
+                        <?php if (!$isForm) : ?>
 
                             <table id="listTickets" class="table table-striped">
                                 <thead>
@@ -139,9 +150,109 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            
+
                         <?php else: ?>
-                            <p>Formulário de cadastro de ticket</p>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <form class="form-horizontal needs-validation" action="api/index.php?action=<?= $isDelete ? 'deleteTicket' : ($controller->action === 'update' ? 'updateTicket' : 'createTicket') ?>" method="POST" id="formTickets" novalidate>
+                                        <input type="hidden" name="ticket_id" value="<?= $escape($ticketRecord['ticket_id'] ?? '') ?>">
+
+                                        <div class="row mb-3">
+                                            <label for="reporter_id" class="col-3 col-form-label required">Relator</label>
+                                            <div class="col-6">
+                                                <select data-plugin="customselect" class="form-select select2-hidden-accessible" name="data[tickets][reporter_id]" id="reporter_id" required <?= $isReadOnly ?>>
+                                                    <option value="">Selecione</option>
+                                                    <?php foreach ($reporters as $reporter): $reporterData = (array) $reporter->data(); ?>
+                                                        <option value="<?= $escape($reporterData['reporter_id'] ?? '') ?>" <?= (string) ($ticketRecord['reporter_id'] ?? '') === (string) ($reporterData['reporter_id'] ?? '') ? 'selected' : '' ?>>
+                                                            <?= $escape($reporterData['name'] ?? '') ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="reference" class="col-3 col-form-label required">Código de referência</label>
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="data[tickets][reference]" id="reference" value="<?= $escape($ticketRecord['reference'] ?? '') ?>" autocomplete="off" required minlength="1" <?= $isDelete ? 'disabled' : '' ?>>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="title" class="col-3 col-form-label required">Título</label>
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="data[tickets][title]" id="title" value="<?= $escape($ticketRecord['title'] ?? '') ?>" autocomplete="off" required minlength="3" <?= $isDelete ? 'disabled' : '' ?>>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="store_id" class="col-3 col-form-label required">Loja</label>
+                                            <div class="col-6">
+                                                <select class="form-select select2-hidden-accessible" name="data[tickets][store_id]" id="store_id" required <?= $isReadOnly ?>>
+                                                    <option value="">Selecione</option>
+                                                    <?php foreach ($stores as $store): $storeData = (array) $store->data(); ?>
+                                                        <option value="<?= $escape($storeData['store_id'] ?? '') ?>" <?= (string) ($ticketRecord['store_id'] ?? '') === (string) ($storeData['store_id'] ?? '') ? 'selected' : '' ?>>
+                                                            <?= $escape($storeData['name'] ?? '') ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="status" class="col-3 col-form-label required">Situação</label>
+                                            <div class="col-6">
+                                                <select class="form-select select2-hidden-accessible" name="data[tickets][status]" id="status" required <?= $isReadOnly ?>>
+                                                    <option value="">Selecione uma situação</option>
+                                                    <?php foreach (['Fazendo', 'Bloqueado', 'Pausado', 'Resolvido', 'Fechado'] as $label): ?>
+                                                        <option value="<?= $label ?>" <?= (string) ($ticketRecord['status'] ?? '') === (string) $label ? 'selected' : '' ?>><?= $label ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="priority" class="col-3 col-form-label required">Nível de prioridade</label>
+                                            <div class="col-6">
+                                                <select class="form-select select2-hidden-accessible" name="data[tickets][priority]" id="priority" required <?= $isReadOnly ?>>
+                                                    <option value="">Selecione um nível</option>
+                                                    <?php foreach ([1 => 'Baixa', 2 => 'Média', 3 => 'Alta'] as $value => $label): ?>
+                                                        <option value="<?= $value ?>" <?= (string) ($ticketRecord['priority'] ?? '') === (string) $value ? 'selected' : '' ?>><?= $label ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="description" class="col-3 col-form-label required">Descrição do problema</label>
+                                            <div class="col-6">
+                                                <textarea class="form-control" name="data[tickets][description]" id="description" rows="6" required minlength="3" <?= $isDelete ? 'disabled' : '' ?>><?= $escape($ticketRecord['description'] ?? '') ?></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="resolution" class="col-3 col-form-label">Como foi resolvido?</label>
+                                            <div class="col-6">
+                                                <textarea class="form-control" name="data[tickets][resolution]" id="resolution" rows="4" <?= $isDelete ? 'disabled' : '' ?>><?= $escape($ticketRecord['resolution'] ?? '') ?></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-end">
+                                            <div class="col-9">
+                                                <button type="submit" class="btn btn-sm <?= $isDelete ? 'btn-danger' : 'btn-primary' ?>" id="btnSave">
+                                                    <?php if ($isDelete): ?>
+                                                        <span class="mdi mdi-delete"></span> Remover
+                                                    <?php else: ?>
+                                                        <span class="mdi mdi-content-save"></span> Salvar
+                                                    <?php endif; ?>
+                                                </button>
+                                                <a href="tickets.php" class="btn btn-sm btn-light ms-2">Cancelar</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -201,6 +312,10 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
     <?php endif; ?>
 
+    <!-- Select2 JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="<?php echo getUrlFull('assets/libs/select2/js/select2.min.js'); ?>"></script>
+
     <!-- page js - MUST come after jQuery and moment -->
     <!-- <script src="<?php echo getUrlFull('assets/js/pages/dashboard.init.js'); ?>" defer></script> -->
 
@@ -209,6 +324,10 @@
 
     <script>
         $(document).ready(function() {
+            if ($('.select2-hidden-accessible').length > 0) {
+                $('.select2-hidden-accessible').select2();
+            }
+
             // Como DataTables extende o jQuery, podemos verificar se o plugin foi carregado
             if ($.fn.dataTable) {
                 var columnsOption = [                
@@ -255,138 +374,86 @@
                 });
             }
 
-            if ($.fn.mask) {
-                $('#phone').mask('(00) #0000-0000');
-            }
+            if ($('#formTickets').length && $.fn.validate) {
+                $('#formTickets').validate({
+                    rules: {
+                        'data[tickets][reporter_id]': { required: true },
+                        'data[tickets][reference]': { required: true },
+                        'data[tickets][title]': { required: true, minlength: 3 },
+                        'data[tickets][store_id]': { required: true },
+                        'data[tickets][status]': { required: true },
+                        'data[tickets][priority]': { required: true },
+                        'data[tickets][description]': { required: true, minlength: 3 }
+                    },
+                    messages: {
+                        'data[tickets][reporter_id]': { required: 'Selecione o relator do ticket.' },
+                        'data[tickets][reference]': { required: 'Informe o código de referência.' },
+                        'data[tickets][title]': {
+                            required: 'Informe o título do ticket.',
+                            minlength: 'O título deve ter pelo menos 3 caracteres.'
+                        },
+                        'data[tickets][store_id]': { required: 'Selecione a loja.' },
+                        'data[tickets][status]': { required: 'Selecione a situação do ticket.' },
+                        'data[tickets][priority]': { required: 'Selecione o nível de prioridade.' },
+                        'data[tickets][description]': {
+                            required: 'Descreva o problema.',
+                            minlength: 'A descrição deve ter pelo menos 3 caracteres.'
+                        }
+                    },
+                    errorElement: 'div',
+                    errorPlacement: function(error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.col-6').append(error);
+                    },
+                    highlight: function(element) {
+                        $(element).addClass('is-invalid').removeClass('is-valid');
+                    },
+                    unhighlight: function(element) {
+                        $(element).addClass('is-valid').removeClass('is-invalid');
+                    },
+                    submitHandler: function(form) {
+                        $.ajax({
+                            url: form.action,
+                            type: 'POST',
+                            data: $(form).serialize(),
+                            dataType: 'json',
+                            beforeSend: function() {
+                                $('#btnSave').prop('disabled', true);
+                                $('#centermodal, #backcentermodal').show();
+                            },
+                            success: function(response) {
+                                const result = response && response.data;
+                                if (response.code === 200 && result && result.status === 'success') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        text: result.message,
+                                        confirmButtonText: 'OK'
+                                    }).then(function() {
+                                        window.location.href = 'tickets.php';
+                                    });
+                                    return;
+                                }
 
-            // Validação do formulário
-            /*
-            $('#formStores').validate({
-                rules: {
-                    name: {
-                        required: true,
-                        minlength: 3
-                    },
-                    responsible: {
-                        required: true,
-                        minlength: 3
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    phone: {
-                        required: false,
-                        minlength: 10
-                    }
-                },
-                messages: {
-                    name: {
-                        required: "Por favor, insira o nome do relator.",
-                        minlength: "O nome deve ter no mínimo 3 caracteres."
-                    },
-                    responsible: {
-                        required: "Por favor, insira o nome do responsável.",
-                        minlength: "O nome deve ter no mínimo 3 caracteres."
-                    },
-                    email: {
-                        required: "Por favor, insira o e-mail.",
-                        email: "Por favor, insira um e-mail válido."
-                    },
-                    phone: {
-                        required: "Por favor, insira o telefone.",
-                        minlength: "O telefone deve ter no mínimo 10 caracteres."
-                    }
-                },
-                errorElement: 'div',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.col-7').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-valid').removeClass('is-invalid');
-                }
-            });
-            */
-
-            // Formulário de submissão via AJAX
-            /*
-            $('#formStores').on('submit', function(e) {
-                e.preventDefault();
-
-                if ($(this).valid()) {
-                    var formData = new FormData(this);
-                    let action = formData.get('action');
-
-                    $.ajax({
-                        url: `api/index.php?action=${action}Store`,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) { console.log('response:', res);
-                            // hide modal spinner
-                            $('#centermodal').hide();
-                            $('#backcentermodal').hide();
-
-                            // success
-                            if (res.code === 200 && res.data.status === 'success') {                                
-                                let dataStayOnPage = $(document.activeElement).data('stayonpage');
-                                // Handle success response
-                                Swal.fire({
-                                    icon: 'success',
-                                    text: res.data.message,
-                                    showConfirmButton: true,
-                                    // timer: 2000
-                                }).then(() => {
-                                    if (dataStayOnPage == 1) {
-                                        window.location.href = window.location.search;
-                                    } else {
-                                        window.location.href = 'stores.php';
-                                    }
-                                });
-                            } 
-                            
-                            // error
-                            if (res.code !== 200 || res.data.status === 'error') {
                                 Swal.fire({
                                     icon: 'error',
-                                    text: res.data.message || 'Ocorreu um erro ao salvar o relator.',
-                                    showConfirmButton: true,
+                                    text: (result && result.message) || 'Não foi possível salvar o ticket.'
                                 });
+                            },
+                            error: function(xhr) {
+                                const message = xhr.responseJSON && xhr.responseJSON.message
+                                    ? xhr.responseJSON.message
+                                    : 'Não foi possível concluir a operação.';
+                                Swal.fire({ icon: 'error', text: message });
+                            },
+                            complete: function() {
+                                $('#btnSave').prop('disabled', false);
+                                $('#centermodal, #backcentermodal').hide();
                             }
-                        },
-                        beforeSend: function() {
-                            $('#centermodal').show();
-                            $('#backcentermodal').show();
-                        },
-                        error: function(xhr, status, error) {
-                            // Handle error response
-                            Swal.fire({
-                                icon: 'error',
-                                text: res.data.message || 'Ocorreu um erro ao salvar o relator.',
-                                showConfirmButton: true,
-                            });
-                        }
-                    });
-                }
-            });
-            */
+                        });
+                    }
+                });
+            }
 
-            // Habilita o botão caso o registro seja deletado e alterna o texto da mensagem de aviso.
-            /*
-            $('.btnSaveOnOff').on('click', function() {
-                let btnSave = $('#btnSave');
-                let property = btnSave.prop('disabled');
-                let LabelLink = (property === true) ? 'Não' : 'Sim';
-                
-                btnSave.prop('disabled', !property);
-                $(this).text(LabelLink);
-            });
-            */
         });
     </script>
 </body>

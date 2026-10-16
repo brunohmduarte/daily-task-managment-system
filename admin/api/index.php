@@ -48,9 +48,9 @@ Router::on('storeUninstall', [$storesController, 'storeUninstall']);
 
 // Rotas para Tickets
 $ticketsController = new TicketsController();
-// Router::on('createTicket', [$ticketsController, 'create']);
-// Router::on('updateTicket', [$ticketsController, 'update']);
-// Router::on('deleteTicket', [$ticketsController, 'delete']);
+Router::on('createTicket', [$ticketsController, 'create']);
+Router::on('updateTicket', [$ticketsController, 'update']);
+Router::on('deleteTicket', [$ticketsController, 'delete']);
 Router::on('listTickets', [$ticketsController, 'listTickets']);
 
 
