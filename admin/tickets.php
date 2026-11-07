@@ -75,6 +75,36 @@
 
     <!-- Config js -->
     <script src="<?php echo getUrlFull('assets/js/config.js'); ?>"></script>
+
+    <style>
+        .timeline {
+            position: relative;
+            border-left: 2px solid #dee2e6;
+            padding-left: 20px;
+        }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item span {
+            font-size: .765rem;
+        }
+        .timeline-item p {
+            max-height: 100px;
+            overflow: hidden;
+            overflow-y: auto;            
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -28px;
+            top: 5px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: #6c757d;
+            border: 2px solid #fff;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -159,6 +189,10 @@
                                         <input type="hidden" name="ticket_id" value="<?= $escape($ticketRecord['ticket_id'] ?? '') ?>">
 
                                         <div class="row mb-3">
+                                            <h3 class="col-12 p-1 border-bottom">Informações do Ticket</h3>
+                                        </div>
+
+                                        <div class="row mb-3">
                                             <label for="reporter_id" class="col-3 col-form-label required">Relator</label>
                                             <div class="col-6">
                                                 <select data-plugin="customselect" class="form-select select2-hidden-accessible" name="data[tickets][reporter_id]" id="reporter_id" required <?= $isReadOnly ?>>
@@ -238,7 +272,74 @@
                                             </div>
                                         </div>
 
-                                        <div class="row justify-content-end">
+                                        <div class="row mb-3">
+                                            <h3 class="col-12 my-3 p-1 border-bottom">Apontamento de Horas</h3>
+                                            <div class="col-6">
+                                                Formulário de apontamento de horas
+                                            </div>
+                                            <div class="col-6">
+                                                Listagem das horas apontadas
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Histórico de Atualizações -->
+                                        <div class="row mb-3">
+                                            <h3 class="col-12 my-3 p-1 border-bottom">Histórico de Atualizações</h3>
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <label for="updateHistory" class="form-label">Título</label>
+                                                    <input type="text" class="form-control" name="updateHistoryTitle" id="updateHistoryTitle" />
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label for="updateHistory" class="form-label">Descrição</label>
+                                                    <textarea class="form-control" name="updateHistoryDescription" id="updateHistoryDescription" rows="4" <?= $isDelete ? 'disabled' : '' ?>><?= $escape($ticketRecord['updateHistory'] ?? '') ?></textarea>
+                                                </div>
+                                                <button type="button" class="btn btn-dark fw-semibold">Salvar atualização</button>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <ul class="timeline">
+                                                    <div class="timeline-item">
+                                                        <span class="text-body-tertiary">12/01/2026 às 11:52</span>
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-bold">Lançamento do Projeto</h5>
+                                                                <p class="card-text text-muted mb-0">Primeira versão oficial do sistema vai ao ar após meses de desenvolvimento e testes internos. Primeira versão oficial do sistema vai ao ar após meses de desenvolvimento e testes internos. Primeira versão oficial do sistema vai ao ar após meses de desenvolvimento e testes internos. Primeira versão oficial do sistema vai ao ar após meses de desenvolvimento e testes internos.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <span class="text-body-tertiary">15/03/2026 às 14:30</span>
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-bold">10 mil Usuários Ativos</h5>
+                                                                <p class="card-text text-muted mb-0">Alcançamos a primeira grande marca de usuários engajados na plataforma de forma orgânica.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <span class="text-body-tertiary ">15/06/2026 às 10:00</span>
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-bold">Nova Atualização de Interface</h5>
+                                                                <p class="card-text text-muted mb-0">Reformulação completa do design focando em acessibilidade e melhor navegação mobile.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <span class="text-body-tertiary">15/10/2026 às 16:00</span>
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-bold">Expansão Internacional</h5>
+                                                                <p class="card-text text-muted mb-0">Abertura de novos servidores e suporte multilíngue para atender usuários da América Latina.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3 justify-content-end">
                                             <div class="col-9">
                                                 <button type="submit" class="btn btn-sm <?= $isDelete ? 'btn-danger' : 'btn-primary' ?>" id="btnSave">
                                                     <?php if ($isDelete): ?>

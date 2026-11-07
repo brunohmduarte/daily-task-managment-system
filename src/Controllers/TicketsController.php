@@ -11,12 +11,12 @@ use Application\Interfaces\CrudInterfaces;
 
 class TicketsController extends Controller implements CrudInterfaces
 {
-    public function init() 
+    public function init()
     {
         $this->defineAction();
     }
 
-    public function getTicketModel() 
+    public function getTicketModel()
     {
         /** @var TicketModel $model */
         return Factory::create(TicketModel::class);
@@ -73,7 +73,6 @@ class TicketsController extends Controller implements CrudInterfaces
                 'status' => 'success',
                 'message' => 'Ticket removido com sucesso!'
             ];
-
         } catch (ApplicationException $e) {
             return [
                 'status' => 'error',
@@ -103,14 +102,23 @@ class TicketsController extends Controller implements CrudInterfaces
             $requiredFields = ['reference', 'title', 'description', 'reporter_id', 'store_id', 'status', 'priority'];
             foreach ($requiredFields as $field) {
                 if (!isset($input[$field]) || !is_scalar($input[$field]) || trim((string) $input[$field]) === '') {
-                    throw new ApplicationException("Preencha todos os campos obrigatórios.", "Missing field: {$field}", 400);
+                    throw new ApplicationException(
+                        "Preencha todos os campos obrigatórios.",
+                        "Missing field: {$field}",
+                        400
+                    );
                 }
             }
 
-            if (strlen(trim((string) $input['title'])) < 3
+            if (
+                strlen(trim((string) $input['title'])) < 3
                 || strlen(trim((string) $input['description'])) < 3
             ) {
-                throw new ApplicationException("O título e a descrição devem ter pelo menos 3 caracteres.", "Ticket text is too short", 400);
+                throw new ApplicationException(
+                    "O título e a descrição devem ter pelo menos 3 caracteres.",
+                    "Ticket text is too short",
+                    400
+                );
             }
 
             $reporterId = filter_var($input['reporter_id'], FILTER_VALIDATE_INT);
@@ -118,17 +126,27 @@ class TicketsController extends Controller implements CrudInterfaces
             $status = filter_var($input['status'], FILTER_VALIDATE_INT);
             $priority = filter_var($input['priority'], FILTER_VALIDATE_INT);
 
-            if (!$reporterId || !$storeId || !$status || !$priority
+            if (
+                !$reporterId || !$storeId || !$status || !$priority
                 || $status < 1 || $status > 5
                 || $priority < 1 || $priority > 3
             ) {
-                throw new ApplicationException("Selecione um relator, uma loja, uma situação e uma prioridade válidos.", "Invalid ticket selection", 400);
+                throw new ApplicationException(
+                    "Selecione um relator, uma loja, uma situação e uma prioridade válidos.",
+                    "Invalid ticket selection",
+                    400
+                );
             }
 
-            if (!$this->getReporterModel()->findById($reporterId)
+            if (
+                !$this->getReporterModel()->findById($reporterId)
                 || !$this->getStoreModel()->findById($storeId)
             ) {
-                throw new ApplicationException("O relator ou a loja selecionados não foram encontrados.", "Invalid reporter or store", 400);
+                throw new ApplicationException(
+                    "O relator ou a loja selecionados não foram encontrados.",
+                    "Invalid reporter or store",
+                    400
+                );
             }
 
             $ticket = $isUpdate
@@ -139,14 +157,14 @@ class TicketsController extends Controller implements CrudInterfaces
                 throw new ApplicationException("Ticket não encontrado.", "Ticket not found", 404);
             }
 
-            $ticket->reference = trim((string) $input['reference']);
-            $ticket->title = trim((string) $input['title']);
+            $ticket->reference   = trim((string) $input['reference']);
+            $ticket->title       = trim((string) $input['title']);
             $ticket->description = trim((string) $input['description']);
-            $ticket->resolution = trim((string) ($input['resolution'] ?? ''));
+            $ticket->resolution  = trim((string) ($input['resolution'] ?? ''));
             $ticket->reporter_id = $reporterId;
-            $ticket->store_id = $storeId;
-            $ticket->status = $status;
-            $ticket->priority = $priority;
+            $ticket->store_id    = $storeId;
+            $ticket->status      = $status;
+            $ticket->priority    = $priority;
 
             if (!$ticket->save()) {
                 throw new ApplicationException("Não foi possível salvar o ticket.", "Ticket save failed", 500);
@@ -169,7 +187,7 @@ class TicketsController extends Controller implements CrudInterfaces
         }
     }
 
-    public function listTickets() 
+    public function listTickets()
     {
         $data = $this->read();
         if (!is_array($data)) {
@@ -250,7 +268,7 @@ class TicketsController extends Controller implements CrudInterfaces
         if (empty($id)) {
             return false;
         }
-        
+
         try {
             $ticket = $this->getTicketModel()->findById($id);
             if (!$ticket) {
@@ -258,7 +276,6 @@ class TicketsController extends Controller implements CrudInterfaces
             }
 
             return true;
-
         } catch (ApplicationException $e) {
             echo $e->getUserMessage();
             return false;
