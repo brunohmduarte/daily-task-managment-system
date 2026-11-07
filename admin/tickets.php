@@ -272,13 +272,44 @@
                                             </div>
                                         </div>
 
+                                        <!-- Apontamento de Horas -->
                                         <div class="row mb-3">
                                             <h3 class="col-12 my-3 p-1 border-bottom">Apontamento de Horas</h3>
-                                            <div class="col-6">
-                                                Formulário de apontamento de horas
+                                            <div class="col-2">
+                                                <input class="form-control" id="example-date" type="date" name="date">
                                             </div>
-                                            <div class="col-6">
-                                                Listagem das horas apontadas
+                                            <div class="col-2">
+                                                <input class="form-control" id="example-time" type="time" name="time">
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" id="example-time" type="time" name="time">
+                                            </div>
+                                            <div class="col-3">
+                                                <button type="button" class="btn btn-dark fw-semibold">Registrar apontamento</button>
+                                            </div>
+                                            <div class="col-6 mt-3">
+                                                <ul class="timeline">
+                                                    <div class="timeline-item">
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-normal">Segunda-feira, 8 de novembro de 2026</h5>
+                                                                <p class="card-text text-muted mb-0">09:40 às 12:00</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <div class="card border-0">
+                                                            <div class="card-body p-0">
+                                                                <h5 class="card-title fw-normal">Segunda-feira, 7 de novembro de 2026</h5>
+                                                                <p class="card-text text-muted mb-0">08:00 às 12:00</p>
+                                                                <p class="card-text text-muted mb-0">13:15 às 15:20</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </div>
+                                            <div class="col-6 mt-3">
+                                                <h5 class="card-title fw-normal">Total de horas registradas: <span class="fw-semibold">6h 25min</span></h5>
                                             </div>
                                         </div>
                                         
